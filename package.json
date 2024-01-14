@@ -8,7 +8,8 @@
     "nodemon:build": "nodemon --exec ./node_modules/.bin/ts-node -- ./src/index.ts",
     "build": "scripts/build.sh",
     "test": "scripts/test.sh",
-    "start": "ts-node src/index.ts"
+    "start": "ts-node src/index.ts",
+    "build:tsc": "rm -rf ./dist && mkdir dist && tsc -p ./tsconfig.json"
   },
   "author": "Camila Couto e Melina Carniel",
   "license": "ISC",
