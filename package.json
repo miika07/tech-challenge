@@ -8,15 +8,13 @@
     "nodemon:build": "nodemon --exec ./node_modules/.bin/ts-node -- ./src/index.ts",
     "build": "scripts/build.sh",
     "test": "scripts/test.sh",
-    "start": "ts-node src/index.ts",
-    "lint": "eslint ./src",
-    "lint:fix": "eslint --fix --ext .ts ./src",
-    "prepare": "husky install"
+    "start": "ts-node src/index.ts"
   },
   "author": "Camila Couto e Melina Carniel",
   "license": "ISC",
   "dependencies": {
     "@hapi/hapi": "^21.3.2",
+    "knex": "^3.1.0",
     "ts-node": "^10.9.2"
   },
   "devDependencies": {
