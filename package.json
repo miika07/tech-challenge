@@ -8,16 +8,19 @@
     "nodemon:build": "nodemon --exec ./node_modules/.bin/ts-node -- ./src/index.ts",
     "build": "scripts/build.sh",
     "test": "scripts/test.sh",
-    "start": "ts-node src/index.ts",
-    "lint": "eslint ./src",
-    "lint:fix": "eslint --fix --ext .ts ./src",
-    "prepare": "husky install"
+    "start": "ts-node src/index.ts"
   },
   "author": "Camila Couto e Melina Carniel",
   "license": "ISC",
   "dependencies": {
     "@hapi/hapi": "^21.3.2",
-    "ts-node": "^10.9.2"
+    "@hapi/inert": "^7.1.0",
+    "@hapi/vision": "^7.0.3",
+    "dotenv": "^16.3.1",
+    "hapi-auth-jwt2": "^10.5.0",
+    "hapi-swagger": "^17.2.0",
+    "ts-node": "^10.9.2",
+    "winston": "^3.11.0"
   },
   "devDependencies": {
     "@types/hapi__hapi": "^21.0.0",
