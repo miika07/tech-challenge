@@ -4,6 +4,7 @@ import Config from './config/environment.config'
 import { SwaggerPlugin } from './plugins/swagger.plugin'
 import Router from './router'
 import * as JWT from 'hapi-auth-jwt2'
+import { AppDataSource } from './data-source'
 
 const validate = async function (): Promise<any> {
   return { isValid: true }
@@ -16,6 +17,13 @@ export default class Server {
       Server._instance = new Hapi.Server({
         port: Config.port
       })
+
+      AppDataSource.initialize()
+      .then(() => {
+          console.log("Iniciou o database");
+      })
+      .catch((error) => console.log(error))
+
       await Server._instance.register(JWT)
 
       Server._instance.auth.strategy('jwt', 'jwt', {

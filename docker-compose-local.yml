@@ -1,0 +1,13 @@
+version: '3'
+services:
+  # Serviço para o banco de dados MySQL
+  mysql:
+    image: mysql:latest
+    container_name: my-sql-local
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: tech-challenge-fiap
+      MYSQL_USER: fiap
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
