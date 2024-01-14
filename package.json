@@ -20,7 +20,8 @@
     "hapi-auth-jwt2": "^10.5.0",
     "hapi-swagger": "^17.2.0",
     "ts-node": "^10.9.2",
-    "winston": "^3.11.0"
+    "winston": "^3.11.0",
+    "knex": "^3.1.0"
   },
   "devDependencies": {
     "@types/hapi__hapi": "^21.0.0",
