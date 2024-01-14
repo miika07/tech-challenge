@@ -8,13 +8,20 @@
     "nodemon:build": "nodemon --exec ./node_modules/.bin/ts-node -- ./src/index.ts",
     "build": "scripts/build.sh",
     "test": "scripts/test.sh",
-    "start": "ts-node src/index.ts"
+    "start": "ts-node src/index.ts",
+    "knex:seed:run": "knex --knexfile src/knexfile.ts seed:run",
+    "knex:seed:make": "knex --knexfile src/knexfile.ts seed:make",
+    "knex:migrate:make": "knex --knexfile src/knexfile.ts migrate:make",
+    "knex:migrate:latest": "knex --knexfile src/knexfile.ts migrate:latest",
+    "knex:migrate:rollback": "knex --knexfile src/knexfile.ts migrate:rollback"
   },
   "author": "Camila Couto e Melina Carniel",
   "license": "ISC",
   "dependencies": {
     "@hapi/hapi": "^21.3.2",
+    "@types/hapi": "^18.0.14",
     "knex": "^3.1.0",
+    "mysql2": "^3.7.0",
     "ts-node": "^10.9.2"
   },
   "devDependencies": {
