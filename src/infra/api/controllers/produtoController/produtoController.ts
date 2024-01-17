@@ -1,24 +1,21 @@
 import * as Hapi from '@hapi/hapi';
 import Logger from '../../../../plugins/logger.plugin';
-import { ClienteManagerUseCase } from '../../../../domain/usecases/cliente/clienteManager';
+import { ProdutoManagerUseCase } from '../../../../domain/usecases/produto/produtoManager';
 
 
-export default class ClienteController {
+export default class ProdutoController {
     public static async register(server: Hapi.Server): Promise<void> {
 
         server.route({
             method: 'GET',
-            path: '/clientes',
+            path: '/produtos',
             handler: async (request: Hapi.Request, h: Hapi.ResponseToolkit): Promise<any> => {
                 try {
-                    // Teste de rota cliente + repository
-                    const clientes = await ClienteManagerUseCase.buscarTodosClientes();
-                    //Deletar tudo antes disso
-
-
-                    return h.response(clientes);
+                    //Adicionar lógicas aqui para produtos.
+                    const produtos = await ProdutoManagerUseCase.buscarTodosProdutos();
+                    return h.response(produtos);
                 } catch (error) {
-                    Logger.error(`Error in GET /clientes: ${error.message}`);
+                    Logger.error(`Error in GET /produtos: ${error.message}`);
                     return h.response({ error: 'Internal Server Error' }).code(500);
                 }
             },
