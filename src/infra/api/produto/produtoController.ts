@@ -1,6 +1,6 @@
 import * as Hapi from '@hapi/hapi';
-import Logger from '../../../../plugins/logger.plugin';
-import { ProdutoManagerUseCase } from '../../../../domain/usecases/produto/produtoManager';
+import Logger from '../../../plugins/logger.plugin';
+import { ProdutoManagerUseCase } from '../../../domain/usecases/produto/produtoManager';
 
 
 export default class ProdutoController {

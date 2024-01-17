@@ -1,7 +1,7 @@
 import * as Hapi from '@hapi/hapi';
-import Logger from '../../../../plugins/logger.plugin';
-import { PedidoManagerUseCase } from '../../../../domain/usecases/pedido/pedidoManager';
-import { ItemPedidoEntity } from '../../../../domain/entities/itemPedido';
+import Logger from '../../../plugins/logger.plugin';
+import { PedidoManagerUseCase } from '../../../domain/usecases/pedido/pedidoManager';
+import { ItemPedidoEntity } from '../../../domain/entities/itemPedido';
 
 
 export default class PedidoController {

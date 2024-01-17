@@ -2,7 +2,7 @@ import * as Hapi from '@hapi/hapi'
 import Logger from '../../plugins/logger.plugin'
 import Config from '../../config/environment.config'
 import { SwaggerPlugin } from '../../plugins/swagger.plugin'
-import Router from './controllers/router'
+import Router from './router'
 // import * as JWT from 'hapi-auth-jwt2'
 import { AppDataSource } from '../data/database/data-source'
 
