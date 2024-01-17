@@ -1,10 +1,10 @@
 import * as Hapi from '@hapi/hapi'
-import Logger from './plugins/logger.plugin'
-import Config from './config/environment.config'
-import { SwaggerPlugin } from './plugins/swagger.plugin'
-import Router from './router'
-import * as JWT from 'hapi-auth-jwt2'
-import { AppDataSource } from './data-source'
+import Logger from '../../plugins/logger.plugin'
+import Config from '../../config/environment.config'
+import { SwaggerPlugin } from '../../plugins/swagger.plugin'
+import Router from './controllers/router'
+// import * as JWT from 'hapi-auth-jwt2'
+import { AppDataSource } from '../data/database/data-source'
 
 const validate = async function (): Promise<any> {
   return { isValid: true }
@@ -24,14 +24,14 @@ export default class Server {
       })
       .catch((error) => console.log(error))
 
-      await Server._instance.register(JWT)
+      // await Server._instance.register(JWT)
 
-      Server._instance.auth.strategy('jwt', 'jwt', {
-        key: 'stubJWT',
-        validate
-      })
+      // Server._instance.auth.strategy('jwt', 'jwt', {
+      //   key: 'stubJWT',
+      //   validate
+      // })
 
-      Server._instance.auth.default('jwt')
+      // Server._instance.auth.default('jwt')
 
       await SwaggerPlugin.registerAll(Server._instance)
       await Router.loadRoutes(Server._instance)

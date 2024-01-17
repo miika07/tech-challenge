@@ -9,7 +9,7 @@ export const AppDataSource = new DataSource({
     database: "tech-challenge-fiap",
     synchronize: true,
     logging: true,
-    entities: ["src/entities/*.ts"],
+    entities: ["src/domain/entities/*.ts"],
     subscribers: [],
-    migrations: ["src/migrations/*.ts"]
+    migrations: ["src/infra/data/database/migrations/*.ts"]
 })

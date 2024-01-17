@@ -1,5 +1,5 @@
 import Logger from './plugins/logger.plugin'
-import Server from './server';
+import Server from './infra/api/server';
 
 (async () => {
   await Server.start()

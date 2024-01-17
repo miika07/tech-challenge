@@ -1,7 +1,6 @@
 import dotenv from 'dotenv'
 import * as path from 'path'
 import * as pack from '../../package.json'
-
 (() => {
   process.env.NODE_ENV = process.env.NODE_ENV || 'development'
   const NODE_ENV = process.env.NODE_ENV
@@ -15,7 +14,7 @@ const config = {
   appName: process.env.APP_NAME ? process.env.APP_NAME : 'tech-challenge',
   projectVersion: pack.version,
   host: process.env.HOST || 'localhost',
-  port: process.env.PORT || 9000,
+  port: process.env.PORT || 3000,
   service: {
     enabled: process.env.ENABLED_SERVICE === 'true'
   },
