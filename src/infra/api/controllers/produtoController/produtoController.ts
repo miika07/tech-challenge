@@ -12,7 +12,10 @@ export default class ProdutoController {
             handler: async (request: Hapi.Request, h: Hapi.ResponseToolkit): Promise<any> => {
                 try {
                     //Adicionar lógicas aqui para produtos.
+                    // const produtos = await ProdutoManagerUseCase.criarProduto("hamburguer", "carne e queijo", 10, "lanche");
                     const produtos = await ProdutoManagerUseCase.buscarTodosProdutos();
+
+
                     return h.response(produtos);
                 } catch (error) {
                     Logger.error(`Error in GET /produtos: ${error.message}`);
