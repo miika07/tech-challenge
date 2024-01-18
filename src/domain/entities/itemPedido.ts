@@ -9,7 +9,7 @@ export class ItemPedidoEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @ManyToOne(() => PedidoEntity, pedido => pedido.itensPedido, { eager: true })
+    @ManyToOne(() => PedidoEntity, pedido => pedido.itensPedido, { eager: true, onDelete: 'CASCADE'})
     @JoinColumn({ name: 'idPedido' })
     idPedido: string;
 
