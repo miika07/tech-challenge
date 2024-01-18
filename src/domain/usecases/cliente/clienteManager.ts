@@ -22,13 +22,13 @@ export default class ClientUseCases implements ClienteRepositoryInterface{
         return this.repository.findOne({ where: { id: id } });
       }
     
-      async atualizarCliente(id: string, nome: string, email: string, cpf: string): Promise<ClienteEntity | undefined> {
+      async atualizarCliente(id: string, nome: string, email: string): Promise<ClienteEntity | undefined> {
         const clienteExistente = await this.repository.findOne({ where: { id: id } });
+        console.log(clienteExistente)
     
         if (clienteExistente) {
           clienteExistente.nome = nome;
           clienteExistente.email = email;
-          clienteExistente.cpf = cpf;
     
           return this.repository.save(clienteExistente);
         }

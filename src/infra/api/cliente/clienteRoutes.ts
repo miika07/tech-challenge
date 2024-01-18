@@ -37,13 +37,35 @@ export default class StarWarsRoutes implements IRoute {
             method: 'POST',
             path: '/api/clientes',
             options: {
-              handler: controller.adicionaCliente,
-              validate: validate.postClient,
+              handler: controller.adicionarCliente,
+              validate: validate.postCliente,
               description: 'Cria um cliente',
               tags: ['api', 'clientes'],
               //auth: 'jwt'
             }
-          },
+        },
+        {
+            method: 'DELETE',
+            path: '/api/clientes/{id}',
+            options: {
+              handler: controller.deletarCliente,
+              validate: validate.getById,
+              description: 'Cria um cliente',
+              tags: ['api', 'clientes'],
+              //auth: 'jwt'
+            }
+        },
+        {
+            method: 'PUT',
+            path: '/api/clientes/{id}',
+            options: {
+              handler: controller.atualizarCliente,
+              validate: validate.updateCliente,
+              description: 'Cria um cliente',
+              tags: ['api', 'clientes'],
+              //auth: 'jwt'
+            }
+        }
       ])
 
       Logger.info('StarWarRoutes - Finish adding user routes')
