@@ -4,7 +4,7 @@ import Logger from '../../../plugins/logger.plugin'
 import IRoute from '../../../helper/route'
 import validate from './validate'
 
-export default class StarWarsRoutes implements IRoute {
+export default class ClienteRoutes implements IRoute {
   public async register (server: Hapi.Server): Promise<any> {
     return await new Promise<void>(resolve => {
       Logger.info('Clientes - Adicionando rotas')
@@ -24,7 +24,7 @@ export default class StarWarsRoutes implements IRoute {
         },
         {
           method: 'GET',
-          path: '/api/clientes/{id}',
+          path: '/api/cliente/{id}',
           options: {
             handler: controller.buscarClientePorID,
             validate: validate.getById,
@@ -35,40 +35,40 @@ export default class StarWarsRoutes implements IRoute {
         },
         {
             method: 'POST',
-            path: '/api/clientes',
+            path: '/api/cliente',
             options: {
               handler: controller.adicionarCliente,
               validate: validate.postCliente,
-              description: 'Cria um cliente',
+              description: 'Adiciona um cliente',
               tags: ['api', 'clientes'],
               //auth: 'jwt'
             }
         },
         {
             method: 'DELETE',
-            path: '/api/clientes/{id}',
+            path: '/api/cliente/{id}',
             options: {
               handler: controller.deletarCliente,
               validate: validate.getById,
-              description: 'Cria um cliente',
+              description: 'Deleta um cliente',
               tags: ['api', 'clientes'],
               //auth: 'jwt'
             }
         },
         {
             method: 'PUT',
-            path: '/api/clientes/{id}',
+            path: '/api/cliente/{id}',
             options: {
               handler: controller.atualizarCliente,
               validate: validate.updateCliente,
-              description: 'Cria um cliente',
+              description: 'Atualiza um cliente',
               tags: ['api', 'clientes'],
               //auth: 'jwt'
             }
         }
       ])
 
-      Logger.info('StarWarRoutes - Finish adding user routes')
+      Logger.info('Clientes - Finalizando de adicionar rotas')
       resolve()
     })
   }
