@@ -4,28 +4,30 @@ import { PedidoEntity } from "../../entities/pedidos";
 import { ItemPedidoEntity } from "../../entities/itemPedido";
 
 
-export const PedidoManagerUseCase: PedidoRepositoryInterface = AppDataSource.getRepository(PedidoEntity).extend({
-    async criarPedido(idCliente: string, status: string): Promise<PedidoEntity> {
-        const pedido = new PedidoEntity();
-        pedido.idCliente = idCliente;
-        pedido.status = status;
-        return this.save(pedido);
-    },
+export default class PedidoUseCases implements PedidoRepositoryInterface {
+    private repository = AppDataSource.getRepository(PedidoEntity);
 
-    async buscarTodosPedidos(): Promise<PedidoEntity[]> {
-        return this.find({
+        async criarPedido(idCliente: string, status: string): Promise<PedidoEntity> {
+                const pedido = new PedidoEntity();
+                pedido.idCliente = idCliente;
+                pedido.status = status;
+                return this.repository.save(pedido);
+        }
+
+        async buscarTodosPedidos(): Promise<PedidoEntity[]> {
+        return this.repository.find({
             relations: {
                 itensPedido: true
             },
         });
-    },
+        }
 
-    async buscarPedidoPorId(id: string): Promise<PedidoEntity | undefined> {
-        return this.findOne({ where: { id: id }, relations: { itensPedido: true } });
-    },
+            async buscarPedidoPorId(id: string): Promise<PedidoEntity | undefined> {
+        return this.repository.findOne({ where: { id: id }, relations: { itensPedido: true } });
+    }
 
-    async atualizarPedido(id: string, status: string = '', itensPedido: ItemPedidoEntity[]): Promise<PedidoEntity | undefined> {
-        const pedidoExistente = await this.findOne({ where: { id: id }, relations: { itensPedido: true } });
+        async atualizarPedido(id: string, status: string = '', itensPedido: ItemPedidoEntity[]): Promise<PedidoEntity | undefined> {
+        const pedidoExistente = await this.repository.findOne({ where: { id: id }, relations: { itensPedido: true } });
 
         if (pedidoExistente) {
             
@@ -35,14 +37,14 @@ export const PedidoManagerUseCase: PedidoRepositoryInterface = AppDataSource.get
 
             pedidoExistente.itensPedido = itensPedido;
 
-            return this.save(pedidoExistente);
+            return this.repository.save(pedidoExistente);
         }
 
         return undefined;
-    },
+    }
 
-    async deletarPedido(id: string): Promise<boolean> {
-        const result = await this.delete(id);
+        async deletarPedido(id: string): Promise<boolean> {
+        const result = await this.repository.delete(id);
         return result.affected !== undefined && result.affected > 0;
-    },
-});
+    }
+}
