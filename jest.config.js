@@ -13,9 +13,10 @@ module.exports = {
     ],
     coverageReporters: ['lcov', 'json', 'text', 'html'],
     testMatch: null,
-    testRegex: '(/__tests__/|(\\.|/)(test|spec))\\.ts$',
+    testRegex: "index.test.ts",
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
     collectCoverage: true,
     testResultsProcessor: 'jest-sonar-reporter',
+    testTimeout: 20000,
   }
   

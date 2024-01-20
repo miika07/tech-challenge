@@ -5,7 +5,9 @@ import { ClienteEntity } from "../../entities/cliente";
 
 export default class ClientUseCases implements ClienteRepositoryInterface{
 
-    private repository = process.env.NODE_ENV == 'test' ? AppDataSourceTest.getRepository(ClienteEntity) : AppDataSource.getRepository(ClienteEntity);
+    private repository = process.env.NODE_ENV == 'test' 
+    ? AppDataSourceTest.getRepository(ClienteEntity) 
+    : AppDataSource.getRepository(ClienteEntity);
     
     async criarCliente(nome: string, email: string, cpf: string): Promise<ClienteEntity> {
         const cliente = new ClienteEntity();

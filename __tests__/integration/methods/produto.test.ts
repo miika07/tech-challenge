@@ -1,37 +1,26 @@
 import { route, TestRouteOptions } from '../../common';
-import { AppDataSourceTest } from '../../../src/infra/data/database/data-source-teste';
 
-beforeAll(async () => {
-  console.log('Antes de todos os testes - Criando conexão...');
-  await AppDataSourceTest.initialize();
-});
-
-afterAll(async () => {
-  await AppDataSourceTest.destroy();
-});
-
-
-describe('CRUD Cliente', () => {
-  it('[POST] Adicionar um cliente - 200', async () => {
+it('[POST] Adicionar um produto - 200', async () => {
     const params: TestRouteOptions = {
       method: 'POST',
-      url: 'api/cliente',
+      url: 'api/produto',
       basePath: '',
       payload: {
-        nome: 'Melina Garcia',
-        email: 'melina@test.com.br',
-        cpf: '304.206.345-23'
+        nome: "x-salada",
+        descricao: "Pão, salada, hamburguer, queijo",
+        preco: 22.50,
+        categoria: "Lanches"
       }
     };
     const { payload, statusCode } = await route(params);
     expect(statusCode).toBe(200);
-    expect(payload.nome).toBe('Melina Garcia');
+    expect(payload.nome).toBe('x-salada');
   });
 
-  it('[GET] Buscar todos os clientes - 200', async () => {
+  it('[GET] Buscar todos os produtos - 200', async () => {
     const params: TestRouteOptions = {
       method: 'GET',
-      url: 'api/clientes',
+      url: 'api/produtos',
       basePath: ''
     };
     
@@ -40,10 +29,10 @@ describe('CRUD Cliente', () => {
     expect(payload).toHaveLength(1);
   });
 
-  it('[GET] Buscar cliente por ID - 200', async () => {
+  it('[GET] Buscar produto por ID - 200', async () => {
     const params: TestRouteOptions = {
       method: 'GET',
-      url: 'api/clientes',
+      url: 'api/produtos',
       basePath: ''
     };
     
@@ -52,7 +41,7 @@ describe('CRUD Cliente', () => {
 
     const paramsId: TestRouteOptions = {
       method: 'GET',
-      url: `api/cliente/${response.payload[0].id}`,
+      url: `api/produto/${response.payload[0].id}`,
       basePath: '',
       query: {
         id:response.payload.id
@@ -60,13 +49,13 @@ describe('CRUD Cliente', () => {
     };
     const { payload, statusCode } = await route(paramsId);
     expect(statusCode).toBe(200);
-    expect(payload.nome).toBe('Melina Garcia');
+    expect(payload.nome).toBe('x-salada');
   });
 
-  it('[PUT] Atualizar cliente por ID - 200', async () => {
+  it('[PUT] Atualizar produto por ID - 200', async () => {
     const params: TestRouteOptions = {
       method: 'GET',
-      url: 'api/clientes',
+      url: 'api/produtos',
       basePath: ''
     };
     
@@ -75,25 +64,25 @@ describe('CRUD Cliente', () => {
 
     const paramsId: TestRouteOptions = {
       method: 'PUT',
-      url: `api/cliente/${response.payload[0].id}`,
+      url: `api/produto/${response.payload[0].id}`,
       basePath: '',
       payload: {
         nome: response.payload[0].nome,
-        email: 'melina@gmail.com.br',
-        cpf: response.payload[0].cpf
+        descricao: response.payload[0].descricao,
+        preco: 25.50,
+        categoria: response.payload[0].categoria
       }
     };
     const { payload, statusCode } = await route(paramsId);
     expect(statusCode).toBe(200);
-    expect(payload.nome).toBe('Melina Garcia');
-    expect(payload.email).toBe('melina@gmail.com.br');
-    expect(payload.cpf).toBe('304.206.345-23');
+    expect(payload.nome).toBe('x-salada');
+    expect(payload.preco).toBe(25.50);
   });
 
-  it('[DELETE] Deletar cliente por ID - 204', async () => {
+  it('[DELETE] Deletar produto por ID - 204', async () => {
     const params: TestRouteOptions = {
       method: 'GET',
-      url: 'api/clientes',
+      url: 'api/produtos',
       basePath: ''
     };
     
@@ -102,7 +91,7 @@ describe('CRUD Cliente', () => {
 
     const paramsId: TestRouteOptions = {
       method: 'DELETE',
-      url: `api/cliente/${response.payload[0].id}`,
+      url: `api/produto/${response.payload[0].id}`,
       basePath: ''
     };
     const { statusCode } = await route(paramsId);
@@ -112,8 +101,6 @@ describe('CRUD Cliente', () => {
     expect(responseAfter.statusCode).toBe(200);
     expect(responseAfter.payload).toHaveLength(0);
   });
-})
-
 
 
 

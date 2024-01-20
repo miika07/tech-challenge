@@ -1,10 +1,13 @@
 import { AppDataSource } from "../../../infra/data/database/data-source";
+import { AppDataSourceTest } from "../../../infra/data/database/data-source-teste";
 import { ProdutoRepositoryInterface } from "../../../infra/data/repositories/produtoRepository";
 import { ProdutoEntity } from "../../entities/produto";
 
 export default class ProdutoUseCases implements ProdutoRepositoryInterface{
-
-    private repository = AppDataSource.getRepository(ProdutoEntity);
+   
+    private repository = process.env.NODE_ENV == 'test' 
+    ? AppDataSourceTest.getRepository(ProdutoEntity) 
+    : AppDataSource.getRepository(ProdutoEntity);
     
     async criarProduto(nome: string, descricao: string, preco: number, categoria: string): Promise<ProdutoEntity> {
         const produto = new ProdutoEntity();

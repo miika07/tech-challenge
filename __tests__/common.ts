@@ -3,6 +3,7 @@ import * as path from 'path';
 import { ServerInjectOptions } from '@hapi/hapi';
 import * as qs from 'querystring';
 import Server from '../src/infra/api/server';
+import { AppDataSourceTest } from '../src/infra/data/database/data-source-teste';
 
 
 interface Route { basePath: string; statusCode: number; headers: any; payload?: { meta: any, records: any[] } | any; }
@@ -46,7 +47,7 @@ export const loadFiles = (currentDir, sequence) => {
   const existModulePath = (name) => {
     return fs.existsSync(`${currentDir}/methods/${name}`);
   };
-
+  console.log(sequence)
   for (let i = 0; i < sequence.length; i++) {
     const item = `${sequence[i]}.test`;
     files.filter((file) => {
@@ -61,19 +62,24 @@ export const loadFiles = (currentDir, sequence) => {
   }
 };
 
-export const requireMethods = (description, currentDir, sequence = ['post', 'get', 'put', 'patch', 'delete']) => {
+export const requireMethods = (description, currentDir, sequence = ['cliente', 'produto', 'put', 'patch', 'delete']) => {
   describe(description, () => {
 
     beforeAll(async () => {
       console.log('Antes de todos os testes - Criando conexão...');
-      jest.useFakeTimers();
-      Date.now = jest.fn(() => 1503187200000);
+      await AppDataSourceTest.initialize();
     });
 
     beforeEach(async () => {
       jest.resetModules();
     });
+
     loadFiles(currentDir, sequence);
+
+    afterAll(async () => {
+      console.log('Depois de todos os testes - Fechando');
+      await AppDataSourceTest.destroy();
+    })
   });
 };
 
