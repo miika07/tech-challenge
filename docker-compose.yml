@@ -11,3 +11,14 @@ services:
       MYSQL_PASSWORD: password
     ports:
       - "3306:3306"
+  
+  mysql-test:
+    image: mysql:latest
+    container_name: mysql-test
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: tech-challenge-fiap-test
+      MYSQL_USER: fiap-test
+      MYSQL_PASSWORD: password
+    ports:
+      - "3307:3306"  

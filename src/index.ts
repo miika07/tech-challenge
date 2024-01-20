@@ -1,16 +1,9 @@
-import Logger from './plugins/logger.plugin'
-import Server from './infra/api/server';
+import './infra/api/server';
 
-(async () => {
-  await Server.start()
-})()
+process.on('uncaughtException', (error: Error) => {
+  console.error(`uncaughtException ${error.message}`);
+});
 
-// listen on SIGINT signal and gracefully stop the server
-process.on('SIGINT', () => {
-  Logger.info('Stopping hapi server')
-
-  Server.stop().then(err => {
-    Logger.info('Server stopped')
-    process.exit(err ? 1 : 0)
-  })
-})
+process.on('unhandledRejection', (reason: any) => {
+  console.error(`unhandledRejection ${reason}`);
+});

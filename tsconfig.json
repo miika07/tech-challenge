@@ -9,7 +9,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true ,
     "forceConsistentCasingInFileNames": true,
-    "rootDir": "./src",
+    "rootDir": ".",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   }

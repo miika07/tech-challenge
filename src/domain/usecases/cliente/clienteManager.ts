@@ -1,10 +1,11 @@
 import { AppDataSource } from "../../../infra/data/database/data-source";
+import { AppDataSourceTest } from "../../../infra/data/database/data-source-teste";
 import { ClienteRepositoryInterface } from "../../../infra/data/repositories/clienteRepository";
 import { ClienteEntity } from "../../entities/cliente";
 
 export default class ClientUseCases implements ClienteRepositoryInterface{
 
-    private repository = AppDataSource.getRepository(ClienteEntity);
+    private repository = process.env.NODE_ENV == 'test' ? AppDataSourceTest.getRepository(ClienteEntity) : AppDataSource.getRepository(ClienteEntity);
     
     async criarCliente(nome: string, email: string, cpf: string): Promise<ClienteEntity> {
         const cliente = new ClienteEntity();

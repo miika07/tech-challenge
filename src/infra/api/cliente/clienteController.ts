@@ -12,7 +12,7 @@ export default class ClienteController {
     ): Promise<any> => {
       try {
         const data = await this.clienteManagerUseCase.buscarTodosClientes()
-        return h.response(data)
+        return h.response(data);
       } catch (error) {
         Logger.error(`Error in GET /clientes: ${error.message}`);
         return h.response({ error: 'Internal Server Error' }).code(500)
@@ -24,7 +24,7 @@ export default class ClienteController {
       ): Promise<any> => {
         try {
           const data = await this.clienteManagerUseCase.buscarClientePorId(request.params.id)
-          return h.response(data)
+          return h.response(data).code(200);
         } catch (error) {
             Logger.error(`Error in GET /cliente/{id}: ${error.message}`);
             return h.response({ error: 'Internal Server Error' }).code(500)

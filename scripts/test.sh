@@ -18,4 +18,4 @@ echo '==> Runing TypeScript Build'
 # Para atualizar os snapshots utilize:
 # node_modules/.bin/jest --detectOpenHandles --forceExit -u
 echo '==> Runing Jest'
-node_modules/.bin/jest --detectOpenHandles --forceExit --noStackTrace --silent
+node_modules/.bin/jest --detectOpenHandles

@@ -29,11 +29,12 @@ const config = {
           jwt: {
             type: 'apiKey',
             name: 'Authorization',
-            in: 'header'
-            // 'x-keyPrefix': 'Bearer '
+            in: 'header',
+            auth: 'stubJWT'
+            //'x-keyPrefix': 'Bearer '
           }
         },
-        security: [{ jwt: [] }]
+        security: [{ jwt: ['stubJWT'] }]
       }
     }
   },
