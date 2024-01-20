@@ -27,7 +27,6 @@ export default class ClientUseCases implements ClienteRepositoryInterface{
     
       async atualizarCliente(id: string, nome: string, email: string): Promise<ClienteEntity | undefined> {
         const clienteExistente = await this.repository.findOne({ where: { id: id } });
-        console.log(clienteExistente)
     
         if (clienteExistente) {
           clienteExistente.nome = nome;

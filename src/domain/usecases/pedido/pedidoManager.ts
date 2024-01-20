@@ -1,11 +1,14 @@
 import { AppDataSource } from "../../../infra/data/database/data-source";
+import { AppDataSourceTest } from "../../../infra/data/database/data-source-teste";
 import { PedidoRepositoryInterface } from "../../../infra/data/repositories/pedidoRepository";
 import { PedidoEntity } from "../../entities/pedidos";
 import { ItemPedidoEntity } from "../../entities/itemPedido";
 
 
 export default class PedidoUseCases implements PedidoRepositoryInterface {
-    private repository = AppDataSource.getRepository(PedidoEntity);
+    private repository = process.env.NODE_ENV == 'test' 
+    ? AppDataSourceTest.getRepository(PedidoEntity) 
+    : AppDataSource.getRepository(PedidoEntity);
 
         async criarPedido(idCliente: string, status: string): Promise<PedidoEntity> {
                 const pedido = new PedidoEntity();

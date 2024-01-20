@@ -47,7 +47,6 @@ export const loadFiles = (currentDir, sequence) => {
   const existModulePath = (name) => {
     return fs.existsSync(`${currentDir}/methods/${name}`);
   };
-  console.log(sequence)
   for (let i = 0; i < sequence.length; i++) {
     const item = `${sequence[i]}.test`;
     files.filter((file) => {
@@ -62,7 +61,7 @@ export const loadFiles = (currentDir, sequence) => {
   }
 };
 
-export const requireMethods = (description, currentDir, sequence = ['cliente', 'produto', 'put', 'patch', 'delete']) => {
+export const requireMethods = (description, currentDir, sequence = ['cliente', 'produto', 'pedido']) => {
   describe(description, () => {
 
     beforeAll(async () => {
