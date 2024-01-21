@@ -15,6 +15,35 @@ it('[POST] Adicionar um pedido - 200', async () => {
       const responseCliente = await route(params);
       expect(responseCliente.statusCode).toBe(200);
 
+     //adicionando produtos
+     const paramsProduto: TestRouteOptions = {
+        method: 'POST',
+        url: 'api/produto',
+        basePath: '',
+        payload: {
+          nome: "x-salada",
+          descricao: "Pão, salada, hamburguer, queijo",
+          preco: 22.50,
+          categoria: "Lanches"
+        }
+      };
+      const responseProduto = await route(paramsProduto);
+      expect(responseProduto.statusCode).toBe(200);
+
+      const paramsProduto2: TestRouteOptions = {
+        method: 'POST',
+        url: 'api/produto',
+        basePath: '',
+        payload: {
+          nome: "batata frita M",
+          descricao: "batata frita tamanho M",
+          preco: 9.00,
+          categoria: "Acompanhamentos"
+        }
+      };
+      const responseProduto2 = await route(paramsProduto2);
+      expect(responseProduto2.statusCode).toBe(200);
+
     //adicionando pedido
     const paramsPedido: TestRouteOptions = {
         method: 'POST',
@@ -22,12 +51,22 @@ it('[POST] Adicionar um pedido - 200', async () => {
         basePath: '',
         payload: {
           cliente: responseCliente.payload.id,
-          status: "Aberto"
+          status: "Recebido",
+          itensPedido: [
+            {
+                idProduto: responseProduto.payload.id,
+                quantidade: 3
+            },
+            {
+                idProduto: responseProduto2.payload.id,
+                quantidade: 3
+            }
+          ]
         }
       };
       const responsePedido = await route(paramsPedido);
       expect(responsePedido.statusCode).toBe(200);
-      
+      expect(responsePedido.payload.itensPedido).toHaveLength(2)
   });
 
   it('[GET] Buscar todos os pedidos - 200', async () => {
@@ -62,39 +101,10 @@ it('[POST] Adicionar um pedido - 200', async () => {
     };
     const { payload, statusCode } = await route(paramsId);
     expect(statusCode).toBe(200);
-    expect(payload.status).toBe('Aberto');
+    expect(payload.status).toBe('Recebido');
   });
 
   it('[PUT] Atualizar pedido por ID - 200', async () => {
-    //adicionando produtos
-    const paramsProduto: TestRouteOptions = {
-        method: 'POST',
-        url: 'api/produto',
-        basePath: '',
-        payload: {
-          nome: "x-salada",
-          descricao: "Pão, salada, hamburguer, queijo",
-          preco: 22.50,
-          categoria: "Lanches"
-        }
-      };
-      const responseProduto = await route(paramsProduto);
-      expect(responseProduto.statusCode).toBe(200);
-
-      const paramsProduto2: TestRouteOptions = {
-        method: 'POST',
-        url: 'api/produto',
-        basePath: '',
-        payload: {
-          nome: "batata frita M",
-          descricao: "batata frita tamanho M",
-          preco: 9.00,
-          categoria: "Acompanhamentos"
-        }
-      };
-      const responseProduto2 = await route(paramsProduto2);
-      expect(responseProduto2.statusCode).toBe(200);
-    
     //buscar pedido
     const params: TestRouteOptions = {
       method: 'GET',
@@ -114,11 +124,11 @@ it('[POST] Adicionar um pedido - 200', async () => {
         cliente: response.payload[0].idCliente.id,
         status: 'Pronto',
         itensPedido:[{
-            idProduto: responseProduto.payload.id,
+            idProduto: response.payload[0].itensPedido[0].idProduto.id,
             quantidade: 2
         },
         {
-            idProduto: responseProduto2.payload.id,
+            idProduto: response.payload[0].itensPedido[1].idProduto.id,
             quantidade: 2
         }]
       }

@@ -10,11 +10,9 @@ export default class PedidoUseCases implements PedidoRepositoryInterface {
     ? AppDataSourceTest.getRepository(PedidoEntity) 
     : AppDataSource.getRepository(PedidoEntity);
 
-        async criarPedido(idCliente: string, status: string): Promise<PedidoEntity> {
-                const pedido = new PedidoEntity();
-                pedido.idCliente = idCliente;
-                pedido.status = status;
-                return this.repository.save(pedido);
+        async criarPedido(idCliente: string, status: string, itensPedido: ItemPedidoEntity[]): Promise<PedidoEntity> {
+            const pedido = new PedidoEntity(idCliente, status, itensPedido);
+            return this.repository.save(pedido);
         }
 
         async buscarTodosPedidos(): Promise<PedidoEntity[]> {

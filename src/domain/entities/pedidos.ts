@@ -1,7 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, OneToMany, ManyToOne } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import { ClienteEntity } from './cliente';
-import { ProdutoEntity } from './produto';
 import { ItemPedidoEntity } from './itemPedido';
 
 @Entity({ name: 'pedidos' })
@@ -20,9 +19,10 @@ export class PedidoEntity {
     itensPedido: ItemPedidoEntity[];
 
 
-    constructor(idCliente: string = '', status: string = '') {
+    constructor(idCliente: string = '', status: string = '', itensPedido: ItemPedidoEntity[] ) {
         this.id = uuidv4();
         this.idCliente = idCliente;
         this.status = status;
+        this.itensPedido = itensPedido
     }
 }

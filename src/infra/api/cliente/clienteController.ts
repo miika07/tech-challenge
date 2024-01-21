@@ -31,6 +31,18 @@ export default class ClienteController {
         }
       }
 
+      public buscarClientePorCPF = async (
+        request: Hapi.Request, h: Hapi.ResponseToolkit
+      ): Promise<any> => {
+        try {
+          const data = await this.clienteManagerUseCase.buscarClientePorCPF(request.params.cpf)
+          return h.response(data).code(200);
+        } catch (error) {
+            Logger.error(`Error in GET /cliente/{cpf}: ${error.message}`);
+            return h.response({ error: 'Internal Server Error' }).code(500)
+        }
+      }
+
       public adicionarCliente = async (
         request: Hapi.Request, h: Hapi.ResponseToolkit
       ): Promise<any> => {

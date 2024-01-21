@@ -24,6 +24,10 @@ export default class ClientUseCases implements ClienteRepositoryInterface{
       async buscarClientePorId(id: string): Promise<ClienteEntity | undefined> {
         return this.repository.findOne({ where: { id: id } });
       }
+
+      async buscarClientePorCPF(cpf: string): Promise<ClienteEntity | undefined> {
+        return this.repository.findOne({ where: { cpf: cpf } });
+      }
     
       async atualizarCliente(id: string, nome: string, email: string): Promise<ClienteEntity | undefined> {
         const clienteExistente = await this.repository.findOne({ where: { id: id } });

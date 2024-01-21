@@ -34,6 +34,17 @@ export default class ClienteRoutes implements IRoute {
           }
         },
         {
+          method: 'GET',
+          path: '/api/cliente-cpf/{cpf}',
+          options: {
+            handler: controller.buscarClientePorCPF,
+            validate: validate.getByCPF,
+            description: 'Busca um cliente por cpf',
+            tags: ['api', 'clientes'],
+            //auth: 'jwt'
+          }
+        },
+        {
             method: 'POST',
             path: '/api/cliente',
             options: {

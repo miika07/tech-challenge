@@ -52,6 +52,27 @@ import { route, TestRouteOptions } from '../../common';
     expect(payload.nome).toBe('Melina Garcia');
   });
 
+  it('[GET] Buscar cliente por CPF - 200', async () => {
+    const params: TestRouteOptions = {
+      method: 'GET',
+      url: 'api/clientes',
+      basePath: ''
+    };
+    
+    const response = await route(params);
+    expect(response.statusCode).toBe(200);
+
+    const paramsId: TestRouteOptions = {
+      method: 'GET',
+      url: `api/cliente-cpf/${response.payload[0].cpf}`,
+      basePath: '',
+    };
+    const { payload, statusCode } = await route(paramsId);
+    expect(statusCode).toBe(200);
+    expect(payload.nome).toBe('Melina Garcia');
+    expect(payload.cpf).toBe('304.206.345-23');
+  });
+
   it('[PUT] Atualizar cliente por ID - 200', async () => {
     const params: TestRouteOptions = {
       method: 'GET',

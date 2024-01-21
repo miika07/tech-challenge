@@ -4,7 +4,6 @@ import PedidoUseCase  from '../../../domain/usecases/pedido/pedidoManager';
 import { ItemPedidoEntity } from '../../../domain/entities/itemPedido';
 import { ok } from 'assert';
 
-
 export default class PedidoController {
     private readonly pedidoManagerUseCase:PedidoUseCase  = new PedidoUseCase();
 
@@ -36,8 +35,8 @@ export default class PedidoController {
           request: Hapi.Request, h: Hapi.ResponseToolkit
         ): Promise<any> => {
           try {
-            const body = request.payload as { cliente: string, status: string };
-            const data = await this.pedidoManagerUseCase.criarPedido(body.cliente, body.status)
+            const body = request.payload as { cliente: string, status: string, itensPedido: ItemPedidoEntity[] };
+            const data = await this.pedidoManagerUseCase.criarPedido(body.cliente, body.status, body.itensPedido)
             return h.response(data)
           } catch (error) {
               Logger.error(`Error in POST /pedido: ${error.message}`);

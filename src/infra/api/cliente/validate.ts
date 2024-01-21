@@ -6,6 +6,11 @@ export default {
       id: Joi.string().required()
     })
   },
+  getByCPF: {
+    params: Joi.object().keys({
+      cpf: Joi.string().pattern(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/).required()
+    })
+  },
   postCliente: {
     payload: Joi.object({
       nome: Joi.string().required(),

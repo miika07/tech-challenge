@@ -37,13 +37,6 @@ const config = {
         security: [{ jwt: ['stubJWT'] }]
       }
     }
-  },
-  apis: {
-    starwars: {
-      url: process.env.STAR_WARS_API || 'https://swapi.dev/api/',
-      retry: Number(process.env.STAR_WARS_RETRY_TIMES) || defaultRetry.times,
-      delay: Number(process.env.STAR_WARS_RETRY_DELAY) || defaultRetry.delay
-    }
   }
 }
 
