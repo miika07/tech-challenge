@@ -1,24 +1,42 @@
 version: '3'
 services:
-  # Serviço para o banco de dados MySQL
-  mysql:
-    image: mysql:latest
-    container_name: my-sql-local
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: tech-challenge-fiap
-      MYSQL_USER: fiap
-      MYSQL_PASSWORD: password
-    ports:
-      - "3306:3306"
-  
-  mysql-test:
-    image: mysql:latest
-    container_name: mysql-test
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: tech-challenge-fiap-test
-      MYSQL_USER: fiap-test
-      MYSQL_PASSWORD: password
-    ports:
-      - "3307:3306"  
+    # Serviço para o banco de dados MySQL
+    mysql:
+        image: mysql:latest
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: tech-challenge-fiap
+            MYSQL_USER: fiap
+            MYSQL_PASSWORD: password
+        ports:
+            - "3306:3306"
+        networks:
+            - tech-challenge-rede
+        volumes:
+            - db_data:/var/lib/mysql
+        healthcheck:
+            test: "mysql $$MYSQL_DATABASE -u$$MYSQL_USER -p$$MYSQL_PASSWORD -e 'SELECT 1;'"
+            interval: 20s
+            timeout: 10s
+            retries: 5
+    node-app:
+        container_name: fiap-backend
+        build:
+            context: .
+            dockerfile: Dockerfile
+        command: sh -c "npm run build:run"
+        ports:
+            - "3000:3000"
+        networks:
+            - tech-challenge-rede
+        volumes:
+            - /usr/src/app
+        depends_on:
+            mysql:
+                condition: service_healthy
+        restart: on-failure
+volumes:
+    db_data:
+networks:
+    tech-challenge-rede:
+        driver: bridge
