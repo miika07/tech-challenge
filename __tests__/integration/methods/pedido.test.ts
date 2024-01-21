@@ -69,6 +69,38 @@ it('[POST] Adicionar um pedido - 200', async () => {
       expect(responsePedido.payload.itensPedido).toHaveLength(2)
   });
 
+  it('[POST] Erro ao adicionar um pedido vazio- 400', async () => {
+    //adicionanado cliente
+    const params: TestRouteOptions = {
+        method: 'POST',
+        url: 'api/cliente',
+        basePath: '',
+        payload: {
+          nome: 'Melina Garcia',
+          email: 'melina@test.com.br',
+          cpf: '304.206.345-23'
+        }
+      };
+      const responseCliente = await route(params);
+      expect(responseCliente.statusCode).toBe(200);
+
+    //adicionando pedido
+    const paramsPedido: TestRouteOptions = {
+        method: 'POST',
+        url: 'api/pedido',
+        basePath: '',
+        payload: {
+          cliente: responseCliente.payload.id,
+          status: "Recebido",
+          itensPedido: []
+        }
+      };
+      const responsePedido = await route(paramsPedido);
+      console.log(responsePedido.payload)
+      expect(responsePedido.statusCode).toBe(400);
+      expect(responsePedido.payload.error).toBe('Bad Request')
+  });
+
   it('[GET] Buscar todos os pedidos - 200', async () => {
     const params: TestRouteOptions = {
       method: 'GET',

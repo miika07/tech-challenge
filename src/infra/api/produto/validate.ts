@@ -11,7 +11,7 @@ export default {
       nome: Joi.string().required(),
       descricao: Joi.string().required(),
       preco: Joi.number().required(),
-      categoria: Joi.string().required()
+      categoria: Joi.string().required().valid('Lanches', 'Acompanhamentos', 'Bebidas')
     })
   },
   updateProduto: {
@@ -22,7 +22,7 @@ export default {
         nome: Joi.string().required(),
         descricao: Joi.string().required(),
         preco: Joi.number().required(),
-        categoria: Joi.string().required()
+        categoria: Joi.string().required().valid('Lanches', 'Acompanhamentos', 'Bebidas')
     })
   }
 }

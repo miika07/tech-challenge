@@ -17,6 +17,24 @@ it('[POST] Adicionar um produto - 200', async () => {
     expect(payload.nome).toBe('x-salada');
   });
 
+  it('[POST] Erro ao adicionar um produto com categoria não válida - 400', async () => {
+    const params: TestRouteOptions = {
+      method: 'POST',
+      url: 'api/produto',
+      basePath: '',
+      payload: {
+        nome: "x-salada",
+        descricao: "Pão, salada, hamburguer, queijo",
+        preco: 22.50,
+        categoria: "Hamburguer"
+      }
+    };
+    const { payload, statusCode } = await route(params);
+    expect(statusCode).toBe(400);
+    expect(payload.error).toBe('Bad Request');
+    expect(payload.message).toBe('Invalid request payload input');
+  });
+
   it('[GET] Buscar todos os produtos - 200', async () => {
     const params: TestRouteOptions = {
       method: 'GET',

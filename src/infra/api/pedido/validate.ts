@@ -9,11 +9,11 @@ export default {
   postPedido: {
     payload: Joi.object({
       cliente: Joi.string().required(),
-      status: Joi.string().required(),
+      status: Joi.string().required().valid('Recebido', 'Em preparação', 'Pronto', 'Finalizado'),
       itensPedido: Joi.array().items(Joi.object({
         idProduto: Joi.string().required(),
         quantidade: Joi.number().required()
-      })).required()
+      }).required()).required()
     })
   },
   updatePedido: {
@@ -22,11 +22,11 @@ export default {
     }),
     payload: Joi.object({
         cliente: Joi.string().required(),
-        status: Joi.string().required(),
+        status: Joi.string().required().valid('Recebido', 'Em preparação', 'Pronto', 'Finalizado'),
         itensPedido: Joi.array().items(Joi.object({
           idProduto: Joi.string().required(),
           quantidade: Joi.number().required()
-        })).required(),
+        }).required()).required(),
         
     })
   }
