@@ -19,6 +19,17 @@ services:
             interval: 20s
             timeout: 10s
             retries: 5
+    mysqltest:
+        image: mysql:latest
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: tech-challenge-fiap-test
+            MYSQL_USER: fiap-test
+            MYSQL_PASSWORD: password
+        ports:
+            - "3307:3306"
+        networks:
+            - tech-challenge-rede
     node-app:
         container_name: fiap-backend
         build:

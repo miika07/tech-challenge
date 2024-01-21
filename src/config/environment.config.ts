@@ -14,7 +14,7 @@ const config = {
   appName: process.env.APP_NAME ? process.env.APP_NAME : 'tech-challenge',
   projectVersion: pack.version,
   host: process.env.HOST || 'localhost',
-  port: process.env.PORT || 3000,
+  port: process.env.NODE_ENV == 'test' ? 3001 : process.env.PORT || 3000,
   service: {
     enabled: process.env.ENABLED_SERVICE === 'true'
   },
