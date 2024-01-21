@@ -6,6 +6,11 @@ export default {
       id: Joi.string().required()
     })
   },
+  getByStatus: {
+    params: Joi.object().keys({
+      status: Joi.string().required().valid('Recebido', 'Em preparação', 'Pronto', 'Finalizado'),
+    })
+  },
   postPedido: {
     payload: Joi.object({
       cliente: Joi.string().required(),

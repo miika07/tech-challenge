@@ -34,6 +34,17 @@ export default class PedidoRoutes implements IRoute {
           }
         },
         {
+          method: 'GET',
+          path: '/api/pedido/status/{status}',
+          options: {
+            handler: controller.buscarPedidoPorStatus,
+            validate: validate.getByStatus,
+            description: 'Busca pedidos por status',
+            tags: ['api', 'pedidos'],
+            //auth: 'jwt'
+          }
+        },
+        {
             method: 'POST',
             path: '/api/pedido',
             options: {

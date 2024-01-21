@@ -30,6 +30,21 @@ export default class PedidoController {
               return h.response({ error: 'Internal Server Error' }).code(500)
           }
         }
+
+        public buscarPedidoPorStatus = async (
+          request: Hapi.Request, h: Hapi.ResponseToolkit
+        ): Promise<any> => {
+          try {
+            const data = await this.pedidoManagerUseCase.buscarPedidoPorStatus(request.params.status);
+            if (!data.length){
+              return h.response('Não existem pedidos para esse status').code(404)
+            }
+            return h.response(data)
+          } catch (error) {
+              Logger.error(`Error in GET /pedido/status/${request.params.status}: ${error.message}`);
+              return h.response({ error: 'Internal Server Error' }).code(500)
+          }
+        }
   
         public adicionarPedido = async (
           request: Hapi.Request, h: Hapi.ResponseToolkit

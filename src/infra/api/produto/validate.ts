@@ -6,6 +6,11 @@ export default {
       id: Joi.string().required()
     })
   },
+  getByCategoria: {
+    params: Joi.object().keys({
+      categoria: Joi.string().required().valid('Lanches', 'Acompanhamentos', 'Bebidas')
+    })
+  },
   postProduto: {
     payload: Joi.object({
       nome: Joi.string().required(),

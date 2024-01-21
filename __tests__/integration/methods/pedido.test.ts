@@ -96,7 +96,6 @@ it('[POST] Adicionar um pedido - 200', async () => {
         }
       };
       const responsePedido = await route(paramsPedido);
-      console.log(responsePedido.payload)
       expect(responsePedido.statusCode).toBe(400);
       expect(responsePedido.payload.error).toBe('Bad Request')
   });
@@ -111,6 +110,29 @@ it('[POST] Adicionar um pedido - 200', async () => {
     const { payload, statusCode } = await route(params);
     expect(statusCode).toBe(200);
     expect(payload).toHaveLength(1);
+  });
+
+  it('[GET] Buscar todos os pedidos por status - 200', async () => {
+    const params: TestRouteOptions = {
+      method: 'GET',
+      url: 'api/pedido/status/Recebido',
+      basePath: ''
+    };
+    
+    const { payload, statusCode } = await route(params);
+    expect(statusCode).toBe(200);
+    expect(payload).toHaveLength(1);
+  });
+
+  it('[GET] Erro ao buscar todos os pedidos por status - 404', async () => {
+    const params: TestRouteOptions = {
+      method: 'GET',
+      url: 'api/pedido/status/Finalizado',
+      basePath: ''
+    };
+    
+    const { payload, statusCode } = await route(params);
+    expect(statusCode).toBe(404);
   });
 
   it('[GET] Buscar pedido por ID - 200', async () => {

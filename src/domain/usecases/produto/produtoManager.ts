@@ -25,6 +25,10 @@ export default class ProdutoUseCases implements ProdutoRepositoryInterface{
     async buscarProdutoPorId(id: string): Promise<ProdutoEntity | undefined> {
         return this.repository.findOne({ where: { id: id } });
     }
+
+    async buscarProdutoPorCategoria(categoria: string): Promise<ProdutoEntity[]> {
+        return this.repository.find({ where: { categoria: categoria } });
+    }
     
     async atualizarProduto(id: string, nome: string, descricao: string, preco: number, categoria: string): Promise<ProdutoEntity | undefined> {
         const produtoExistente = await this.repository.findOne({ where: { id: id } });

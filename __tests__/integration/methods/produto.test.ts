@@ -70,6 +70,27 @@ it('[POST] Adicionar um produto - 200', async () => {
     expect(payload.nome).toBe('x-salada');
   });
 
+  it('[GET] Buscar produto por Categoria - 200', async () => {
+    const paramsId: TestRouteOptions = {
+      method: 'GET',
+      url: `api/produto/categoria/Lanches`,
+      basePath: '',
+    };
+    const { payload, statusCode } = await route(paramsId);
+    expect(statusCode).toBe(200);
+    expect(payload[0].nome).toBe('x-salada');
+  });
+
+  it('[GET] Buscar produto por Categoria - 404', async () => {
+    const paramsId: TestRouteOptions = {
+      method: 'GET',
+      url: `api/produto/categoria/Bebidas`,
+      basePath: '',
+    };
+    const { payload, statusCode } = await route(paramsId);
+    expect(statusCode).toBe(404);
+  });
+
   it('[PUT] Atualizar produto por ID - 200', async () => {
     const params: TestRouteOptions = {
       method: 'GET',

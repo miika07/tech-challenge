@@ -23,9 +23,13 @@ export default class PedidoUseCases implements PedidoRepositoryInterface {
         });
         }
 
-            async buscarPedidoPorId(id: string): Promise<PedidoEntity | undefined> {
-        return this.repository.findOne({ where: { id: id }, relations: { itensPedido: true } });
-    }
+        async buscarPedidoPorId(id: string): Promise<PedidoEntity | undefined> {
+          return this.repository.findOne({ where: { id: id }, relations: { itensPedido: true } });
+        }
+
+        async buscarPedidoPorStatus(status: string): Promise<PedidoEntity[]> {
+            return this.repository.find({ where: { status: status }, relations: { itensPedido: true } });
+          }
 
         async atualizarPedido(id: string, status: string = '', itensPedido: ItemPedidoEntity[]): Promise<PedidoEntity | undefined> {
         const pedidoExistente = await this.repository.findOne({ where: { id: id }, relations: { itensPedido: true } });

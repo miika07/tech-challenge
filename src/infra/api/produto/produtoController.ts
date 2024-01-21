@@ -30,6 +30,21 @@ export default class ProdutoController {
         }
       }
 
+      public buscarProdutoPorCategoria = async (
+        request: Hapi.Request, h: Hapi.ResponseToolkit
+      ): Promise<any> => {
+        try {
+          const data = await this.produtoManagerUseCase.buscarProdutoPorCategoria(request.params.categoria)
+          if (!data.length) {
+            return h.response('Não encontrado nenhum produto para essa categoria').code(404)
+          }
+          return h.response(data)
+        } catch (error) {
+            Logger.error(`Error in GET /produtos/categoria/${request.params.categoria}: ${error.message}`);
+            return h.response({ error: 'Internal Server Error' }).code(500)
+        }
+      }
+
       public adicionarProduto = async (
         request: Hapi.Request, h: Hapi.ResponseToolkit
       ): Promise<any> => {

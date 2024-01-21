@@ -34,6 +34,17 @@ export default class ProdutoRoutes implements IRoute {
           }
         },
         {
+          method: 'GET',
+          path: '/api/produto/categoria/{categoria}',
+          options: {
+            handler: controller.buscarProdutoPorCategoria,
+            validate: validate.getByCategoria,
+            description: 'Busca produtos por categoria',
+            tags: ['api', 'produtos'],
+            //auth: 'jwt'
+          }
+        },
+        {
             method: 'POST',
             path: '/api/produto',
             options: {
