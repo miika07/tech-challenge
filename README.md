@@ -31,11 +31,11 @@ Foram também aplicados os conceitos de DDD para a execução desse projeto e a 
 
 Abaixo temos a visão final do Eventstorm:
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![Cadastro](src/assets/eventstorm/cadastro.jpg)
+![Pedido](src/assets/eventstorm/pedido.jpg)
+![Pagamento](src/assets/eventstorm/pagamento.jpg)
+![Acompanhamento](src/assets/eventstorm/acompanhamento.jpg)
+![Retirada](src/assets/eventstorm/retirada.jpg)
 ## Stack utilizada
 
 **Back-end:** Node, Hapi.
