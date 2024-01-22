@@ -8,7 +8,7 @@ export class ItemPedidoEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @ManyToOne(() => PedidoEntity, pedido => pedido.itensPedido, { eager: true, onDelete: 'CASCADE'})
+    @ManyToOne(() => PedidoEntity, pedido => pedido.itensPedido, { eager: true, onDelete: 'CASCADE' })
     @JoinColumn({ name: 'idPedido' })
     idPedido: string;
 
@@ -20,7 +20,7 @@ export class ItemPedidoEntity {
     quantidade: number;
 
 
-    constructor(idProduto: string = '', quantidade: number = 0) {
+    constructor(idProduto: string = '', quantidade: number = 0, produtoObj?: ProdutoEntity) {
         this.id = uuidv4();
         this.idProduto = idProduto;
         this.quantidade = quantidade;

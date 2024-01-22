@@ -18,4 +18,3 @@ COPY . .
 
 # Exponha a porta em que a aplicação estará em execução
 EXPOSE 3000
-
