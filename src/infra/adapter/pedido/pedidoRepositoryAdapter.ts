@@ -1,26 +1,33 @@
-import { AppDataSource } from "../../../infra/data/database/data-source";
-import { AppDataSourceTest } from "../../../infra/data/database/data-source-teste";
-import { PedidoRepositoryInterface } from "../../../infra/data/repositories/pedidoRepository";
-import { PedidoEntity } from "../../entities/pedidos";
-import { ItemPedidoEntity } from "../../entities/itemPedido";
+import { Repository } from "typeorm";
+import { PedidoRepositoryInterface } from "../../../core/applications/ports/pedidoRepository";
+import { ItemPedidoEntity } from "../../../core/domain/entities/itemPedido";
+import { PedidoEntity } from "../../../core/domain/entities/pedidos";
+import { AppDataSource } from "../../data/database/data-source";
+import { AppDataSourceTest } from "../../data/database/data-source-teste";
 
+export class PedidoRepositoryAdapter implements PedidoRepositoryInterface {
 
-export default class PedidoUseCases implements PedidoRepositoryInterface {
-    private repository = process.env.NODE_ENV == 'test'
-        ? AppDataSourceTest.getRepository(PedidoEntity)
-        : AppDataSource.getRepository(PedidoEntity);
+    private pedidoRepository: Repository<PedidoEntity>;
+    private itemPedidoRepository: Repository<ItemPedidoEntity>;
 
-    private itemPedidoRepository = process.env.NODE_ENV == 'test'
-        ? AppDataSourceTest.getRepository(ItemPedidoEntity)
-        : AppDataSource.getRepository(ItemPedidoEntity);
+    constructor() {
+        this.pedidoRepository = process.env.NODE_ENV == 'test'
+            ? AppDataSourceTest.getRepository(PedidoEntity)
+            : AppDataSource.getRepository(PedidoEntity);
+
+        this.itemPedidoRepository = process.env.NODE_ENV == 'test'
+            ? AppDataSourceTest.getRepository(ItemPedidoEntity)
+            : AppDataSource.getRepository(ItemPedidoEntity);
+
+    }
 
     async criarPedido(idCliente: string, status: string, itensPedido: ItemPedidoEntity[]): Promise<PedidoEntity> {
-        const pedido = new PedidoEntity(idCliente, status, itensPedido);
-        return this.repository.save(pedido);
+        const pedido: PedidoEntity = new PedidoEntity(idCliente, status, itensPedido);
+        return this.pedidoRepository.save(pedido);
     }
 
     async buscarTodosPedidos(): Promise<PedidoEntity[]> {
-        return this.repository.find({
+        return this.pedidoRepository.find({
             relations: {
                 itensPedido: true
             },
@@ -28,15 +35,15 @@ export default class PedidoUseCases implements PedidoRepositoryInterface {
     }
 
     async buscarPedidoPorId(id: string): Promise<PedidoEntity | undefined> {
-        return this.repository.findOne({ where: { id: id }, relations: { itensPedido: true } });
+        return this.pedidoRepository.findOne({ where: { id: id }, relations: { itensPedido: true } });
     }
 
     async buscarPedidoPorStatus(status: string): Promise<PedidoEntity[]> {
-        return this.repository.find({ where: { status: status }, relations: { itensPedido: true } });
+        return this.pedidoRepository.find({ where: { status: status }, relations: { itensPedido: true } });
     }
 
     async atualizarPedido(id: string, status: string = '', itensPedido: ItemPedidoEntity[]): Promise<PedidoEntity | undefined> {
-        const pedidoExistente = await this.repository.findOne({ where: { id: id }, relations: { itensPedido: true } });
+        const pedidoExistente = await this.pedidoRepository.findOne({ where: { id: id }, relations: { itensPedido: true } });
         const pedidosOriginal = pedidoExistente.itensPedido;
 
         if (pedidoExistente) {
@@ -71,7 +78,7 @@ export default class PedidoUseCases implements PedidoRepositoryInterface {
             });
             pedidoExistente.itensPedido = listaAtualizadaItens;
 
-            let retorno = this.repository.save(pedidoExistente);
+            let retorno = this.pedidoRepository.save(pedidoExistente);
 
             /**remove itens que não tem mais pedido, pois o save não remove 
             esses itens altomaticamente do database, 
@@ -89,7 +96,7 @@ export default class PedidoUseCases implements PedidoRepositoryInterface {
     }
 
     async deletarPedido(id: string): Promise<boolean> {
-        const result = await this.repository.delete(id);
+        const result = await this.pedidoRepository.delete(id);
         return result.affected !== undefined && result.affected > 0;
     }
 }

@@ -1,6 +1,5 @@
-import { ItemPedidoEntity } from "../../../domain/entities/itemPedido";
-import { PedidoEntity } from "../../../domain/entities/pedidos";
-
+import { ItemPedidoEntity } from "../../domain/entities/itemPedido";
+import { PedidoEntity } from "../../domain/entities/pedidos";
 
 export interface PedidoRepositoryInterface {
     criarPedido(idCliente: string, status: string, itensPedido: ItemPedidoEntity[]): Promise<PedidoEntity>;

@@ -13,7 +13,7 @@ export default {
   },
   postPedido: {
     payload: Joi.object({
-      cliente: Joi.string().required(),
+      cliente: Joi.string(),
       status: Joi.string().required().valid('Recebido', 'Em preparação', 'Pronto', 'Finalizado'),
       itensPedido: Joi.array().items(Joi.object({
         idProduto: Joi.string().required(),

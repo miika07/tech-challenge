@@ -1,4 +1,4 @@
-import { ProdutoEntity } from '../../../domain/entities/produto';
+import { ProdutoEntity } from "../../domain/entities/produto";
 
 export interface ProdutoRepositoryInterface {
     criarProduto(nome: string, descricao: string, preco: number, categoria: string): Promise<ProdutoEntity>;

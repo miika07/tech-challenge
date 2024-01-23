@@ -1,4 +1,4 @@
-import { ClienteEntity } from '../../../domain/entities/cliente';
+import { ClienteEntity } from "../../domain/entities/cliente";
 
 export interface ClienteRepositoryInterface {
     criarCliente(nome: string, email: string, cpf: string): Promise<ClienteEntity>;

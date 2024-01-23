@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, OneToMany, ManyToOne, Unique, ManyToMany } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
-import { ClienteEntity } from './cliente';
 import { ItemPedidoEntity } from './itemPedido';
+import { ClienteEntity } from './cliente';
 
 @Entity({ name: 'pedidos' })
 @Unique(['numeroPedido'])
@@ -9,7 +9,7 @@ export class PedidoEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @ManyToOne(() => ClienteEntity, { eager: true })
+    @ManyToOne(() => ClienteEntity, { eager: true, nullable: true })
     @JoinColumn({ name: 'idCliente' })
     idCliente: string;
 
@@ -23,7 +23,7 @@ export class PedidoEntity {
     numeroPedido: number;
 
 
-    constructor(idCliente: string = '', status: string = '', itensPedido: ItemPedidoEntity[] ) {
+    constructor(idCliente: string = null, status: string = '', itensPedido: ItemPedidoEntity[] ) {
         this.id = uuidv4();
         this.idCliente = idCliente;
         this.status = status;

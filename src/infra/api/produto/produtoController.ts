@@ -1,10 +1,10 @@
 import * as Hapi from '@hapi/hapi';
 import Logger from '../../../plugins/logger.plugin';
-import ProdutoUseCases from '../../../domain/usecases/produto/produtoManager';
 import { ok } from 'assert';
+import ProdutoManagerUseCases from '../../../core/applications/usecases/produto/produtoManagerUseCase';
 
 export default class ProdutoController {
-    private readonly produtoManagerUseCase:ProdutoUseCases  = new ProdutoUseCases()
+    private readonly produtoManagerUseCase:ProdutoManagerUseCases  = new ProdutoManagerUseCases()
 
     public buscarTodosProdutos = async (
       request: Hapi.Request, h: Hapi.ResponseToolkit
