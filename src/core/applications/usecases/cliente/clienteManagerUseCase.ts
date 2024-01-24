@@ -1,11 +1,12 @@
 import ClienteRepositoryAdapter from "../../../../infra/adapter/cliente/clienteRepositoryAdapter";
 import { ClienteEntity } from "../../../domain/entities/cliente";
 
-export default class ClienteManagerUseCase{
+export default class ClienteManagerUseCase {
 
-    private adapter: ClienteRepositoryAdapter;
+    private adapter: ClienteRepositoryAdapter = new ClienteRepositoryAdapter();
 
     async criarCliente(nome: string, email: string, cpf: string): Promise<ClienteEntity> {
+        console.log('nome', nome)
         return this.adapter.criarCliente(nome, email, cpf);
     }
 

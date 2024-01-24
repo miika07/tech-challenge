@@ -6,7 +6,7 @@ import { PedidoEntity } from "../../../domain/entities/pedidos";
 
 export default class PedidoManagerUseCase {
 
-    private adapter: PedidoRepositoryAdapter;
+    private adapter: PedidoRepositoryAdapter = new PedidoRepositoryAdapter();
 
     constructor() {
         this.adapter = new PedidoRepositoryAdapter();

@@ -1,11 +1,9 @@
 import ProdutoRepositoryAdapter from "../../../../infra/adapter/produto/produtoRepositoryAdapter";
-import { AppDataSource } from "../../../../infra/data/database/data-source";
-import { AppDataSourceTest } from "../../../../infra/data/database/data-source-teste";
 import { ProdutoEntity } from "../../../domain/entities/produto";
 
 export default class ProdutoManagerUseCases {
    
-    private adapter: ProdutoRepositoryAdapter;
+    private adapter: ProdutoRepositoryAdapter = new ProdutoRepositoryAdapter();
     
     async criarProduto(nome: string, descricao: string, preco: number, categoria: string): Promise<ProdutoEntity> {
         return this.adapter.criarProduto(nome, descricao, preco, categoria);
