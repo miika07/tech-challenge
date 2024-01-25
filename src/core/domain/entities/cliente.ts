@@ -1,7 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, Index } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
 @Entity({ name: 'clientes' })
+@Index('idx_cliente_id', ['id'], { unique: true })
+@Index('idx_cliente_cpf', ['cpf'], { unique: true })
 export class ClienteEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;

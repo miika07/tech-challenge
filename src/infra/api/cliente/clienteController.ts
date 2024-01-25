@@ -12,7 +12,11 @@ export default class ClienteController {
     ): Promise<any> => {
         try {
             const data = await this.clienteManagerUseCase.buscarTodosClientes()
-            return h.response(data);
+            console.log(data)
+            if(data.length > 0){
+              return h.response(data);
+            }
+            return h.response({ error: 'Not found'}).code(404);
         } catch (error) {
             Logger.error(`Error in GET /clientes: ${error.message}`);
             return h.response({ error: 'Internal Server Error' }).code(500)
@@ -24,7 +28,10 @@ export default class ClienteController {
     ): Promise<any> => {
         try {
             const data = await this.clienteManagerUseCase.buscarClientePorId(request.params.id)
-            return h.response(data).code(200);
+            if (data){
+              return h.response(data).code(200);
+            }
+            return h.response({ error: 'Not found'}).code(404);
         } catch (error) {
             Logger.error(`Error in GET /cliente/{id}: ${error.message}`);
             return h.response({ error: 'Internal Server Error' }).code(500)
@@ -36,7 +43,10 @@ export default class ClienteController {
     ): Promise<any> => {
         try {
             const data = await this.clienteManagerUseCase.buscarClientePorCPF(request.params.cpf)
-            return h.response(data).code(200);
+            if (data){
+              return h.response(data).code(200);
+            }
+            return h.response({ error: 'Not found'}).code(404);
         } catch (error) {
             Logger.error(`Error in GET /cliente/{cpf}: ${error.message}`);
             return h.response({ error: 'Internal Server Error' }).code(500)
@@ -48,8 +58,11 @@ export default class ClienteController {
     ): Promise<any> => {
         try {
             const body = request.payload as { nome: string, email: string, cpf: string };
-            const data = await this.clienteManagerUseCase.criarCliente(body.nome, body.email, body.cpf)
-            return h.response(data)
+            const data = await this.clienteManagerUseCase.criarCliente(body.nome, body.email, body.cpf);
+            if (data) {
+              return h.response(data);
+            }
+            return h.response({error: 'Cliente já existe'}).code(400)
         } catch (error) {
             Logger.error(`Error in POST /clientes: ${error.message}`);
             return h.response({ error: 'Internal Server Error' }).code(500)
@@ -60,7 +73,7 @@ export default class ClienteController {
         request: Hapi.Request, h: Hapi.ResponseToolkit
     ): Promise<any> => {
         try {
-            const data = await this.clienteManagerUseCase.deletarCliente(request.params.id)
+            await this.clienteManagerUseCase.deletarCliente(request.params.id)
             return h.response(ok)
         } catch (error) {
             Logger.error(`Error in DELETE /cliente: ${error.message}`);
@@ -73,7 +86,7 @@ export default class ClienteController {
     ): Promise<any> => {
         try {
             const body = request.payload as { nome: string, email: string, cpf: string };
-            const data = await this.clienteManagerUseCase.atualizarCliente(request.params.id, body.nome, body.email)
+            const data = await this.clienteManagerUseCase.atualizarCliente(body.cpf, body.nome, body.email)
             return h.response(data)
         } catch (error) {
             Logger.error(`Error in PUT /cliente: ${error.message}`);
