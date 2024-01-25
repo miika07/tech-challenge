@@ -78,7 +78,7 @@ it('[POST] Adicionar um pedido - 200', async () => {
         payload: {
           nome: 'Melina Garcia',
           email: 'melina@test.com.br',
-          cpf: '304.206.345-23'
+          cpf: '301.206.345-23'
         }
       };
       const responseCliente = await route(params);

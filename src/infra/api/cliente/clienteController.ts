@@ -12,11 +12,7 @@ export default class ClienteController {
     ): Promise<any> => {
         try {
             const data = await this.clienteManagerUseCase.buscarTodosClientes()
-            console.log(data)
-            if(data.length > 0){
-              return h.response(data);
-            }
-            return h.response({ error: 'Not found'}).code(404);
+            return h.response(data);
         } catch (error) {
             Logger.error(`Error in GET /clientes: ${error.message}`);
             return h.response({ error: 'Internal Server Error' }).code(500)
