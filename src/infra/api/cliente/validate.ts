@@ -19,9 +19,6 @@ export default {
     })
   },
   updateCliente: {
-    params: Joi.object().keys({
-      id: Joi.string().required()
-    }),
     payload: Joi.object({
       nome: Joi.string().required(),
       email: Joi.string().email().required(),

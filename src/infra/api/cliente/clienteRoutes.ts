@@ -68,7 +68,7 @@ export default class ClienteRoutes implements IRoute {
         },
         {
             method: 'PUT',
-            path: '/api/cliente/{id}',
+            path: '/api/cliente',
             options: {
               handler: controller.atualizarCliente,
               validate: validate.updateCliente,

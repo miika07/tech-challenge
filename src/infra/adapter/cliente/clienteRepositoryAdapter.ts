@@ -14,37 +14,24 @@ export default class ClienteRepositoryAdapter implements ClienteRepositoryInterf
             : AppDataSource.getRepository(ClienteEntity);
     }
 
-    async criarCliente(nome: string, email: string, cpf: string): Promise<ClienteEntity> {
-        const cliente = new ClienteEntity();
-        cliente.nome = nome;
-        cliente.email = email;
-        cliente.cpf = cpf;
-        return this.clienteRepository.save(cliente);
+    async criarCliente(cliente: ClienteEntity): Promise<ClienteEntity> {
+        return await this.clienteRepository.save(cliente);
     }
 
     async buscarTodosClientes(): Promise<ClienteEntity[]> {
-        return this.clienteRepository.find();
+        return await this.clienteRepository.find();
     }
 
     async buscarClientePorId(id: string): Promise<ClienteEntity | undefined> {
-        return this.clienteRepository.findOne({ where: { id: id } });
+        return await this.clienteRepository.findOne({ where: { id: id } });
     }
 
     async buscarClientePorCPF(cpf: string): Promise<ClienteEntity | undefined> {
-        return this.clienteRepository.findOne({ where: { cpf: cpf } });
+        return await this.clienteRepository.findOne({ where: { cpf: cpf } });
     }
 
-    async atualizarCliente(id: string, nome: string, email: string): Promise<ClienteEntity | undefined> {
-        const clienteExistente = await this.clienteRepository.findOne({ where: { id: id } });
-
-        if (clienteExistente) {
-            clienteExistente.nome = nome;
-            clienteExistente.email = email;
-
-            return this.clienteRepository.save(clienteExistente);
-        }
-
-        return undefined;
+    async atualizarCliente(cliente: ClienteEntity): Promise<ClienteEntity> {
+       return await this.clienteRepository.save(cliente);
     }
 
     async deletarCliente(id: string): Promise<boolean> {
