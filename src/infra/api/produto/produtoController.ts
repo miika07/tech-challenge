@@ -23,7 +23,10 @@ export default class ProdutoController {
       ): Promise<any> => {
         try {
           const data = await this.produtoManagerUseCase.buscarProdutoPorId(request.params.id)
-          return h.response(data)
+          if (data){
+            return h.response(data).code(200);
+          }
+          return h.response({ error: 'Not found'}).code(404);
         } catch (error) {
             Logger.error(`Error in GET /produtos/${request.params.id}: ${error.message}`);
             return h.response({ error: 'Internal Server Error' }).code(500)
@@ -76,7 +79,10 @@ export default class ProdutoController {
         try {
             const body = request.payload as { nome: string, descricao: string, preco: number, categoria: string };
             const data = await this.produtoManagerUseCase.atualizarProduto(request.params.id, body.nome, body.descricao, body.preco, body.categoria)
-            return h.response(data)
+            if (data){
+              return h.response(data).code(200);
+            }
+            return h.response({ error: 'Not found'}).code(404);
         } catch (error) {
             Logger.error(`Error in PUT /produtos/${request.params.id}: ${error.message}`);
             return h.response({ error: 'Internal Server Error' }).code(500)

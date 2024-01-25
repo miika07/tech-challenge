@@ -15,13 +15,8 @@ export default class ProdutoRepositoryAdapter implements ProdutoRepositoryInterf
         : AppDataSource.getRepository(ProdutoEntity);
     }
 
-    async criarProduto(nome: string, descricao: string, preco: number, categoria: string): Promise<ProdutoEntity> {
-        const produto = new ProdutoEntity();
-        produto.descricao = descricao;
-        produto.nome = nome;
-        produto.preco = preco;
-        produto.categoria = categoria;
-        return this.produtoRepository.save(produto);
+    async criarProduto(produto: ProdutoEntity): Promise<ProdutoEntity> {
+        return await this.produtoRepository.save(produto);
     }
 
     async buscarTodosProdutos(): Promise<ProdutoEntity[]> {
@@ -36,19 +31,8 @@ export default class ProdutoRepositoryAdapter implements ProdutoRepositoryInterf
         return this.produtoRepository.find({ where: { categoria: categoria } });
     }
 
-    async atualizarProduto(id: string, nome: string, descricao: string, preco: number, categoria: string): Promise<ProdutoEntity | undefined> {
-        const produtoExistente = await this.produtoRepository.findOne({ where: { id: id } });
-
-        if (produtoExistente) {
-            produtoExistente.descricao = descricao;
-            produtoExistente.nome = nome;
-            produtoExistente.preco = preco;
-            produtoExistente.categoria = categoria;
-
-            return this.produtoRepository.save(produtoExistente);
-        }
-
-        return undefined;
+    async atualizarProduto(produto: ProdutoEntity): Promise<ProdutoEntity | undefined> {
+        return this.produtoRepository.save(produto);
     }
 
     async deletarProduto(id: string): Promise<boolean> {
