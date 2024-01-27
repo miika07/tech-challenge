@@ -24,7 +24,10 @@ export default class PedidoController {
     ): Promise<any> => {
         try {
             const data = await this.pedidoManagerUseCase.buscarPedidoPorId(request.params.id)
-            return h.response(data)
+            if (data){
+                return h.response(data).code(200);
+              }
+              return h.response({ error: 'Not found'}).code(404);
         } catch (error) {
             Logger.error(`Error in GET /pedido/${request.params.id}: ${error.message}`);
             return h.response({ error: 'Internal Server Error' }).code(500)
