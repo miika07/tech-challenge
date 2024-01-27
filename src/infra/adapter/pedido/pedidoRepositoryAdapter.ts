@@ -49,4 +49,11 @@ export class PedidoRepositoryAdapter implements PedidoRepositoryInterface {
         const result = await this.pedidoRepository.delete(id);
         return result.affected !== undefined && result.affected > 0;
     }
+
+    async deletarItensPedido(itensPedido): Promise<ItemPedidoEntity[]> {
+        const result = itensPedido.forEach(element => {
+            return this.itemPedidoRepository.remove(element);
+        });
+        return result;
+    }
 }

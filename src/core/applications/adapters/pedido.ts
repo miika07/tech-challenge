@@ -17,20 +17,34 @@ export const parserItemPedido = (itemPedidoDB: ItemPedidoEntity): ItemPedido => 
     }
 }
 
-export const parserItems = (itensPedido: ItemPedido[], itensPedidoDB: ItemPedidoEntity[]) => {
-    // ver o que tem na pedidodb e na itens pedido e atualizar a quantidade
-    itensPedidoDB.forEach(itens => {
-        const pedidoExistente = itensPedido.find((item) => item.idProduto === itens.idProduto);
-        if(pedidoExistente){
-            itens.quantidade = pedidoExistente.quantidade
-        }
-    })
-    // ver o que não tem na pedidosdb e criar uma nova
-    itensPedido.
+export const parserItems = (idPedido, itensPedido: ItemPedido[], itensPedidoDB: ItemPedidoEntity[]) => {
 
-    // ver o que tem na pedidos db e não tem na pedidos e deletar
-    return {itensPedidosDB: lffkf,
-    itensremover: []}
+    let listaAtualizadaItens = [];
+    itensPedido.forEach(item => {
+
+        let itemAtualizado;
+
+        let itemExistente = itensPedidoDB.find(existe => {
+            let obj: any = existe.idProduto;
+            if (item.idProduto == obj.id) return existe;
+        });
+
+        if (itemExistente) {
+            itemAtualizado = itemExistente;
+            itemAtualizado.quantidade = item.quantidade;
+        } else {
+            itemAtualizado = new ItemPedidoEntity();
+            itemAtualizado.idPedido = idPedido.id;
+            itemAtualizado.idProduto = item.idProduto;
+            itemAtualizado.quantidade = item.quantidade;
+        }
+
+        listaAtualizadaItens.push(itemAtualizado);
+    });
+
+    let listaRemover = itensPedidoDB.filter(item => !listaAtualizadaItens.includes(item));
+
+    return { itensPedidoDB: listaAtualizadaItens, itensRemover: listaRemover };
 }
 
 export const parserNewPedidoDB = (idCliente: string, status: string, itensPedido: ItemPedido[]): PedidoEntity => {
@@ -49,22 +63,22 @@ export const parserPedidoDB = (id: string, idCliente: string, status: string, it
     }
 }
 
-export const parserPedido = (pedidoDB: PedidoEntity) : Pedido => {
+export const parserPedido = (pedidoDB: PedidoEntity): Pedido => {
     return {
         ...pedidoDB.id && { id: pedidoDB.id },
-        ...pedidoDB.idCliente && { idCliente: pedidoDB.idCliente }, 
+        ...pedidoDB.idCliente && { idCliente: pedidoDB.idCliente },
         status: pedidoDB.status,
         itemPedido: pedidoDB.itensPedido.map(item => parserItemPedido(item)),
         numeroPedido: pedidoDB.numeroPedido
     }
 }
 
-export const parserPedidos = (pedidosDB: PedidoEntity[]) : Pedido[] => {
+export const parserPedidos = (pedidosDB: PedidoEntity[]): Pedido[] => {
     const pedidos: Pedido[] = [];
     pedidosDB.forEach((pedidoDB) => {
         pedidos.push({
             ...pedidoDB.id && { id: pedidoDB.id },
-            ...pedidoDB.idCliente && { idCliente: pedidoDB.idCliente }, 
+            ...pedidoDB.idCliente && { idCliente: pedidoDB.idCliente },
             status: pedidoDB.status,
             itemPedido: pedidoDB.itensPedido.map(item => parserItemPedido(item)),
             numeroPedido: pedidoDB.numeroPedido

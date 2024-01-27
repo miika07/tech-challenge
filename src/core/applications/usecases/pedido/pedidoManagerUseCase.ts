@@ -1,7 +1,7 @@
 import { PedidoRepositoryAdapter } from "../../../../infra/adapter/pedido/pedidoRepositoryAdapter";
 import { ItemPedidoEntity } from "../../../domain/entities/itemPedido";
 import { PedidoEntity } from "../../../domain/entities/pedidos";
-import { parserItemPedido, parserNewPedidoDB, parserPedido, parserPedidoDB, parserPedidos } from "../../adapters/pedido";
+import { parserItemPedido, parserItems, parserNewPedidoDB, parserPedido, parserPedidoDB, parserPedidos } from "../../adapters/pedido";
 import { ItemPedido } from "../../models/itensPedido";
 import { Pedido } from "../../models/pedido";
 
@@ -34,11 +34,11 @@ export default class PedidoManagerUseCase {
     async atualizarPedido(id: string, status: string = '', itensPedido: ItemPedido[]): Promise<Pedido | undefined> {
         const pedido = await this.adapter.buscarPedidoPorId(id);
         if (pedido) {
-            const itensPedidoDB = 
-            const pedidoDB = parserPedidoDB(pedido.id, pedido.idCliente, status, itensPedido, pedido.numeroPedido);
+            const itensPedidoParsed = parserItems(id, itensPedido,pedido.itensPedido);
+            const pedidoDB = parserPedidoDB(pedido.id, pedido.idCliente, status, itensPedidoParsed.itensPedidoDB, pedido.numeroPedido);
             const response = await this.adapter.atualizarPedido(pedidoDB);
-            // remover itens
-            return parserPedido(response)
+            const removerItensDB = this.adapter.deletarItensPedido(itensPedidoParsed.itensRemover);
+            return parserPedido(response);
         }
         
         return pedido;
