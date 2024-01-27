@@ -1,9 +1,9 @@
 import { ItemPedido } from "./itensPedido";
 
 export interface Pedido {
-    id: string;
+    id?: string;
     idCliente?: string;
     status: string;
-    itemPedido: ItemPedido[];
-    numeroPedido: number;
+    itemPedido?: ItemPedido[];
+    numeroPedido?: number;
 }
