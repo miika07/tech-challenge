@@ -1,0 +1,236 @@
+{
+	"info": {
+		"_postman_id": "4ce918dd-be5a-46a2-a159-d5efedcf1620",
+		"name": "Tech-challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7488873"
+	},
+	"item": [
+		{
+			"name": "Fluxo",
+			"item": [
+				{
+					"name": "adicionar-cliente",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"usuario-teste\",\n  \"email\": \"usuario@gmail.com\",\n  \"cpf\": \"527.319.829-73\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/cliente",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"cliente"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar-cliente-por-cpf",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/cliente-cpf/527.319.829-73",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"cliente-cpf",
+								"527.319.829-73"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "busca-produto-por-categoria",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/produto/categoria/Lanches",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"produto",
+								"categoria",
+								"Lanches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "adicionar-pedido",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"cliente\": \"7c8b9e8b-3294-41ca-b7f8-4def634ccd8e\",\n    \"status\": \"RECEBIDO\",\n    \"itensPedido\": [\n        {\n            \"idProduto\": \"2fa8d3c9-bc29-49cd-ab03-e5223a53717b\",\n            \"quantidade\": 1\n        },\n        {\n            \"idProduto\": \"11b93953-9efb-45fe-921c-cfd85b1857f1\",\n            \"quantidade\": 1\n        },\n        {\n            \"idProduto\": \"7f4e0815-e5de-45bb-a983-eacb082ad36c\",\n            \"quantidade\": 1\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/pedido",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"pedido"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "atualiza-status",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"FINALIZADO\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/pedido/atualizar-status/34a833ab-4b0d-4719-999f-1b0366c58579",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"pedido",
+								"atualizar-status",
+								"34a833ab-4b0d-4719-999f-1b0366c58579"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "buscar-pedido-por-status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/pedido/status/RECEBIDO",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"pedido",
+								"status",
+								"RECEBIDO"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "atualiza-status Copy",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"FINALIZADO\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/pedido/atualizar-status/34a833ab-4b0d-4719-999f-1b0366c58579",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"pedido",
+								"atualizar-status",
+								"34a833ab-4b0d-4719-999f-1b0366c58579"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

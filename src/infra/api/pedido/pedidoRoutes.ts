@@ -76,7 +76,18 @@ export default class PedidoRoutes implements IRoute {
               tags: ['api', 'pedidos'],
               //auth: 'jwt'
             }
-        }
+        },
+        {
+          method: 'PUT',
+          path: '/api/pedido/atualizar-status/{id}',
+          options: {
+            handler: controller.atualizarStatusPedido,
+            validate: validate.updateStatusPedido,
+            description: 'Atualiza status do pedido',
+            tags: ['api', 'pedidos'],
+            //auth: 'jwt'
+          }
+      }
       ])
 
       Logger.info('Pedidos - Finalizando de adicionar rotas')

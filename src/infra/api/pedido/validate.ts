@@ -8,13 +8,13 @@ export default {
   },
   getByStatus: {
     params: Joi.object().keys({
-      status: Joi.string().required().valid('Recebido', 'Em preparação', 'Pronto', 'Finalizado'),
+      status: Joi.string().required().valid('RECEBIDO', 'EM_PREPARACAO', 'PRONTO', 'FINALIZADO'),
     })
   },
   postPedido: {
     payload: Joi.object({
       cliente: Joi.string(),
-      status: Joi.string().required().valid('Recebido', 'Em preparação', 'Pronto', 'Finalizado'),
+      status: Joi.string().required().valid('RECEBIDO', 'EM_PREPARACAO', 'PRONTO', 'FINALIZADO'),
       itensPedido: Joi.array().items(Joi.object({
         idProduto: Joi.string().required(),
         quantidade: Joi.number().required()
@@ -27,12 +27,20 @@ export default {
     }),
     payload: Joi.object({
         cliente: Joi.string(),
-        status: Joi.string().required().valid('Recebido', 'Em preparação', 'Pronto', 'Finalizado'),
+        status: Joi.string().required().valid('RECEBIDO', 'EM_PREPARACAO', 'PRONTO', 'FINALIZADO'),
         itensPedido: Joi.array().items(Joi.object({
           idProduto: Joi.string().required(),
           quantidade: Joi.number().required()
         }).required()).required(),
         
+    })
+  },
+  updateStatusPedido: {
+    params: Joi.object().keys({
+      id: Joi.string().required()
+    }),
+    payload: Joi.object({
+        status: Joi.string().required().valid('RECEBIDO', 'EM_PREPARACAO', 'PRONTO', 'FINALIZADO')  
     })
   }
 }

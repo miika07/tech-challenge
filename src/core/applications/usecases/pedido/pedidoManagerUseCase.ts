@@ -31,7 +31,7 @@ export default class PedidoManagerUseCase {
         return response ? parserPedidos(response) : response;
     }
 
-    async atualizarPedido(id: string, status: string = '', itensPedido: ItemPedido[]): Promise<Pedido | undefined> {
+    async atualizarPedido(id: string, status: string, itensPedido: ItemPedido[]): Promise<Pedido | undefined> {
         const pedido = await this.adapter.buscarPedidoPorId(id);
         if (pedido) {
             const itensPedidoParsed = parserItems(id, itensPedido,pedido.itensPedido);
@@ -41,6 +41,16 @@ export default class PedidoManagerUseCase {
             return parserPedido(response);
         }
         
+        return pedido;
+    }
+
+    async atualizarStatusPedido(id: string, status: string): Promise<Pedido | undefined> {
+        const pedido = await this.adapter.buscarPedidoPorId(id);
+        if (pedido) {
+            pedido.status = status
+            const response = await this.adapter.atualizarPedido(pedido);
+            return parserPedido(response);
+        }
         return pedido;
     }
 

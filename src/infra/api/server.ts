@@ -5,6 +5,8 @@ import { SwaggerPlugin } from '../../plugins/swagger.plugin'
 import Router from './router'
 // import * as JWT from 'hapi-auth-jwt2'
 import { AppDataSource } from '../data/database/data-source'
+import { plugin } from 'hapi-alive';
+
 
 
 const server = new Hapi.Server({
@@ -32,7 +34,14 @@ const server = new Hapi.Server({
             // })
 
             // Server._instance.auth.default('jwt')
-
+            await server.register({
+              plugin,
+              options: {
+                healthCheck: () => {
+                  return { status: 'OK' };
+                },
+              },
+            });
             await SwaggerPlugin.registerAll(server)
             await Router.loadRoutes(server)
 
