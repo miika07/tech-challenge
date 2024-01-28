@@ -1,7 +1,7 @@
 import { ItemPedidoEntity } from "../../domain/entities/itemPedido";
 import { PedidoEntity } from "../../domain/entities/pedidos";
 import { ItemPedido } from "../models/itensPedido";
-import { Pedido } from "../models/pedido";
+import { Pedido, Status } from "../models/pedido";
 
 export const parserNewItensPedidoDB = (idProduto: string, quantidade: number): ItemPedidoEntity => {
     const itemPedidoDB = new ItemPedidoEntity(idProduto, quantidade);
@@ -67,7 +67,7 @@ export const parserPedido = (pedidoDB: PedidoEntity): Pedido => {
     return {
         ...pedidoDB.id && { id: pedidoDB.id },
         ...pedidoDB.idCliente && { idCliente: pedidoDB.idCliente },
-        status: pedidoDB.status,
+        status: Status[pedidoDB.status],
         itensPedido: pedidoDB.itensPedido.map(item => parserItemPedido(item)),
         numeroPedido: pedidoDB.numeroPedido
     }
@@ -79,7 +79,7 @@ export const parserPedidos = (pedidosDB: PedidoEntity[]): Pedido[] => {
         pedidos.push({
             ...pedidoDB.id && { id: pedidoDB.id },
             ...pedidoDB.idCliente && { idCliente: pedidoDB.idCliente },
-            status: pedidoDB.status,
+            status: Status[pedidoDB.status],
             itensPedido: pedidoDB.itensPedido.map(item => parserItemPedido(item)),
             numeroPedido: pedidoDB.numeroPedido
         })

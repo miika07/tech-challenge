@@ -86,5 +86,16 @@ export default class PedidoController {
             return h.response({ error: 'Internal Server Error' }).code(500)
         }
     }
-
+    public atualizarStatusPedido = async (
+        request: Hapi.Request, h: Hapi.ResponseToolkit
+    ): Promise<any> => {
+        try {
+            const body = request.payload as { status: string };
+            const data = await this.pedidoManagerUseCase.atualizarStatusPedido(request.params.id ,body.status)
+            return h.response(data)
+        } catch (error) {
+            Logger.error(`Error in PUT /pedido/${request.params.id}: ${error.message}`);
+            return h.response({ error: 'Internal Server Error' }).code(500)
+        }
+    }
 }

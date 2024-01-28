@@ -1,13 +1,13 @@
 {
 	"info": {
-		"_postman_id": "31cb8615-bbe1-4b6b-a96a-1bf2b66c3ebe",
+		"_postman_id": "4ce918dd-be5a-46a2-a159-d5efedcf1620",
 		"name": "Tech-challenge",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "7488873"
 	},
 	"item": [
 		{
-			"name": "Cliente",
+			"name": "Fluxo",
 			"item": [
 				{
 					"name": "adicionar-cliente",
@@ -43,32 +43,6 @@
 					"response": []
 				},
 				{
-					"name": "buscar-cliente-por-id",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "accept",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:3000/api/cliente/0bd315f4-6db0-4019-9c16-112ba6f450f1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"cliente",
-								"0bd315f4-6db0-4019-9c16-112ba6f450f1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "buscar-cliente-por-cpf",
 					"request": {
 						"method": "GET",
@@ -89,129 +63,6 @@
 								"api",
 								"cliente-cpf",
 								"527.319.829-73"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "atualizar-cliente",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"nome\": \"usuario-teste\",\n  \"email\": \"testtest@gmail.com\",\n  \"cpf\": \"527.319.829-73\"\n}"
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/cliente",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"cliente"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "remover-cliente",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "accept",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:3000/api/cliente/0bd315f4-6db0-4019-9c16-112ba6f450f1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"cliente",
-								"0bd315f4-6db0-4019-9c16-112ba6f450f1"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Produto",
-			"item": [
-				{
-					"name": "adicionar-produto",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"nome\": \"x-salada\",\n  \"descricao\": \"pão, hamburguer, queijo e salada\",\n  \"preco\": 22,\n  \"categoria\": \"Lanches\"\n}"
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/produto",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"produto"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "busca-produto-por-id",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "accept",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:3000/api/produto/2fa8d3c9-bc29-49cd-ab03-e5223a53717b",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"produto",
-								"2fa8d3c9-bc29-49cd-ab03-e5223a53717b"
 							]
 						}
 					},
@@ -245,71 +96,6 @@
 					"response": []
 				},
 				{
-					"name": "atualizar-produto",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"nome\": \"X-salada\",\n  \"descricao\": \"pao, hamburguer, salada, queijo e maionese\",\n  \"preco\": 23,\n  \"categoria\": \"Lanches\"\n}"
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/produto/14d5cfdd-cdf0-45b8-8e34-ac1cb035f270",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"produto",
-								"14d5cfdd-cdf0-45b8-8e34-ac1cb035f270"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "remover-produto",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "accept",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:3000/api/produto/14d5cfdd-cdf0-45b8-8e34-ac1cb035f270",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"produto",
-								"14d5cfdd-cdf0-45b8-8e34-ac1cb035f270"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Pedido",
-			"item": [
-				{
 					"name": "adicionar-pedido",
 					"request": {
 						"method": "POST",
@@ -325,7 +111,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"cliente\": \"7c8b9e8b-3294-41ca-b7f8-4def634ccd8e\",\n    \"status\": \"Recebido\",\n    \"itensPedido\": [\n        {\n            \"idProduto\": \"2fa8d3c9-bc29-49cd-ab03-e5223a53717b\",\n            \"quantidade\": 1\n        },\n        {\n            \"idProduto\": \"11b93953-9efb-45fe-921c-cfd85b1857f1\",\n            \"quantidade\": 1\n        },\n        {\n            \"idProduto\": \"7f4e0815-e5de-45bb-a983-eacb082ad36c\",\n            \"quantidade\": 1\n        }\n    ]\n}"
+							"raw": "{\n    \"cliente\": \"7c8b9e8b-3294-41ca-b7f8-4def634ccd8e\",\n    \"status\": \"RECEBIDO\",\n    \"itensPedido\": [\n        {\n            \"idProduto\": \"2fa8d3c9-bc29-49cd-ab03-e5223a53717b\",\n            \"quantidade\": 1\n        },\n        {\n            \"idProduto\": \"11b93953-9efb-45fe-921c-cfd85b1857f1\",\n            \"quantidade\": 1\n        },\n        {\n            \"idProduto\": \"7f4e0815-e5de-45bb-a983-eacb082ad36c\",\n            \"quantidade\": 1\n        }\n    ]\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/pedido",
@@ -343,60 +129,7 @@
 					"response": []
 				},
 				{
-					"name": "buscar-pedido-por-id",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "accept",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:3000/api/pedido/5f219f48-d2f3-4d9a-b2db-3444b6ec88e3",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"pedido",
-								"5f219f48-d2f3-4d9a-b2db-3444b6ec88e3"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "buscar-pedido-por-status",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "accept",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:3000/api/pedido/status/Recebido",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"pedido",
-								"status",
-								"Recebido"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "atualizar-pedido",
+					"name": "atualiza-status",
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -411,10 +144,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"status\": \"Em preparação\",\n  \"itensPedido\": [\n    {\n      \"idProduto\": \"2fa8d3c9-bc29-49cd-ab03-e5223a53717b\",\n      \"quantidade\": 1\n    },\n{\n      \"idProduto\": \"7f4e0815-e5de-45bb-a983-eacb082ad36c\",\n      \"quantidade\": 1\n    }\n  ]\n}"
+							"raw": "{\n  \"status\": \"FINALIZADO\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/pedido/5f219f48-d2f3-4d9a-b2db-3444b6ec88e3",
+							"raw": "http://localhost:3000/api/pedido/atualizar-status/34a833ab-4b0d-4719-999f-1b0366c58579",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -423,16 +156,22 @@
 							"path": [
 								"api",
 								"pedido",
-								"5f219f48-d2f3-4d9a-b2db-3444b6ec88e3"
+								"atualizar-status",
+								"34a833ab-4b0d-4719-999f-1b0366c58579"
 							]
 						}
 					},
 					"response": []
-				},
+				}
+			]
+		},
+		{
+			"name": "admin",
+			"item": [
 				{
-					"name": "remover-pedido",
+					"name": "buscar-pedido-por-status",
 					"request": {
-						"method": "DELETE",
+						"method": "GET",
 						"header": [
 							{
 								"key": "accept",
@@ -440,7 +179,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/pedido/5f219f48-d2f3-4d9a-b2db-3444b6ec88e3",
+							"raw": "http://localhost:3000/api/pedido/status/RECEBIDO",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -449,7 +188,43 @@
 							"path": [
 								"api",
 								"pedido",
-								"5f219f48-d2f3-4d9a-b2db-3444b6ec88e3"
+								"status",
+								"RECEBIDO"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "atualiza-status Copy",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"FINALIZADO\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/pedido/atualizar-status/34a833ab-4b0d-4719-999f-1b0366c58579",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"pedido",
+								"atualizar-status",
+								"34a833ab-4b0d-4719-999f-1b0366c58579"
 							]
 						}
 					},
