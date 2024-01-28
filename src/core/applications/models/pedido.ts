@@ -4,6 +4,6 @@ export interface Pedido {
     id?: string;
     idCliente?: string;
     status: string;
-    itemPedido?: ItemPedido[];
+    itensPedido?: ItemPedido[];
     numeroPedido?: number;
 }

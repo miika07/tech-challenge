@@ -68,7 +68,7 @@ export const parserPedido = (pedidoDB: PedidoEntity): Pedido => {
         ...pedidoDB.id && { id: pedidoDB.id },
         ...pedidoDB.idCliente && { idCliente: pedidoDB.idCliente },
         status: pedidoDB.status,
-        itemPedido: pedidoDB.itensPedido.map(item => parserItemPedido(item)),
+        itensPedido: pedidoDB.itensPedido.map(item => parserItemPedido(item)),
         numeroPedido: pedidoDB.numeroPedido
     }
 }
@@ -80,7 +80,7 @@ export const parserPedidos = (pedidosDB: PedidoEntity[]): Pedido[] => {
             ...pedidoDB.id && { id: pedidoDB.id },
             ...pedidoDB.idCliente && { idCliente: pedidoDB.idCliente },
             status: pedidoDB.status,
-            itemPedido: pedidoDB.itensPedido.map(item => parserItemPedido(item)),
+            itensPedido: pedidoDB.itensPedido.map(item => parserItemPedido(item)),
             numeroPedido: pedidoDB.numeroPedido
         })
     })

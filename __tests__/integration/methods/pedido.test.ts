@@ -193,6 +193,38 @@ it('[POST] Adicionar um pedido - 200', async () => {
     expect(payload.status).toBe('Pronto');
   });
 
+  it('[PUT] Remover item do pedido - 200', async () => {
+    //buscar pedido
+    const params: TestRouteOptions = {
+      method: 'GET',
+      url: 'api/pedidos',
+      basePath: ''
+    };
+    
+    const response = await route(params);
+    expect(response.statusCode).toBe(200);
+   
+    //Atualizar o pedido
+    const paramsId: TestRouteOptions = {
+      method: 'PUT',
+      url: `api/pedido/${response.payload[0].id}`,
+      basePath: '',
+      payload: {
+        cliente: response.payload[0].idCliente.id,
+        status: 'Pronto',
+        itensPedido:[{
+            idProduto: response.payload[0].itensPedido[0].idProduto.id,
+            quantidade: 3
+        }]
+      }
+    };
+    const { payload, statusCode } = await route(paramsId);
+    expect(statusCode).toBe(200);
+    expect(payload.itensPedido).toHaveLength(1);
+    expect(payload.itensPedido[0].quantidade).toBe(3)
+    expect(payload.status).toBe('Pronto');
+  });
+
   it('[DELETE] Deletar pedido por ID - 204', async () => {
     const params: TestRouteOptions = {
       method: 'GET',
