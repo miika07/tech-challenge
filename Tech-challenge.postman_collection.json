@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "4ce918dd-be5a-46a2-a159-d5efedcf1620",
+		"_postman_id": "caf606aa-f97b-4151-b1ed-3c8fecc3a0f4",
 		"name": "Tech-challenge",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "7488873"
+		"_exporter_id": "31619346",
+		"_collection_link": "https://galactic-robot-284700.postman.co/workspace/My-Workspace~34a43219-9205-4013-8d1f-b08bfa6e4543/collection/31619346-caf606aa-f97b-4151-b1ed-3c8fecc3a0f4?action=share&source=collection_link&creator=31619346"
 	},
 	"item": [
 		{
@@ -11,6 +12,22 @@
 			"item": [
 				{
 					"name": "adicionar-cliente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (responseCode.code === 200) {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.collectionVariables.set(\"idCliente\", jsonData.id);\r",
+									"}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -97,6 +114,22 @@
 				},
 				{
 					"name": "adicionar-pedido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (responseCode.code === 200) {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.collectionVariables.set(\"idPedido\", jsonData.id);\r",
+									"}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -111,7 +144,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"cliente\": \"7c8b9e8b-3294-41ca-b7f8-4def634ccd8e\",\n    \"status\": \"RECEBIDO\",\n    \"itensPedido\": [\n        {\n            \"idProduto\": \"2fa8d3c9-bc29-49cd-ab03-e5223a53717b\",\n            \"quantidade\": 1\n        },\n        {\n            \"idProduto\": \"11b93953-9efb-45fe-921c-cfd85b1857f1\",\n            \"quantidade\": 1\n        },\n        {\n            \"idProduto\": \"7f4e0815-e5de-45bb-a983-eacb082ad36c\",\n            \"quantidade\": 1\n        }\n    ]\n}"
+							"raw": "{\n    \"cliente\": \"{{idCliente}}\",\n    \"status\": \"RECEBIDO\",\n    \"itensPedido\": [\n        {\n            \"idProduto\": \"0688c7bd-daac-4db6-a52b-c6cbcb3e1b85\",\n            \"quantidade\": 1\n        },\n        {\n            \"idProduto\": \"342e139f-3c3b-450d-b2b2-b18db17d9be6\",\n            \"quantidade\": 1\n        },\n        {\n            \"idProduto\": \"7f1152f7-66bc-44d9-aae6-4c0161194c59\",\n            \"quantidade\": 1\n        }\n    ]\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/pedido",
@@ -123,6 +156,58 @@
 							"path": [
 								"api",
 								"pedido"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listar-pedidos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/pedidos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"pedidos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "buscar-pedido-por-status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/pedido/status/FINALIZADO",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"pedido",
+								"status",
+								"FINALIZADO"
 							]
 						}
 					},
@@ -147,7 +232,7 @@
 							"raw": "{\n  \"status\": \"FINALIZADO\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/pedido/atualizar-status/34a833ab-4b0d-4719-999f-1b0366c58579",
+							"raw": "http://localhost:3000/api/pedido/atualizar-status/{{idPedido}}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -157,80 +242,45 @@
 								"api",
 								"pedido",
 								"atualizar-status",
-								"34a833ab-4b0d-4719-999f-1b0366c58579"
+								"{{idPedido}}"
 							]
 						}
 					},
 					"response": []
 				}
 			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		},
 		{
-			"name": "admin",
-			"item": [
-				{
-					"name": "buscar-pedido-por-status",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "accept",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:3000/api/pedido/status/RECEBIDO",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"pedido",
-								"status",
-								"RECEBIDO"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "atualiza-status Copy",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"status\": \"FINALIZADO\"\n}"
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/pedido/atualizar-status/34a833ab-4b0d-4719-999f-1b0366c58579",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"pedido",
-								"atualizar-status",
-								"34a833ab-4b0d-4719-999f-1b0366c58579"
-							]
-						}
-					},
-					"response": []
-				}
-			]
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "idCliente",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "idPedido",
+			"value": "",
+			"type": "string"
 		}
 	]
 }
