@@ -33,12 +33,14 @@ O deploy é feito através de docker, é necessário rodar o comando
 
 - Após isso, execute a requisição ```POST adicionar_pedido``` para gerar um novo pedido.
 
-- Caso queira verificar o pedido criado, execute a requisição ```_GET_  listar-pedidos```.
+- Caso queira verificar o pedido criado, execute a requisição ```GET listar-pedidos```.
 
 - Dentro da pasta _admin_ existem duas requisições, uma é ```GET buscar-pedido-por-status``` que está preparada para buscar todos os pedidos com o status de ```RECEBIDO``` e a outra é o ```POST atualiza-status```, que atualiza o pedido para o status que for definido na requisição, na collection está por padrão o status ```FINALIZADO```.
 
+
 Caso queira todos os endpoints do projeto, pode ser encontrado acessando a url 
 [http://localhost:3000/documentation](http://localhost:3000/documentation), construída usando o [Swagger](https://swagger.io).
+
 
 
 ### EventStorm
