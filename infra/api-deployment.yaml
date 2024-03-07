@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node-app
+  template:
+    metadata:
+      labels:
+        app: node-app
+    spec:
+      containers:
+        - name: node-app
+          image: melcarniel84/tech-challenge:v3
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - name: volume-aplicacao
+              mountPath: /usr/src/app  # Caminho onde o volume será montado no container
+      volumes:
+        - name: volume-aplicacao
+          hostPath:
+            path: /usr/src/app  # Caminho no host onde os dados serão armazenados
+            type: DirectoryOrCreate
