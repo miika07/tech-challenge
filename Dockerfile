@@ -13,5 +13,8 @@ RUN npm cache clean --force
 # Instale as dependências
 RUN npm install
 
+# Copie o restante dos arquivos do código fonte
+COPY . .
+
 # Execute o comando de build:run
 CMD ["sh", "-c", "npm run build:run"]

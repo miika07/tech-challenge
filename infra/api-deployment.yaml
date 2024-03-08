@@ -14,14 +14,6 @@ spec:
     spec:
       containers:
         - name: node-app
-          image: melcarniel84/tech-challenge:v3
+          image: melcarniel84/tech-challenge:v14
           ports:
             - containerPort: 3000
-          volumeMounts:
-            - name: volume-aplicacao
-              mountPath: /usr/src/app  # Caminho onde o volume será montado no container
-      volumes:
-        - name: volume-aplicacao
-          hostPath:
-            path: /usr/src/app  # Caminho no host onde os dados serão armazenados
-            type: DirectoryOrCreate
