@@ -1,7 +1,7 @@
 
 # Tech Challenge - FIAP - Turma 5SOAT
 
-Primeira entrega da Pós de Arquitetura de Software da FIAP.
+Segunda entrega da Pós de Arquitetura de Software da FIAP.
 ## Autores
 
 - [Camila Couto](https://github.com/miika07)
@@ -43,7 +43,12 @@ Caso queira todos os endpoints do projeto, pode ser encontrado acessando a url
 
 ### Desenhos de Arquitetura
 
+O sistema foi projetado para rodar em arquitetura Cloud, usando serviços da AWS seguindo as seguinte premissa: 
+
 ![Arquitetura Cloud - Kubernetes](src/assets/arquitetura/arquitetura-cloud.png)
+
+Utilizamos o modelo C4 de nível 1 para abstrair a arquitetura e representar como os nossos stakeholders se comunicam com o sistema.
+
 ![C4 Model - Nível 1](src/assets/arquitetura/c4-projeto-tech-challenge.png)
 
 ### EventStorm
