@@ -16,6 +16,25 @@ O deploy é feito através de docker, é necessário rodar o comando
 
 ## Documentação
 
+**Roteiro de uso [SEGUNDA ENTREGA]**
+
+>Por favor, usar a collection __fluxo - segunda entrega__ que está na collection do POSTMAN
+
+- Primeiro vamos adicionar um cliente, é opcional para criar um pedido, mas nesse fluxo vamos incluir e setar as váriaveis.
+
+- Depois vamos fazer o checkout do pedido, na collection já vai estar setado alguns produtos que incluímos na migration.
+Foi adicionado também um status de pagamento nesse payload, onde a gente criar na tabela pagamentos um registro vinculando com o id do pedido. Vamos enviar o status como EM_ANALISE.
+
+- Em seguida tem um uma rota para consultar o status do pagamento, essa rota também já está setada a váriavel com o id do pedido. Consultando agora o resultado deveria ser o mesmo de cima, EM_ANALISE.
+
+- Em seguida vamos chamar o webhook de pagamento, nessa rota vamos mockar o pagamento do pedido, por isso enviamos o status como APROVADO. E dentro desse mock já está atualizando o status do pedido para RECEBIDO caso o pagamento esteja ok.
+
+- Podemos consultar o status do pagamento mais uma vez para confirmar o pagamento.
+
+- Depois podemos listar todos os pedidos que estejam com o status RECEBIDO, EM_PREPARACAO e PRONTO. Vai ser ordenado de acordo com o que foi pedido no challenge.
+
+- E por último temos a rota de atualizar o status do pedido, onde a váriavel do pedido já está setada também.
+
 **Roteiro de uso**
 
 >Antes de iniciar o uso da API, temos algumas informações importantes!
