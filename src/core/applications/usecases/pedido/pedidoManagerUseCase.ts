@@ -1,6 +1,6 @@
 import { PedidoRepositoryAdapter } from "../../../../infra/adapter/pedido/pedidoRepositoryAdapter";
 import { PedidoEntity } from "../../../domain/entities/pedidos";
-import { parserCheckoutPedido, parserItems, parserNewPedidoDB, parserPedido, parserPedidoDB, parserPedidos } from "../../adapters/pedido";
+import { parserPedidosComDescricao, parserCheckoutPedido, parserItems, parserNewPedidoDB, parserPedido, parserPedidoDB, parserPedidos } from "../../adapters/pedido";
 import { ItemPedido } from "../../models/itensPedido";
 import { CheckoutPedidoResponse, Pedido } from "../../models/pedido";
 import PagamentoManagerUseCase from "../pagamento/pagamentoManagerUseCase";
@@ -59,6 +59,19 @@ export default class PedidoManagerUseCase {
         return this.adapter.deletarPedido(id);
     }
 
+    async buscarPedidosNaoFinalizados(): Promise<Pedido[]> {
+        const response = await this.adapter.buscarPedidosNaoFinalizados();
+        const pedidosComParse = parserPedidosComDescricao(response);
+
+        const listaPronto = pedidosComParse.filter(objeto => objeto.status === Status.PRONTO);
+        const listaEmPreparacao = pedidosComParse.filter(objeto => objeto.status === Status.EM_PREPARACAO);
+        const listaRecebido = pedidosComParse.filter(objeto => objeto.status === Status.RECEBIDO);
+
+        const result = listaPronto.concat(listaEmPreparacao, listaRecebido);
+
+        return result;
+    }
+    
     async checkoutPedido(idCliente: string, status: string, itensPedido: ItemPedido[], statusPagamento: string): Promise<CheckoutPedidoResponse>{
         const pedidoDB: PedidoEntity = parserNewPedidoDB(idCliente, status, itensPedido);
         const response = await this.adapter.criarPedido(pedidoDB);

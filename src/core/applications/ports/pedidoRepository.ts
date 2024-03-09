@@ -8,4 +8,5 @@ export interface PedidoRepositoryInterface {
     buscarPedidoPorStatus(status: string): Promise<PedidoEntity[]>;
     atualizarPedido(pedido: PedidoEntity): Promise<PedidoEntity | undefined>;
     deletarPedido(id: string): Promise<boolean>;
+    buscarPedidosNaoFinalizados(): Promise<PedidoEntity[]>;
 }

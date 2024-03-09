@@ -87,6 +87,25 @@ export const parserPedidos = (pedidosDB: PedidoEntity[]): Pedido[] => {
     return pedidos;
 }
 
+export const parserPedidosComDescricao = (pedidosDB: PedidoEntity[]) => {
+    const pedidos = [];
+    pedidosDB.forEach((pedidoDB) => {
+        let cliente: any = pedidoDB.idCliente; 
+        pedidos.push({
+            ...pedidoDB.id && { id: pedidoDB.id },
+           
+            status: Status[pedidoDB.status],
+            itensPedido: pedidoDB.itensPedido.map(item => {
+                let obj: any = item.idProduto;
+                return {idProduto: obj.id, descricao: obj.descricao};
+            }),
+            numeroPedido: pedidoDB.numeroPedido,
+            updateAt: pedidoDB.updatedAt
+        })
+    })
+    return pedidos;
+}
+
 export const parserCheckoutPedido = (pedidoDB: PedidoEntity): CheckoutPedidoResponse => {
     return {
         numeroPedido: pedidoDB.numeroPedido
