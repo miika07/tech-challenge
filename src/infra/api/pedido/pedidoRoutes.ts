@@ -56,6 +56,17 @@ export default class PedidoRoutes implements IRoute {
             }
         },
         {
+          method: 'POST',
+          path: '/api/checkout-pedido',
+          options: {
+            handler: controller.checkoutPedido,
+            validate: validate.postCheckoutPedido,
+            description: 'Checkout do pedido',
+            tags: ['api', 'pedidos'],
+            //auth: 'jwt'
+          }
+      },
+        {
             method: 'DELETE',
             path: '/api/pedido/{id}',
             options: {

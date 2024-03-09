@@ -14,3 +14,7 @@ export interface Pedido {
     itensPedido?: ItemPedido[];
     numeroPedido?: number;
 }
+
+export interface CheckoutPedidoResponse {
+    numeroPedido?: number;
+}
