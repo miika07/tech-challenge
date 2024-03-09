@@ -10,7 +10,7 @@ export default class PagamentoController {
         request: Hapi.Request, h: Hapi.ResponseToolkit
     ): Promise<any> => {
         try {
-            const data = await this.pagamentoUseCase.buscarPagamentoPorIdPedido(request.params.id)
+            const data = await this.pagamentoUseCase.buscarPagamentoPorIdPedido(request.params.idPedido)
             if (data){
               return h.response(data).code(200);
             }

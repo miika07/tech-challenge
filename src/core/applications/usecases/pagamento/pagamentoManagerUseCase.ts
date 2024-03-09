@@ -15,7 +15,9 @@ export default class PagamentoManagerUseCase {
     }
 
     async buscarPagamentoPorIdPedido(id: string): Promise<Pagamento> {
+        console.log(id)
         const response = await this.adapter.buscarPagamentoPorIdPedido(id);
+        console.log(response)
         return response ? parserPagamento(response) : response;
     }
 
