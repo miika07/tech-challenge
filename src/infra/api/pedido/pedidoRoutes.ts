@@ -5,7 +5,7 @@ import IRoute from '../../../helper/route'
 import validate from './validate'
 
 export default class PedidoRoutes implements IRoute {
-  public async register (server: Hapi.Server): Promise<any> {
+  public async register(server: Hapi.Server): Promise<any> {
     return await new Promise<void>(resolve => {
       Logger.info('Pedidos - Adicionando rotas')
 
@@ -45,15 +45,15 @@ export default class PedidoRoutes implements IRoute {
           }
         },
         {
-            method: 'POST',
-            path: '/api/pedido',
-            options: {
-              handler: controller.adicionarPedido,
-              validate: validate.postPedido,
-              description: 'Adiciona um pedido',
-              tags: ['api', 'pedidos'],
-              //auth: 'jwt'
-            }
+          method: 'POST',
+          path: '/api/pedido',
+          options: {
+            handler: controller.adicionarPedido,
+            validate: validate.postPedido,
+            description: 'Adiciona um pedido',
+            tags: ['api', 'pedidos'],
+            //auth: 'jwt'
+          }
         },
         {
           method: 'POST',
@@ -78,15 +78,15 @@ export default class PedidoRoutes implements IRoute {
             }
         },
         {
-            method: 'PUT',
-            path: '/api/pedido/{id}',
-            options: {
-              handler: controller.atualizarPedido,
-              validate: validate.updatePedido,
-              description: 'Atualiza um pedido',
-              tags: ['api', 'pedidos'],
-              //auth: 'jwt'
-            }
+          method: 'PUT',
+          path: '/api/pedido/{id}',
+          options: {
+            handler: controller.atualizarPedido,
+            validate: validate.updatePedido,
+            description: 'Atualiza um pedido',
+            tags: ['api', 'pedidos'],
+            //auth: 'jwt'
+          }
         },
         {
           method: 'PUT',
@@ -98,7 +98,18 @@ export default class PedidoRoutes implements IRoute {
             tags: ['api', 'pedidos'],
             //auth: 'jwt'
           }
-      }
+        },
+        {
+          method: 'GET',
+          path: '/api/pedidos/nao-finalizados',
+          options: {
+            handler: controller.buscarPedidosNaoFinalizados,
+            description: 'Busca os pedidos que estão em andamento ainda.',
+            tags: ['api', 'pedidos']
+            // auth: 'jwt'
+          }
+        }
+
       ])
 
       Logger.info('Pedidos - Finalizando de adicionar rotas')

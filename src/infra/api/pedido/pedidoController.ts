@@ -111,4 +111,16 @@ export default class PedidoController {
             return h.response({ error: 'Internal Server Error' }).code(500)
         }
     }
+
+    public buscarPedidosNaoFinalizados = async (
+        request: Hapi.Request, h: Hapi.ResponseToolkit
+    ): Promise<any> => {
+        try {
+            const data = await this.pedidoManagerUseCase.buscarPedidosNaoFinalizados()
+            return h.response(data)
+        } catch (error) {
+            Logger.error(`Error in GET /pedidos/nao-finalizados: ${error.message}`);
+            return h.response({ error: 'Internal Server Error' }).code(500)
+        }
+    }
 }
