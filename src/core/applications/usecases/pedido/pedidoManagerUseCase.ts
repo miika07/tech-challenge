@@ -2,7 +2,7 @@ import { PedidoRepositoryAdapter } from "../../../../infra/adapter/pedido/pedido
 import { PedidoEntity } from "../../../domain/entities/pedidos";
 import { parserPedidosComDescricao, parserCheckoutPedido, parserItems, parserNewPedidoDB, parserPedido, parserPedidoDB, parserPedidos } from "../../adapters/pedido";
 import { ItemPedido } from "../../models/itensPedido";
-import { CheckoutPedidoResponse, Pedido } from "../../models/pedido";
+import { CheckoutPedidoResponse, Pedido, Status } from "../../models/pedido";
 import PagamentoManagerUseCase from "../pagamento/pagamentoManagerUseCase";
 
 export default class PedidoManagerUseCase {
@@ -38,7 +38,7 @@ export default class PedidoManagerUseCase {
             const itensPedidoParsed = parserItems(id, itensPedido,pedido.itensPedido);
             const pedidoDB = parserPedidoDB(pedido.id, pedido.idCliente, status, itensPedidoParsed.itensPedidoDB, pedido.numeroPedido);
             const response = await this.adapter.atualizarPedido(pedidoDB);
-            const removerItensDB = this.adapter.deletarItensPedido(itensPedidoParsed.itensRemover);
+            await this.adapter.deletarItensPedido(itensPedidoParsed.itensRemover);
             return parserPedido(response);
         }
         
