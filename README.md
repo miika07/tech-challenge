@@ -41,7 +41,10 @@ O deploy é feito através de docker, é necessário rodar o comando
 Caso queira todos os endpoints do projeto, pode ser encontrado acessando a url 
 [http://localhost:3000/documentation](http://localhost:3000/documentation), construída usando o [Swagger](https://swagger.io).
 
+### Desenhos de Arquitetura
 
+![Arquitetura Cloud - Kubernetes](src/assets/arquitetura/arquitetura-cloud.png)
+![C4 Model - Nível 1](src/assets/arquitetura/c4-projeto-tech-challenge.png)
 
 ### EventStorm
 
