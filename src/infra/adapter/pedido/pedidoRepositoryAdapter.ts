@@ -1,4 +1,4 @@
-import { Repository } from "typeorm";
+import { Not, Repository } from "typeorm";
 import { PedidoRepositoryInterface } from "../../../core/applications/ports/pedidoRepository";
 import { ItemPedidoEntity } from "../../../core/domain/entities/itemPedido";
 import { PedidoEntity } from "../../../core/domain/entities/pedidos";
@@ -53,6 +53,15 @@ export class PedidoRepositoryAdapter implements PedidoRepositoryInterface {
     async deletarItensPedido(itensPedido): Promise<ItemPedidoEntity[]> {
         const result = itensPedido.forEach(element => {
             return this.itemPedidoRepository.remove(element);
+        });
+        return result;
+    }
+
+    async buscarPedidosNaoFinalizados(): Promise<PedidoEntity[]> {
+        const result = this.pedidoRepository.find({
+            where: { status: Not("FINALIZADO") }, 
+            relations: { itensPedido: true }, 
+            order: { status: 'ASC', updatedAt: 'ASC' },
         });
         return result;
     }

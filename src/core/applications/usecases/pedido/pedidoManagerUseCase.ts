@@ -1,9 +1,9 @@
 import { PedidoRepositoryAdapter } from "../../../../infra/adapter/pedido/pedidoRepositoryAdapter";
 import { ItemPedidoEntity } from "../../../domain/entities/itemPedido";
 import { PedidoEntity } from "../../../domain/entities/pedidos";
-import { parserItemPedido, parserItems, parserNewPedidoDB, parserPedido, parserPedidoDB, parserPedidos } from "../../adapters/pedido";
+import { parserPedidosComDescricao, parserItems, parserNewPedidoDB, parserPedido, parserPedidoDB, parserPedidos } from "../../adapters/pedido";
 import { ItemPedido } from "../../models/itensPedido";
-import { Pedido } from "../../models/pedido";
+import { Pedido, Status } from "../../models/pedido";
 
 export default class PedidoManagerUseCase {
 
@@ -57,4 +57,18 @@ export default class PedidoManagerUseCase {
     async deletarPedido(id: string): Promise<boolean> {
         return this.adapter.deletarPedido(id);
     }
+
+    async buscarPedidosNaoFinalizados(): Promise<Pedido[]> {
+        const response = await this.adapter.buscarPedidosNaoFinalizados();
+        const pedidosComParse = parserPedidosComDescricao(response);
+
+        const listaPronto = pedidosComParse.filter(objeto => objeto.status === Status.PRONTO);
+        const listaEmPreparacao = pedidosComParse.filter(objeto => objeto.status === Status.EM_PREPARACAO);
+        const listaRecebido = pedidosComParse.filter(objeto => objeto.status === Status.RECEBIDO);
+
+        const result = listaPronto.concat(listaEmPreparacao, listaRecebido);
+
+        return result;
+    }
+    
 }
