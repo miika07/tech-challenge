@@ -16,7 +16,11 @@ O deploy é feito através de docker, é necessário rodar o comando
 
 ## Documentação
 
-**Roteiro de uso [SEGUNDA ENTREGA]**
+### Roteiro de uso
+
+> Os roteiros de uso são independentes
+
+**[SEGUNDA ENTREGA]**
 
 >Por favor, usar a collection __fluxo - segunda entrega__ que está na collection do POSTMAN
 
@@ -35,7 +39,7 @@ Foi adicionado também um status de pagamento nesse payload, onde a gente criar 
 
 - E por último temos a rota de atualizar o status do pedido, onde a váriavel do pedido já está setada também.
 
-**Roteiro de uso**
+**[PRIMEIRA ENTREGA]**
 
 >Antes de iniciar o uso da API, temos algumas informações importantes!
 
