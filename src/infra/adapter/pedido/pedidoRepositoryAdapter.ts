@@ -63,7 +63,10 @@ export class PedidoRepositoryAdapter implements PedidoRepositoryInterface {
 
     async buscarPedidosNaoFinalizados(): Promise<PedidoEntity[]> {
         const result = this.pedidoRepository.find({
-            where: { status: Not("FINALIZADO") }, 
+            where: [
+                { status: Not("PENDENTE") },
+                { status: Not("FINALIZADO") }
+            ],
             relations: { itensPedido: true }, 
             order: { status: 'ASC', updatedAt: 'ASC' },
         });

@@ -17,5 +17,6 @@ export interface Pedido {
 }
 
 export interface CheckoutPedidoResponse {
+    idPedido?: string;
     numeroPedido?: number;
 }

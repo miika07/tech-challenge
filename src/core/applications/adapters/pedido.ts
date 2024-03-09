@@ -108,6 +108,7 @@ export const parserPedidosComDescricao = (pedidosDB: PedidoEntity[]) => {
 
 export const parserCheckoutPedido = (pedidoDB: PedidoEntity): CheckoutPedidoResponse => {
     return {
+        idPedido: pedidoDB.id,
         numeroPedido: pedidoDB.numeroPedido
     }
 }
