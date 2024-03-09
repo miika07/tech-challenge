@@ -25,7 +25,7 @@ export default class WebhookRoutes implements IRoute {
         }
       ])
 
-      Logger.info('Pedidos - Finalizando de adicionar rotas')
+      Logger.info('Webhook - Finalizando de adicionar rotas')
       resolve()
     })
   }
