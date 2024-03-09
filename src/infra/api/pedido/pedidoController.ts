@@ -62,6 +62,19 @@ export default class PedidoController {
         }
     }
 
+    public checkoutPedido = async (
+        request: Hapi.Request, h: Hapi.ResponseToolkit
+    ): Promise<any> => {
+        try {
+            const body = request.payload as { cliente: string, status: string, itensPedido: ItemPedidoEntity[], statusPagamento: string};
+            const data = await this.pedidoManagerUseCase.checkoutPedido(body.cliente, body.status, body.itensPedido, body.statusPagamento)
+            return h.response(data)
+        } catch (error) {
+            Logger.error(`Error in POST /pedido: ${error.message}`);
+            return h.response({ error: 'Internal Server Error' }).code(500)
+        }
+    }
+
     public deletarPedido = async (
         request: Hapi.Request, h: Hapi.ResponseToolkit
     ): Promise<any> => {

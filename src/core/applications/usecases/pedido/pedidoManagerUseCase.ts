@@ -1,13 +1,14 @@
 import { PedidoRepositoryAdapter } from "../../../../infra/adapter/pedido/pedidoRepositoryAdapter";
-import { ItemPedidoEntity } from "../../../domain/entities/itemPedido";
 import { PedidoEntity } from "../../../domain/entities/pedidos";
-import { parserPedidosComDescricao, parserItems, parserNewPedidoDB, parserPedido, parserPedidoDB, parserPedidos } from "../../adapters/pedido";
+import { parserPedidosComDescricao, parserCheckoutPedido, parserItems, parserNewPedidoDB, parserPedido, parserPedidoDB, parserPedidos } from "../../adapters/pedido";
 import { ItemPedido } from "../../models/itensPedido";
-import { Pedido, Status } from "../../models/pedido";
+import { CheckoutPedidoResponse, Pedido } from "../../models/pedido";
+import PagamentoManagerUseCase from "../pagamento/pagamentoManagerUseCase";
 
 export default class PedidoManagerUseCase {
 
     private adapter: PedidoRepositoryAdapter = new PedidoRepositoryAdapter();
+    private pagamentoUseCase: PagamentoManagerUseCase = new PagamentoManagerUseCase();
 
 
     async criarPedido(idCliente: string, status: string, itensPedido: ItemPedido[]): Promise<Pedido> {
@@ -71,4 +72,11 @@ export default class PedidoManagerUseCase {
         return result;
     }
     
+    async checkoutPedido(idCliente: string, status: string, itensPedido: ItemPedido[], statusPagamento: string): Promise<CheckoutPedidoResponse>{
+        const pedidoDB: PedidoEntity = parserNewPedidoDB(idCliente, status, itensPedido);
+        const response = await this.adapter.criarPedido(pedidoDB);
+
+        await this.pagamentoUseCase.criarPagamento(statusPagamento, response.id)
+        return parserCheckoutPedido(response);
+    }
 }
