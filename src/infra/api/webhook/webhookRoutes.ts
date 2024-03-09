@@ -18,7 +18,7 @@ export default class WebhookRoutes implements IRoute {
             options: {
               handler: controller.webhookPagamento,
               validate: validate.postWebhook,
-              description: 'Webhooke para pagamento do pedido',
+              description: 'Webhook para pagamento do pedido',
               tags: ['api', 'webhook'],
               //auth: 'jwt'
             }

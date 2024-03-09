@@ -1,6 +1,7 @@
 import { ItemPedido } from "./itensPedido";
 
 export enum Status {
+    PENDENTE_PAGAMENTO = "Pendente pagamento",
     RECEBIDO = 'Recebido',
     EM_PREPARACAO = 'Em preparação',
     PRONTO = 'Pronto',

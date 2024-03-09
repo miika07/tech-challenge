@@ -7,7 +7,10 @@ export default class WebhookManagerUseCase {
     private adapterPedido: PedidoRepositoryAdapter = new PedidoRepositoryAdapter();
 
     async atualizarStatusPedido(idPedido: string, statusPagamento: string): Promise<Boolean> {
+        console.log(idPedido)
+        console.log(statusPagamento)
         const pagamento = await this.adapter.buscarPagamentoPorIdPedido(idPedido);
+        console.log(pagamento)
         if (pagamento) {
             pagamento.status = statusPagamento
             await this.adapter.atualizarPagamentoStatus(pagamento);

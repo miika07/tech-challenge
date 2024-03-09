@@ -37,6 +37,10 @@ export class PedidoRepositoryAdapter implements PedidoRepositoryInterface {
         return this.pedidoRepository.findOne({ where: { id: id }, relations: { itensPedido: true } });
     }
 
+    async buscarPedidoPorNumeroPedido(numeroPedido: number): Promise<PedidoEntity | undefined> {
+        return this.pedidoRepository.findOne({ where: { numeroPedido: numeroPedido }, relations: { itensPedido: true } });
+    }
+
     async buscarPedidoPorStatus(status: string): Promise<PedidoEntity[]> {
         return this.pedidoRepository.find({ where: { status: status }, relations: { itensPedido: true } });
     }
