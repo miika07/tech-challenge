@@ -1,7 +1,6 @@
 import { PedidoRepositoryAdapter } from "../../../../infra/adapter/pedido/pedidoRepositoryAdapter";
-import { ItemPedidoEntity } from "../../../domain/entities/itemPedido";
 import { PedidoEntity } from "../../../domain/entities/pedidos";
-import { parserItemPedido, parserItems, parserNewPedidoDB, parserPedido, parserPedidoDB, parserPedidos } from "../../adapters/pedido";
+import { parserItems, parserNewPedidoDB, parserPedido, parserPedidoDB, parserPedidos } from "../../adapters/pedido";
 import { ItemPedido } from "../../models/itensPedido";
 import { Pedido } from "../../models/pedido";
 
