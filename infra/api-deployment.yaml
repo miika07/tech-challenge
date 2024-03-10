@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: node-app
-          image: melcarniel84/tech-challenge:v14
+          image: melcarniel84/tech-challenge:v16
           ports:
             - containerPort: 3000
