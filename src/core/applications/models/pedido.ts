@@ -8,7 +8,7 @@ export enum Status {
     FINALIZADO = 'Finalizado'
 }
 
-export interface Pedido {
+export class Pedido {
     id?: string;
     idCliente?: string;
     status: string;
@@ -16,7 +16,7 @@ export interface Pedido {
     numeroPedido?: number;
 }
 
-export interface CheckoutPedidoResponse {
+export class CheckoutPedidoResponse {
     idPedido?: string;
     numeroPedido?: number;
 }

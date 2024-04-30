@@ -2,23 +2,15 @@ import { Not, Repository } from "typeorm";
 import { PedidoRepositoryInterface } from "../../../core/applications/ports/pedidoRepository";
 import { ItemPedidoEntity } from "../../../core/domain/entities/itemPedido";
 import { PedidoEntity } from "../../../core/domain/entities/pedidos";
-import { AppDataSource } from "../../data/database/data-source";
-import { AppDataSourceTest } from "../../data/database/data-source-teste";
 
 export class PedidoRepositoryAdapter implements PedidoRepositoryInterface {
 
     private pedidoRepository: Repository<PedidoEntity>;
     private itemPedidoRepository: Repository<ItemPedidoEntity>;
 
-    constructor() {
-        this.pedidoRepository = process.env.NODE_ENV == 'test'
-            ? AppDataSourceTest.getRepository(PedidoEntity)
-            : AppDataSource.getRepository(PedidoEntity);
-
-        this.itemPedidoRepository = process.env.NODE_ENV == 'test'
-            ? AppDataSourceTest.getRepository(ItemPedidoEntity)
-            : AppDataSource.getRepository(ItemPedidoEntity);
-
+    constructor(pedidoRepository: Repository<PedidoEntity>, itemPedidoRepository: Repository<ItemPedidoEntity>) {
+        this.pedidoRepository = pedidoRepository;
+        this.itemPedidoRepository = itemPedidoRepository;
     }
 
     async criarPedido(pedido: PedidoEntity): Promise<PedidoEntity> {
@@ -67,7 +59,7 @@ export class PedidoRepositoryAdapter implements PedidoRepositoryInterface {
                 { status: Not("PENDENTE") },
                 { status: Not("FINALIZADO") }
             ],
-            relations: { itensPedido: true }, 
+            relations: { itensPedido: true },
             order: { status: 'ASC', updatedAt: 'ASC' },
         });
         return result;

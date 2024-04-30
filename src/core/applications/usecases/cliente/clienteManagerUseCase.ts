@@ -1,12 +1,15 @@
 import ClienteRepositoryAdapter from "../../../../infra/adapter/cliente/clienteRepositoryAdapter";
 import { ClienteEntity } from "../../../domain/entities/cliente";
 import { parserCliente, parserClientes, parserClientesDB } from "../../adapters/cliente";
-import { Cliente } from "../../models/cliente";
+import Cliente from "../../models/cliente";
 
 export default class ClienteManagerUseCase {
 
-    private adapter: ClienteRepositoryAdapter = new ClienteRepositoryAdapter();
-   
+    private adapter;
+
+    constructor(adapter: ClienteRepositoryAdapter){
+        this.adapter = adapter;
+    }
 
     async criarCliente(nome: string, email: string, cpf: string): Promise<Cliente> {
         const cliente: ClienteEntity = await this.adapter.buscarClientePorCPF(cpf);

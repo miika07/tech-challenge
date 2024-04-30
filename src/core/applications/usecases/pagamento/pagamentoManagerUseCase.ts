@@ -5,8 +5,11 @@ import { Pagamento } from "../../models/pagamento";
 
 export default class PagamentoManagerUseCase {
 
-    private adapter: PagamentoRepositoryAdapter = new PagamentoRepositoryAdapter();
+    private adapter;
 
+    constructor(adapter: PagamentoRepositoryAdapter){
+        this.adapter = adapter;
+    }
 
     async criarPagamento(status: string, idPedido: string): Promise<Pagamento> {
         const pedidoDB: PagamentoEntity = parserPagamentoDB(status, idPedido);

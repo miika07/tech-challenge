@@ -3,8 +3,13 @@ import { PedidoRepositoryAdapter } from "../../../../infra/adapter/pedido/pedido
 
 export default class WebhookManagerUseCase {
 
-    private adapter: PagamentoRepositoryAdapter = new PagamentoRepositoryAdapter();
-    private adapterPedido: PedidoRepositoryAdapter = new PedidoRepositoryAdapter();
+    private adapter: PagamentoRepositoryAdapter;
+    private adapterPedido: PedidoRepositoryAdapter;
+
+    constructor(adapter: PagamentoRepositoryAdapter, adapterPedido: PedidoRepositoryAdapter){
+        this.adapter = adapter;
+        this.adapterPedido = adapterPedido
+    }
 
     async atualizarStatusPedido(idPedido: string, statusPagamento: string): Promise<Boolean> {
         console.log(idPedido)

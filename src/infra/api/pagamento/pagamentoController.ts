@@ -1,10 +1,18 @@
 import * as Hapi from '@hapi/hapi';
 import Logger from '../../../plugins/logger.plugin';
 import PagamentoManagerUseCase from '../../../core/applications/usecases/pagamento/pagamentoManagerUseCase';
-
+import { AppDataSourceTest } from '../../data/database/data-source-teste';
+import { PagamentoEntity } from '../../../core/domain/entities/pagamento';
+import { AppDataSource } from '../../data/database/data-source';
+import { PagamentoRepositoryAdapter } from '../../adapter/pagamento/pagamentoRepositoryAdapter';
 
 export default class PagamentoController {
-    private readonly pagamentoUseCase: PagamentoManagerUseCase = new PagamentoManagerUseCase()
+
+    private pagamentoRepository = process.env.NODE_ENV == 'test'
+            ? AppDataSourceTest.getRepository(PagamentoEntity)
+            : AppDataSource.getRepository(PagamentoEntity);
+    private adapter: PagamentoRepositoryAdapter = new PagamentoRepositoryAdapter(this.pagamentoRepository);
+    private readonly pagamentoUseCase: PagamentoManagerUseCase = new PagamentoManagerUseCase(this.adapter)
 
     public buscarPagamentoPorID = async (
         request: Hapi.Request, h: Hapi.ResponseToolkit

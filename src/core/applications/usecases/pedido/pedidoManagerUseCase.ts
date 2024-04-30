@@ -7,9 +7,14 @@ import PagamentoManagerUseCase from "../pagamento/pagamentoManagerUseCase";
 
 export default class PedidoManagerUseCase {
 
-    private adapter: PedidoRepositoryAdapter = new PedidoRepositoryAdapter();
-    private pagamentoUseCase: PagamentoManagerUseCase = new PagamentoManagerUseCase();
+    private adapter: PedidoRepositoryAdapter;
+    private pagamentoUseCase: PagamentoManagerUseCase;
 
+    constructor(adapter: PedidoRepositoryAdapter, pagamentoUseCase: PagamentoManagerUseCase
+    ) {
+        this.adapter = adapter;
+        this.pagamentoUseCase = pagamentoUseCase;
+    }
 
     async criarPedido(idCliente: string, status: string, itensPedido: ItemPedido[]): Promise<Pedido> {
         const pedidoDB: PedidoEntity = parserNewPedidoDB(idCliente, status, itensPedido);
@@ -35,13 +40,13 @@ export default class PedidoManagerUseCase {
     async atualizarPedido(id: string, status: string, itensPedido: ItemPedido[]): Promise<Pedido | undefined> {
         const pedido = await this.adapter.buscarPedidoPorId(id);
         if (pedido) {
-            const itensPedidoParsed = parserItems(id, itensPedido,pedido.itensPedido);
+            const itensPedidoParsed = parserItems(id, itensPedido, pedido.itensPedido);
             const pedidoDB = parserPedidoDB(pedido.id, pedido.idCliente, status, itensPedidoParsed.itensPedidoDB, pedido.numeroPedido);
             const response = await this.adapter.atualizarPedido(pedidoDB);
             await this.adapter.deletarItensPedido(itensPedidoParsed.itensRemover);
             return parserPedido(response);
         }
-        
+
         return pedido;
     }
 
@@ -71,8 +76,8 @@ export default class PedidoManagerUseCase {
 
         return result;
     }
-    
-    async checkoutPedido(idCliente: string, status: string, itensPedido: ItemPedido[], statusPagamento: string): Promise<CheckoutPedidoResponse>{
+
+    async checkoutPedido(idCliente: string, status: string, itensPedido: ItemPedido[], statusPagamento: string): Promise<CheckoutPedidoResponse> {
         const pedidoDB: PedidoEntity = parserNewPedidoDB(idCliente, status, itensPedido);
         const response = await this.adapter.criarPedido(pedidoDB);
 

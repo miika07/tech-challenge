@@ -5,8 +5,12 @@ import { Produto } from "../../models/produto";
 
 export default class ProdutoManagerUseCases {
    
-    private adapter: ProdutoRepositoryAdapter = new ProdutoRepositoryAdapter();
+    private adapter: ProdutoRepositoryAdapter;
     
+    constructor(adapter: ProdutoRepositoryAdapter){
+        this.adapter = adapter;
+    }
+
     async criarProduto(nome: string, descricao: string, preco: number, categoria: string): Promise<Produto> {
         const produtoDB: ProdutoEntity = parserNewProdutoDB(nome, descricao, preco, categoria)
         const response = await this.adapter.criarProduto(produtoDB);

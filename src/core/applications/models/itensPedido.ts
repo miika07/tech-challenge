@@ -1,4 +1,4 @@
-export interface ItemPedido {
+export class ItemPedido {
     id?: string;
     idPedido: string;
     idProduto: string;
