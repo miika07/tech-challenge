@@ -9,10 +9,8 @@ export default class ProdutoRepositoryAdapter implements ProdutoRepositoryInterf
 
     private produtoRepository: Repository<ProdutoEntity>;
 
-    constructor() {
-        this.produtoRepository  = process.env.NODE_ENV == 'test'
-        ? AppDataSourceTest.getRepository(ProdutoEntity)
-        : AppDataSource.getRepository(ProdutoEntity);
+    constructor(produtoRepository: Repository<ProdutoEntity>) {
+        this.produtoRepository  = produtoRepository;
     }
 
     async criarProduto(produto: ProdutoEntity): Promise<ProdutoEntity> {

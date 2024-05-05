@@ -1,7 +1,7 @@
 
 # Tech Challenge - FIAP - Turma 5SOAT
 
-Primeira entrega da Pós de Arquitetura de Software da FIAP.
+Segunda entrega da Pós de Arquitetura de Software da FIAP.
 ## Autores
 
 - [Camila Couto](https://github.com/miika07)
@@ -16,7 +16,11 @@ O deploy é feito através de docker, é necessário rodar o comando
 
 ## Documentação
 
-**Roteiro de uso [SEGUNDA ENTREGA]**
+### Roteiro de uso
+
+> Os roteiros de uso são independentes
+
+**[SEGUNDA ENTREGA]**
 
 >Por favor, usar a collection __fluxo - segunda entrega__ que está na collection do POSTMAN
 
@@ -35,7 +39,7 @@ Foi adicionado também um status de pagamento nesse payload, onde a gente criar 
 
 - E por último temos a rota de atualizar o status do pedido, onde a váriavel do pedido já está setada também.
 
-**Roteiro de uso**
+**[PRIMEIRA ENTREGA]**
 
 >Antes de iniciar o uso da API, temos algumas informações importantes!
 
@@ -60,7 +64,15 @@ Foi adicionado também um status de pagamento nesse payload, onde a gente criar 
 Caso queira todos os endpoints do projeto, pode ser encontrado acessando a url 
 [http://localhost:3000/documentation](http://localhost:3000/documentation), construída usando o [Swagger](https://swagger.io).
 
+### Desenhos de Arquitetura
 
+O sistema foi projetado para rodar em arquitetura Cloud, usando serviços da AWS seguindo a seguinte premissa: 
+
+![Arquitetura Cloud - Kubernetes](src/assets/arquitetura/arquitetura-cloud.png)
+
+Utilizamos também o modelo C4 de nível 1 para abstrair a arquitetura e representar como os nossos stakeholders se comunicam com o sistema.
+
+![C4 Model - Nível 1](src/assets/arquitetura/c4-projeto-tech-challenge.png)
 
 ### EventStorm
 

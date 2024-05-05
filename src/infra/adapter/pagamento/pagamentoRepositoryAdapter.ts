@@ -1,17 +1,13 @@
 import { Repository } from "typeorm";
 import { PagamentoRepositoryInterface } from "../../../core/applications/ports/pagamentoRepository";
-import { AppDataSource } from "../../data/database/data-source";
-import { AppDataSourceTest } from "../../data/database/data-source-teste";
 import { PagamentoEntity } from "../../../core/domain/entities/pagamento";
 
 export class PagamentoRepositoryAdapter implements PagamentoRepositoryInterface {
 
     private pagamentoRepository: Repository<PagamentoEntity>;
 
-    constructor() {
-        this.pagamentoRepository = process.env.NODE_ENV == 'test'
-            ? AppDataSourceTest.getRepository(PagamentoEntity)
-            : AppDataSource.getRepository(PagamentoEntity);
+    constructor(pagamentoRepository: Repository<PagamentoEntity>) {
+        this.pagamentoRepository = pagamentoRepository;
     }
 
     async criarPagamento(pagamento: PagamentoEntity): Promise<PagamentoEntity> {
