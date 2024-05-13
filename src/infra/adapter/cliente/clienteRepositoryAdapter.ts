@@ -1,17 +1,13 @@
 import { Repository } from "typeorm";
 import { ClienteRepositoryInterface } from "../../../core/applications/ports/clienteRepository";
 import { ClienteEntity } from "../../../core/domain/entities/cliente";
-import { AppDataSource } from "../../data/database/data-source";
-import { AppDataSourceTest } from "../../data/database/data-source-teste";
 
 export default class ClienteRepositoryAdapter implements ClienteRepositoryInterface {
 
     private clienteRepository: Repository<ClienteEntity>;
 
-    constructor() {
-        this.clienteRepository = process.env.NODE_ENV == 'test'
-            ? AppDataSourceTest.getRepository(ClienteEntity)
-            : AppDataSource.getRepository(ClienteEntity);
+    constructor(clienteRepository: Repository<ClienteEntity>) {
+        this.clienteRepository = clienteRepository;
     }
 
     async criarCliente(cliente: ClienteEntity): Promise<ClienteEntity> {

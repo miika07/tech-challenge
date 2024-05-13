@@ -1,5 +1,6 @@
 import { ClienteEntity } from "../../domain/entities/cliente";
-import { Cliente } from "../models/cliente";
+import Cliente from "../models/cliente";
+
 
 export const parserCliente = (clienteDB: ClienteEntity) : Cliente => {
     return {

@@ -3,11 +3,33 @@ import Logger from '../../plugins/logger.plugin'
 import Config from '../../config/environment.config'
 import { SwaggerPlugin } from '../../plugins/swagger.plugin'
 import Router from './router'
-// import * as JWT from 'hapi-auth-jwt2'
+import * as JWT from 'hapi-auth-jwt2'
 import { AppDataSource } from '../data/database/data-source'
 import { plugin } from 'hapi-alive';
+import { CognitoJwtVerifier } from "aws-jwt-verify";
 
-
+async function verifyToken(decoded, request) {
+  const verifier = CognitoJwtVerifier.create({
+    userPoolId: "us-east-1_5WTWlLU5B",
+    tokenUse: "access",
+    clientId: "t52frj6phsk6mti10u43gjq3b",
+  });
+  
+  try {
+      const authorizationHeader = request.headers.authorization;
+      if (!authorizationHeader) {
+          return { isValid: true };
+      }
+      
+      const token = authorizationHeader.replace('Bearer ', '');
+      const payload = await verifier.verify(token);
+      
+      return { isValid: true, credentials: payload };
+  } catch (error) {
+      console.error('Failed to verify token:', error);
+      return { isValid: false };
+  }
+}
 
 const server = new Hapi.Server({
     port: Config.port
@@ -26,14 +48,15 @@ const server = new Hapi.Server({
             .catch((error) => console.log(error))
             }
         
-            // await Server._instance.register(JWT)
+            await server.register(JWT)
 
-            // Server._instance.auth.strategy('jwt', 'jwt', {
-            //   key: 'stubJWT',
-            //   validate
-            // })
+            server.auth.strategy('jwt', 'jwt', {
+              key: false,
+              verify: verifyToken
+            })
 
-            // Server._instance.auth.default('jwt')
+            server.auth.default('jwt')
+
             await server.register({
               plugin,
               options: {

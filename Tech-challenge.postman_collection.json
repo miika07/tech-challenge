@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "caf606aa-f97b-4151-b1ed-3c8fecc3a0f4",
+		"_postman_id": "85a88299-11d4-4dd6-a48e-e21fed1541a9",
 		"name": "Tech-challenge",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "31619346",
-		"_collection_link": "https://galactic-robot-284700.postman.co/workspace/My-Workspace~34a43219-9205-4013-8d1f-b08bfa6e4543/collection/31619346-caf606aa-f97b-4151-b1ed-3c8fecc3a0f4?action=share&source=collection_link&creator=31619346"
+		"_exporter_id": "7488873"
 	},
 	"item": [
 		{
@@ -212,6 +211,179 @@
 						}
 					},
 					"response": []
+				}
+			]
+		},
+		{
+			"name": "Fluxo - segunda entrega",
+			"item": [
+				{
+					"name": "adicionar-cliente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (responseCode.code === 200) {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.collectionVariables.set(\"idCliente\", jsonData.id);\r",
+									"}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"usuario-4\",\n  \"email\": \"usuario@gmail.com\",\n  \"cpf\": \"517.319.829-73\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/cliente",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"cliente"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "checkout-pedido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Extrai o valor do campo \"campo_desejado\" da resposta JSON\r",
+									"var valor = JSON.parse(responseBody).idPedido;\r",
+									"\r",
+									"// Salva o valor como uma variável global no Postman\r",
+									"pm.collectionVariables.set(\"idPedido\", valor);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"cliente\": \"{{idCliente}}\",\n    \"status\": \"PENDENTE_PAGAMENTO\",\n    \"itensPedido\": [\n        {\n            \"idProduto\": \"0688c7bd-daac-4db6-a52b-c6cbcb3e1b85\",\n            \"quantidade\": 1\n        },\n        {\n            \"idProduto\": \"342e139f-3c3b-450d-b2b2-b18db17d9be6\",\n            \"quantidade\": 1\n        },\n        {\n            \"idProduto\": \"7f1152f7-66bc-44d9-aae6-4c0161194c59\",\n            \"quantidade\": 1\n        }\n    ],\n    \"statusPagamento\": \"EM_ANALISE\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/checkout-pedido",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"checkout-pedido"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar status pagamento",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/pagamento/{{idPedido}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"pagamento",
+								"{{idPedido}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Webhook - pagamento",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"idPedido\": \"{{idPedido}}\",\n  \"statusPagamento\": \"APROVADO\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/webhook-pagamento",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"webhook-pagamento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar pedidos não finalizados",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/pedidos/nao-finalizados",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"pedidos",
+								"nao-finalizados"
+							]
+						}
+					},
+					"response": []
 				},
 				{
 					"name": "atualiza-status",
@@ -229,7 +401,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"status\": \"FINALIZADO\"\n}"
+							"raw": "{\n  \"status\": \"EM_PREPARACAO\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/pedido/atualizar-status/{{idPedido}}",

@@ -7,7 +7,7 @@ export class PagamentoEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @OneToOne(() => PedidoEntity, { eager: true, nullable: true })
+    @Column()
     idPedido: string;
 
     @Column()

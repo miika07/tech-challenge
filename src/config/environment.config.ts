@@ -18,6 +18,13 @@ const config = {
   service: {
     enabled: process.env.ENABLED_SERVICE === 'true'
   },
+  apis: {
+    apigateway:{
+      url: "https://nnqm29mol6.execute-api.us-east-1.amazonaws.com/Prod/auth-cpf",
+      retry: defaultRetry.times,
+      delay: defaultRetry.delay
+    },
+  },
   plugins: {
     swagger: {
       options: {
@@ -27,14 +34,14 @@ const config = {
         },
         securityDefinitions: {
           jwt: {
-            type: 'apiKey',
-            name: 'Authorization',
-            in: 'header',
-            auth: 'stubJWT'
-            //'x-keyPrefix': 'Bearer '
+              type: 'apiKey',
+              name: 'Authorization',
+              in: 'header',
+              description: 'Bearer <token>'
           }
-        },
-        security: [{ jwt: ['stubJWT'] }]
+      },
+        security: [{ jwt: [] }],
+        schemes: ['http','https']
       }
     }
   }

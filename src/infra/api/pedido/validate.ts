@@ -8,17 +8,28 @@ export default {
   },
   getByStatus: {
     params: Joi.object().keys({
-      status: Joi.string().required().valid('RECEBIDO', 'EM_PREPARACAO', 'PRONTO', 'FINALIZADO'),
+      status: Joi.string().required().valid('RECEBIDO', 'EM_PREPARACAO', 'PRONTO', 'FINALIZADO', 'PENDENTE_PAGAMENTO'),
     })
   },
   postPedido: {
     payload: Joi.object({
       cliente: Joi.string(),
-      status: Joi.string().required().valid('RECEBIDO', 'EM_PREPARACAO', 'PRONTO', 'FINALIZADO'),
+      status: Joi.string().required().valid('RECEBIDO', 'EM_PREPARACAO', 'PRONTO', 'FINALIZADO', 'PENDENTE_PAGAMENTO'),
       itensPedido: Joi.array().items(Joi.object({
         idProduto: Joi.string().required(),
         quantidade: Joi.number().required()
       }).required()).required()
+    })
+  },
+  postCheckoutPedido: {
+    payload: Joi.object({
+      cliente: Joi.string(),
+      status: Joi.string().required().valid('RECEBIDO', 'EM_PREPARACAO', 'PRONTO', 'FINALIZADO', 'PENDENTE_PAGAMENTO'),
+      itensPedido: Joi.array().items(Joi.object({
+        idProduto: Joi.string().required(),
+        quantidade: Joi.number().required()
+      }).required()).required(),
+      statusPagamento: Joi.string().required().valid('NEGADO', 'APROVADO', 'EM_ANALISE'),
     })
   },
   updatePedido: {

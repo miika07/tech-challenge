@@ -4,7 +4,7 @@ export enum Status {
     EM_ANALISE = 'Em Análise'
 }
 
-export interface Pagamento {
+export class Pagamento {
     id?: string;
     idPedido: string;
     status: string;

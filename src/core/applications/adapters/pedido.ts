@@ -1,7 +1,7 @@
 import { ItemPedidoEntity } from "../../domain/entities/itemPedido";
 import { PedidoEntity } from "../../domain/entities/pedidos";
 import { ItemPedido } from "../models/itensPedido";
-import { Pedido, Status } from "../models/pedido";
+import { CheckoutPedidoResponse, Pedido, Status } from "../models/pedido";
 
 export const parserNewItensPedidoDB = (idProduto: string, quantidade: number): ItemPedidoEntity => {
     const itemPedidoDB = new ItemPedidoEntity(idProduto, quantidade);
@@ -85,4 +85,30 @@ export const parserPedidos = (pedidosDB: PedidoEntity[]): Pedido[] => {
         })
     })
     return pedidos;
+}
+
+export const parserPedidosComDescricao = (pedidosDB: PedidoEntity[]) => {
+    const pedidos = [];
+    pedidosDB.forEach((pedidoDB) => {
+        let cliente: any = pedidoDB.idCliente; 
+        pedidos.push({
+            ...pedidoDB.id && { id: pedidoDB.id },
+           
+            status: Status[pedidoDB.status],
+            itensPedido: pedidoDB.itensPedido.map(item => {
+                let obj: any = item.idProduto;
+                return {idProduto: obj.id, descricao: obj.descricao};
+            }),
+            numeroPedido: pedidoDB.numeroPedido,
+            updateAt: pedidoDB.updatedAt
+        })
+    })
+    return pedidos;
+}
+
+export const parserCheckoutPedido = (pedidoDB: PedidoEntity): CheckoutPedidoResponse => {
+    return {
+        idPedido: pedidoDB.id,
+        numeroPedido: pedidoDB.numeroPedido
+    }
 }
