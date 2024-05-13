@@ -20,7 +20,9 @@ export default class PagamentosRoutes implements IRoute {
             validate: validate.getById,
             description: 'Busca pagamento por pedido',
             tags: ['api', 'pagamentos'],
-            //auth: 'jwt'
+            auth: {
+              mode: "optional"
+            }
           }
         }
       ])

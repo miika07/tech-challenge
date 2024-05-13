@@ -18,8 +18,10 @@ export default class ClienteRoutes implements IRoute {
           options: {
             handler: controller.buscarTodosClientes,
             description: 'Busca todos os clientes',
-            tags: ['api', 'clientes']
-            // auth: 'jwt'
+            tags: ['api', 'clientes'],
+            auth: {
+              mode: "optional"
+            }
           }
         },
         {
@@ -30,7 +32,9 @@ export default class ClienteRoutes implements IRoute {
             validate: validate.getById,
             description: 'Busca um cliente por id',
             tags: ['api', 'clientes'],
-            //auth: 'jwt'
+            auth: {
+              mode: "optional"
+            }
           }
         },
         {
@@ -41,7 +45,9 @@ export default class ClienteRoutes implements IRoute {
             validate: validate.getByCPF,
             description: 'Busca um cliente por cpf',
             tags: ['api', 'clientes'],
-            //auth: 'jwt'
+            auth: {
+              mode: "optional"
+            }
           }
         },
         {
@@ -52,7 +58,9 @@ export default class ClienteRoutes implements IRoute {
               validate: validate.postCliente,
               description: 'Adiciona um cliente',
               tags: ['api', 'clientes'],
-              //auth: 'jwt'
+              auth: {
+              mode: "optional"
+            }
             }
         },
         {
@@ -63,7 +71,9 @@ export default class ClienteRoutes implements IRoute {
               validate: validate.getById,
               description: 'Deleta um cliente',
               tags: ['api', 'clientes'],
-              //auth: 'jwt'
+              auth: {
+              mode: "optional"
+            }
             }
         },
         {
@@ -74,7 +84,9 @@ export default class ClienteRoutes implements IRoute {
               validate: validate.updateCliente,
               description: 'Atualiza um cliente',
               tags: ['api', 'clientes'],
-              //auth: 'jwt'
+              auth: {
+              mode: "optional"
+            }
             }
         }
       ])

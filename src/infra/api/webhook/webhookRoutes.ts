@@ -20,7 +20,9 @@ export default class WebhookRoutes implements IRoute {
               validate: validate.postWebhook,
               description: 'Webhook para pagamento do pedido',
               tags: ['api', 'webhook'],
-              //auth: 'jwt'
+              auth: {
+                mode: "optional"
+              }
             }
         }
       ])
