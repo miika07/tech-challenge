@@ -18,8 +18,10 @@ export default class ProdutoRoutes implements IRoute {
           options: {
             handler: controller.buscarTodosProdutos,
             description: 'Busca todos os produtos',
-            tags: ['api', 'produtos']
-            // auth: 'jwt'
+            tags: ['api', 'produtos'],
+            auth: {
+              mode: "optional"
+            }
           }
         },
         {
@@ -30,7 +32,9 @@ export default class ProdutoRoutes implements IRoute {
             validate: validate.getById,
             description: 'Busca um produto por id',
             tags: ['api', 'produtos'],
-            //auth: 'jwt'
+            auth: {
+              mode: "optional"
+            }
           }
         },
         {
@@ -41,7 +45,9 @@ export default class ProdutoRoutes implements IRoute {
             validate: validate.getByCategoria,
             description: 'Busca produtos por categoria',
             tags: ['api', 'produtos'],
-            //auth: 'jwt'
+            auth: {
+              mode: "optional"
+            }
           }
         },
         {
@@ -52,7 +58,9 @@ export default class ProdutoRoutes implements IRoute {
               validate: validate.postProduto,
               description: 'Adiciona um produto',
               tags: ['api', 'produtos'],
-              //auth: 'jwt'
+              auth: {
+              mode: "optional"
+            }
             }
         },
         {
@@ -63,7 +71,9 @@ export default class ProdutoRoutes implements IRoute {
               validate: validate.getById,
               description: 'Deleta um produto',
               tags: ['api', 'produtos'],
-              //auth: 'jwt'
+              auth: {
+              mode: "optional"
+            }
             }
         },
         {
@@ -74,7 +84,9 @@ export default class ProdutoRoutes implements IRoute {
               validate: validate.updateProduto,
               description: 'Atualiza um produto',
               tags: ['api', 'produtos'],
-              //auth: 'jwt'
+              auth: {
+              mode: "optional"
+            }
             }
         }
       ])

@@ -23,6 +23,7 @@
     "@hapi/inert": "^7.1.0",
     "@hapi/vision": "^7.0.3",
     "@types/hapi": "^18.0.14",
+    "aws-jwt-verify": "^4.0.1",
     "axios": "^1.6.5",
     "dotenv": "^16.3.1",
     "hapi-alive": "^2.0.4",

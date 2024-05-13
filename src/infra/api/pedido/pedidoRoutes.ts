@@ -18,8 +18,10 @@ export default class PedidoRoutes implements IRoute {
           options: {
             handler: controller.buscarTodosPedidos,
             description: 'Busca todos os pedidos',
-            tags: ['api', 'pedidos']
-            // auth: 'jwt'
+            tags: ['api', 'pedidos'],
+            auth: {
+              mode: "optional"
+            }
           }
         },
         {
@@ -30,7 +32,9 @@ export default class PedidoRoutes implements IRoute {
             validate: validate.getById,
             description: 'Busca um pedido por id',
             tags: ['api', 'pedidos'],
-            //auth: 'jwt'
+            auth: {
+              mode: "optional"
+            }
           }
         },
         {
@@ -41,7 +45,9 @@ export default class PedidoRoutes implements IRoute {
             validate: validate.getByStatus,
             description: 'Busca pedidos por status',
             tags: ['api', 'pedidos'],
-            //auth: 'jwt'
+            auth: {
+              mode: "optional"
+            }
           }
         },
         {
@@ -52,7 +58,9 @@ export default class PedidoRoutes implements IRoute {
             validate: validate.postPedido,
             description: 'Adiciona um pedido',
             tags: ['api', 'pedidos'],
-            //auth: 'jwt'
+            auth: {
+              mode: "optional"
+            }
           }
         },
         {
@@ -63,7 +71,9 @@ export default class PedidoRoutes implements IRoute {
             validate: validate.postCheckoutPedido,
             description: 'Checkout do pedido',
             tags: ['api', 'pedidos'],
-            //auth: 'jwt'
+            auth: {
+              mode: "optional"
+            }
           }
       },
         {
@@ -74,7 +84,9 @@ export default class PedidoRoutes implements IRoute {
               validate: validate.getById,
               description: 'Deleta um pedido',
               tags: ['api', 'pedidos'],
-              //auth: 'jwt'
+              auth: {
+              mode: "optional"
+            }
             }
         },
         {
@@ -85,7 +97,9 @@ export default class PedidoRoutes implements IRoute {
             validate: validate.updatePedido,
             description: 'Atualiza um pedido',
             tags: ['api', 'pedidos'],
-            //auth: 'jwt'
+            auth: {
+              mode: "optional"
+            }
           }
         },
         {
@@ -96,7 +110,9 @@ export default class PedidoRoutes implements IRoute {
             validate: validate.updateStatusPedido,
             description: 'Atualiza status do pedido',
             tags: ['api', 'pedidos'],
-            //auth: 'jwt'
+            auth: {
+              mode: "optional"
+            }
           }
         },
         {
@@ -105,8 +121,10 @@ export default class PedidoRoutes implements IRoute {
           options: {
             handler: controller.buscarPedidosNaoFinalizados,
             description: 'Busca os pedidos que estão em andamento ainda.',
-            tags: ['api', 'pedidos']
-            // auth: 'jwt'
+            tags: ['api', 'pedidos'],
+            auth: {
+              mode: "optional"
+            }
           }
         }
 

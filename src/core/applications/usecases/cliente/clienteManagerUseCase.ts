@@ -2,13 +2,27 @@ import ClienteRepositoryAdapter from "../../../../infra/adapter/cliente/clienteR
 import { ClienteEntity } from "../../../domain/entities/cliente";
 import { parserCliente, parserClientes, parserClientesDB } from "../../adapters/cliente";
 import Cliente from "../../models/cliente";
+import ApiGatewayService from "../../../../service/api-gateway.service"
 
 export default class ClienteManagerUseCase {
-
     private adapter;
+    private serviceApiGateway: ApiGatewayService = new ApiGatewayService()
 
     constructor(adapter: ClienteRepositoryAdapter){
         this.adapter = adapter;
+    }
+
+    async adicionarClienteCognito(id: string): Promise<Cliente | undefined> {
+        const response = await this.adapter.buscarClientePorId(id);
+        if(response){
+            try{
+                await this.serviceApiGateway.adicionarCliente(response.cpf)
+            } catch (error) {
+                return null
+            }
+           
+        }
+        return response;
     }
 
     async criarCliente(nome: string, email: string, cpf: string): Promise<Cliente> {
@@ -18,6 +32,7 @@ export default class ClienteManagerUseCase {
         }
         const clienteDB: ClienteEntity = parserClientesDB(nome, email, cpf);
         const response =  await this.adapter.criarCliente(clienteDB);
+        await this.adicionarClienteCognito(response.id)
         return parserCliente(response);
     }
 

@@ -12,10 +12,7 @@ export default class WebhookManagerUseCase {
     }
 
     async atualizarStatusPedido(idPedido: string, statusPagamento: string): Promise<Boolean> {
-        console.log(idPedido)
-        console.log(statusPagamento)
         const pagamento = await this.adapter.buscarPagamentoPorIdPedido(idPedido);
-        console.log(pagamento)
         if (pagamento) {
             pagamento.status = statusPagamento
             await this.adapter.atualizarPagamentoStatus(pagamento);
