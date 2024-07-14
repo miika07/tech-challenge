@@ -62,32 +62,6 @@ export default class ClienteRoutes implements IRoute {
               mode: "optional"
             }
             }
-        },
-        {
-            method: 'DELETE',
-            path: '/api/cliente/{id}',
-            options: {
-              handler: controller.deletarCliente,
-              validate: validate.getById,
-              description: 'Deleta um cliente',
-              tags: ['api', 'clientes'],
-              auth: {
-              mode: "optional"
-            }
-            }
-        },
-        {
-            method: 'PUT',
-            path: '/api/cliente',
-            options: {
-              handler: controller.atualizarCliente,
-              validate: validate.updateCliente,
-              description: 'Atualiza um cliente',
-              tags: ['api', 'clientes'],
-              auth: {
-              mode: "optional"
-            }
-            }
         }
       ])
 

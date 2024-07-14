@@ -11,6 +11,11 @@ export default class AxiosInstanceClass {
   }
 
   async request (options: AxiosRequestConfig): Promise<any> {
-    return await this.axiosInstance.request(options)
+    try {
+      return await this.axiosInstance.request(options)
+    } catch (error) {
+      console.log(error)
+    }
+    
   }
 }

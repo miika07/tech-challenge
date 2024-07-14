@@ -50,45 +50,6 @@ export default class ProdutoRoutes implements IRoute {
             }
           }
         },
-        {
-            method: 'POST',
-            path: '/api/produto',
-            options: {
-              handler: controller.adicionarProduto,
-              validate: validate.postProduto,
-              description: 'Adiciona um produto',
-              tags: ['api', 'produtos'],
-              auth: {
-              mode: "optional"
-            }
-            }
-        },
-        {
-            method: 'DELETE',
-            path: '/api/produto/{id}',
-            options: {
-              handler: controller.deletarProduto,
-              validate: validate.getById,
-              description: 'Deleta um produto',
-              tags: ['api', 'produtos'],
-              auth: {
-              mode: "optional"
-            }
-            }
-        },
-        {
-            method: 'PUT',
-            path: '/api/produto/{id}',
-            options: {
-              handler: controller.atualizarProduto,
-              validate: validate.updateProduto,
-              description: 'Atualiza um produto',
-              tags: ['api', 'produtos'],
-              auth: {
-              mode: "optional"
-            }
-            }
-        }
       ])
 
       Logger.info('Produtos - Finalizando de adicionar rotas')

@@ -73,29 +73,4 @@ export default class ClienteController {
             return h.response({ error: 'Internal Server Error' }).code(500)
         }
     }
-
-    public deletarCliente = async (
-        request: Hapi.Request, h: Hapi.ResponseToolkit
-    ): Promise<any> => {
-        try {
-            await this.clienteManagerUseCase.deletarCliente(request.params.id)
-            return h.response(ok)
-        } catch (error) {
-            Logger.error(`Error in DELETE /cliente: ${error.message}`);
-            return h.response({ error: 'Internal Server Error' }).code(500)
-        }
-    }
-
-    public atualizarCliente = async (
-        request: Hapi.Request, h: Hapi.ResponseToolkit
-    ): Promise<any> => {
-        try {
-            const body = request.payload as { nome: string, email: string, cpf: string };
-            const data = await this.clienteManagerUseCase.atualizarCliente(body.cpf, body.nome, body.email)
-            return h.response(data)
-        } catch (error) {
-            Logger.error(`Error in PUT /cliente: ${error.message}`);
-            return h.response({ error: 'Internal Server Error' }).code(500)
-        }
-    }
 }
