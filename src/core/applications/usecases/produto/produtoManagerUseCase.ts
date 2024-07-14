@@ -1,49 +1,29 @@
 import ProdutoRepositoryAdapter from "../../../../infra/adapter/produto/produtoRepositoryAdapter";
-import { ProdutoEntity } from "../../../domain/entities/produto";
-import { parserProduto, parserNewProdutoDB, parserProdutos, parserProdutoDB } from "../../adapters/produto";
 import { Produto } from "../../models/produto";
+import ProdutosService from "../../../../service/produtos.service"
 
 export default class ProdutoManagerUseCases {
    
     private adapter: ProdutoRepositoryAdapter;
+    private serviceProdutos: ProdutosService = new ProdutosService();
     
     constructor(adapter: ProdutoRepositoryAdapter){
         this.adapter = adapter;
     }
-
-    async criarProduto(nome: string, descricao: string, preco: number, categoria: string): Promise<Produto> {
-        const produtoDB: ProdutoEntity = parserNewProdutoDB(nome, descricao, preco, categoria)
-        const response = await this.adapter.criarProduto(produtoDB);
-        return parserProduto(response);
-    }
     
     async buscarTodosProdutos(): Promise<Produto[]> {
-        const response = await this.adapter.buscarTodosProdutos();
-        return parserProdutos(response);
+        const response = await this.serviceProdutos.buscarTodosProdutos();
+        return response.data;
     }
     
     async buscarProdutoPorId(id: string): Promise<Produto | undefined> {
-        const response = await this.adapter.buscarProdutoPorId(id);
-        return response ? parserProduto(response) : response;
+        const response = await this.serviceProdutos.buscarProdutosPorId(id);
+        return response.data;
     }
 
     async buscarProdutoPorCategoria(categoria: string): Promise<Produto[]> {
-        const response = await this.adapter.buscarProdutoPorCategoria(categoria);
-        return parserProdutos(response);
+        const response = await this.serviceProdutos.buscarProdutosPorCategoria(categoria);
+        return response.data;
     }
     
-    async atualizarProduto(id: string, nome: string, descricao: string, preco: number, categoria: string): Promise<Produto | undefined> {
-        const produto = await this.adapter.buscarProdutoPorId(id);
-        if (produto) {
-            const produtoDB = parserProdutoDB(produto.id, nome, descricao, preco, categoria);
-            const response = await this.adapter.atualizarProduto(produtoDB);
-            return parserProduto(response)
-        }
-        
-        return produto;
-    }
-
-    async deletarProduto(id: string): Promise<boolean> {
-        return this.adapter.deletarProduto(id);
-    }
 }

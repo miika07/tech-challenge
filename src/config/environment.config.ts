@@ -24,6 +24,16 @@ const config = {
       retry: defaultRetry.times,
       delay: defaultRetry.delay
     },
+    clientes:{
+      url: "http://localhost:8000/api/clientes",
+      retry: defaultRetry.times,
+      delay: defaultRetry.delay
+    },
+    produtos:{
+      url: "http://localhost:8001/api/produtos",
+      retry: defaultRetry.times,
+      delay: defaultRetry.delay
+    },
   },
   plugins: {
     swagger: {
