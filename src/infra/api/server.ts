@@ -4,7 +4,6 @@ import Config from '../../config/environment.config'
 import { SwaggerPlugin } from '../../plugins/swagger.plugin'
 import Router from './router'
 import * as JWT from 'hapi-auth-jwt2'
-import { AppDataSource } from '../data/database/data-source'
 import { plugin } from 'hapi-alive';
 import { CognitoJwtVerifier } from "aws-jwt-verify";
 
@@ -40,14 +39,6 @@ const server = new Hapi.Server({
   try {
     const isTestEnvironment = process.env.NODE_ENV
     Logger.info(isTestEnvironment)
-    if(isTestEnvironment != 'test'){
-        AppDataSource.initialize()
-            .then(() => {
-                console.log("Iniciou o database");
-            })
-            .catch((error) => console.log(error))
-            }
-        
             await server.register(JWT)
 
             server.auth.strategy('jwt', 'jwt', {

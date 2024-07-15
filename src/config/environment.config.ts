@@ -34,6 +34,11 @@ const config = {
       retry: defaultRetry.times,
       delay: defaultRetry.delay
     },
+    pedidos:{
+      url: "http://localhost:8002/api/pedidos",
+      retry: defaultRetry.times,
+      delay: defaultRetry.delay
+    },
   },
   plugins: {
     swagger: {
