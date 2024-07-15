@@ -14,7 +14,8 @@
     "migration:generate": "npm run typeorm migration:generate src/infra/data/database/migrations/database",
     "migration:run": "npm run typeorm migration:run",
     "migration:create": "typeorm-ts-node-commonjs migration:create src/infra/data/database/migrations/Migration",
-    "build:tsc": "rm -rf ./dist && mkdir dist && tsc -p ./tsconfig.json"
+    "build:tsc": "rm -rf ./dist && mkdir dist && tsc -p ./tsconfig.json",
+    "test:windows": "cross-env NODE_ENV=test  && jest --detectOpenHandles --coverage --forceExit -u"
   },
   "author": "Camila Couto e Melina Carniel",
   "license": "ISC",
@@ -41,6 +42,7 @@
   "devDependencies": {
     "@types/jest": "^29.5.11",
     "@types/node": "^20.11.0",
+    "cross-env": "^7.0.3",
     "jest": "^29.7.0",
     "jest-sonar-reporter": "^2.0.0",
     "nodemon": "^3.0.2",
