@@ -2,31 +2,11 @@ import * as Hapi from '@hapi/hapi';
 import Logger from '../../../plugins/logger.plugin';
 import { ItemPedidoEntity } from '../../../core/domain/entities/itemPedido';
 import PedidoManagerUseCase from '../../../core/applications/usecases/pedido/pedidoManagerUseCase';
-import { ok } from 'assert';
-import { AppDataSourceTest } from '../../data/database/data-source-teste';
-import { AppDataSource } from '../../data/database/data-source';
-import { PedidoRepositoryAdapter } from '../../adapter/pedido/pedidoRepositoryAdapter';
-import { PagamentoRepositoryAdapter } from '../../adapter/pagamento/pagamentoRepositoryAdapter';
-import { PagamentoEntity } from '../../../core/domain/entities/pagamento';
-import { PedidoEntity } from '../../../core/domain/entities/pedidos';
 
 export default class PedidoController {
 
-    //Repositories
-    private pedidoRepository = process.env.NODE_ENV == 'test'
-        ? AppDataSourceTest.getRepository(PedidoEntity)
-        : AppDataSource.getRepository(PedidoEntity);
-    private itemPedidoRepository = process.env.NODE_ENV == 'test'
-        ? AppDataSourceTest.getRepository(ItemPedidoEntity)
-        : AppDataSource.getRepository(ItemPedidoEntity);
-    private pagamentoRepository = process.env.NODE_ENV == 'test'
-        ? AppDataSourceTest.getRepository(PagamentoEntity)
-        : AppDataSource.getRepository(PagamentoEntity);
-    
-
     //Pedido
-    private adapter: PedidoRepositoryAdapter = new PedidoRepositoryAdapter(this.pedidoRepository, this.itemPedidoRepository);
-    private readonly pedidoManagerUseCase: PedidoManagerUseCase = new PedidoManagerUseCase(this.adapter);
+    private readonly pedidoManagerUseCase: PedidoManagerUseCase = new PedidoManagerUseCase();
 
     public buscarTodosPedidos = async (
         request: Hapi.Request, h: Hapi.ResponseToolkit
