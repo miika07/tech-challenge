@@ -3,7 +3,6 @@ import * as path from 'path';
 import { ServerInjectOptions } from '@hapi/hapi';
 import * as qs from 'querystring';
 import Server from '../src/infra/api/server';
-import { AppDataSourceTest } from '../src/infra/data/database/data-source-teste';
 
 
 interface Route { basePath: string; statusCode: number; headers: any; payload?: { meta: any, records: any[] } | any; }
@@ -66,7 +65,7 @@ export const requireMethods = (description, currentDir, sequence = ['cliente', '
 
     beforeAll(async () => {
       console.log('Antes de todos os testes - Criando conexão...');
-      await AppDataSourceTest.initialize();
+      //await AppDataSourceTest.initialize();
     });
 
     beforeEach(async () => {
@@ -77,7 +76,7 @@ export const requireMethods = (description, currentDir, sequence = ['cliente', '
 
     afterAll(async () => {
       console.log('Depois de todos os testes - Fechando');
-      await AppDataSourceTest.destroy();
+      // await AppDataSourceTest.destroy();
     })
   });
 };
