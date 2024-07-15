@@ -37,32 +37,7 @@ export default class PedidoRoutes implements IRoute {
             }
           }
         },
-        {
-          method: 'GET',
-          path: '/api/pedido/status/{status}',
-          options: {
-            handler: controller.buscarPedidoPorStatus,
-            validate: validate.getByStatus,
-            description: 'Busca pedidos por status',
-            tags: ['api', 'pedidos'],
-            auth: {
-              mode: "optional"
-            }
-          }
-        },
-        {
-          method: 'POST',
-          path: '/api/pedido',
-          options: {
-            handler: controller.adicionarPedido,
-            validate: validate.postPedido,
-            description: 'Adiciona um pedido',
-            tags: ['api', 'pedidos'],
-            auth: {
-              mode: "optional"
-            }
-          }
-        },
+      
         {
           method: 'POST',
           path: '/api/checkout-pedido',
@@ -76,32 +51,6 @@ export default class PedidoRoutes implements IRoute {
             }
           }
       },
-        {
-            method: 'DELETE',
-            path: '/api/pedido/{id}',
-            options: {
-              handler: controller.deletarPedido,
-              validate: validate.getById,
-              description: 'Deleta um pedido',
-              tags: ['api', 'pedidos'],
-              auth: {
-              mode: "optional"
-            }
-            }
-        },
-        {
-          method: 'PUT',
-          path: '/api/pedido/{id}',
-          options: {
-            handler: controller.atualizarPedido,
-            validate: validate.updatePedido,
-            description: 'Atualiza um pedido',
-            tags: ['api', 'pedidos'],
-            auth: {
-              mode: "optional"
-            }
-          }
-        },
         {
           method: 'PUT',
           path: '/api/pedido/atualizar-status/{id}',

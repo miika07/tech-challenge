@@ -16,12 +16,6 @@ export default class ClientesService {
     })
   }
 
-  async buscarTodosClientes (): Promise<any> {
-    return await this.axios.request({
-     method: 'GET'
-    })
-  }
-
   async buscarClienteId (id: string): Promise<any> {
     return await this.axios.request({
      method: 'GET',

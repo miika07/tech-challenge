@@ -3,17 +3,14 @@ import { PedidoEntity } from "../../../domain/entities/pedidos";
 import { parserPedidosComDescricao, parserCheckoutPedido, parserItems, parserNewPedidoDB, parserPedido, parserPedidoDB, parserPedidos } from "../../adapters/pedido";
 import { ItemPedido } from "../../models/itensPedido";
 import { CheckoutPedidoResponse, Pedido, Status } from "../../models/pedido";
-import PagamentoManagerUseCase from "../pagamento/pagamentoManagerUseCase";
 
 export default class PedidoManagerUseCase {
 
     private adapter: PedidoRepositoryAdapter;
-    private pagamentoUseCase: PagamentoManagerUseCase;
 
-    constructor(adapter: PedidoRepositoryAdapter, pagamentoUseCase: PagamentoManagerUseCase
+    constructor(adapter: PedidoRepositoryAdapter
     ) {
         this.adapter = adapter;
-        this.pagamentoUseCase = pagamentoUseCase;
     }
 
     async criarPedido(idCliente: string, status: string, itensPedido: ItemPedido[]): Promise<Pedido> {
@@ -80,8 +77,6 @@ export default class PedidoManagerUseCase {
     async checkoutPedido(idCliente: string, status: string, itensPedido: ItemPedido[], statusPagamento: string): Promise<CheckoutPedidoResponse> {
         const pedidoDB: PedidoEntity = parserNewPedidoDB(idCliente, status, itensPedido);
         const response = await this.adapter.criarPedido(pedidoDB);
-
-        await this.pagamentoUseCase.criarPagamento(statusPagamento, response.id)
         return parserCheckoutPedido(response);
     }
 }

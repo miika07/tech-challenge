@@ -15,11 +15,6 @@ export default class ClienteManagerUseCase {
         return cliente.data;
         }
 
-    async buscarTodosClientes(): Promise<Cliente[]> {
-        const response = await this.serviceClientes.buscarTodosClientes();
-        return response.data;
-    }
-
     async buscarClientePorId(id: string): Promise<Cliente | undefined> {
         const response = await this.serviceClientes.buscarClienteId(id);
         return response.data;

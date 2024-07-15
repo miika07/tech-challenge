@@ -16,18 +16,6 @@ export default class ClienteController {
     private readonly clienteManagerUseCase: ClienteManagerUseCase = new ClienteManagerUseCase(this.adapter);
     
 
-    public buscarTodosClientes = async (
-        request: Hapi.Request, h: Hapi.ResponseToolkit
-    ): Promise<any> => {
-        try {
-            const data = await this.clienteManagerUseCase.buscarTodosClientes()
-            return h.response(data);
-        } catch (error) {
-            Logger.error(`Error in GET /clientes: ${error.message}`);
-            return h.response({ error: 'Internal Server Error' }).code(500)
-        }
-    }
-
     public buscarClientePorID = async (
         request: Hapi.Request, h: Hapi.ResponseToolkit
     ): Promise<any> => {

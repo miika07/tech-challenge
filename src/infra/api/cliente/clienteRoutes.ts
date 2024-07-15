@@ -14,18 +14,6 @@ export default class ClienteRoutes implements IRoute {
       server.route([
         {
           method: 'GET',
-          path: '/api/clientes',
-          options: {
-            handler: controller.buscarTodosClientes,
-            description: 'Busca todos os clientes',
-            tags: ['api', 'clientes'],
-            auth: {
-              mode: "optional"
-            }
-          }
-        },
-        {
-          method: 'GET',
           path: '/api/cliente/{id}',
           options: {
             handler: controller.buscarClientePorID,
