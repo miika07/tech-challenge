@@ -88,7 +88,7 @@ const { url } = Config.apis.clientes
       await route(paramsId);
     } catch (error) {
       expect(error.statusCode).toBe(404);
-      expect(error.payload.data).toBe('Not found');
+      expect(error.payload.data).toBe('Not found'); 
     }
    
   });
