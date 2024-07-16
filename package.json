@@ -7,14 +7,15 @@
     "dev": "npm run nodemon:build",
     "nodemon:build": "nodemon --exec ./node_modules/.bin/ts-node -- ./src/index.ts",
     "build": "scripts/build.sh",
-    "test": "scripts/test.sh",
+    "test:script": "scripts/test.sh",
     "start": "ts-node src/index.ts",
     "typeorm": "typeorm-ts-node-commonjs --dataSource src/infra/data/database/data-source.ts",
     "migration:generate": "npm run typeorm migration:generate src/infra/data/database/migrations/database",
     "migration:run": "npm run typeorm migration:run",
     "migration:create": "typeorm-ts-node-commonjs migration:create src/infra/data/database/migrations/Migration",
     "build:tsc": "rm -rf ./dist && mkdir dist && tsc -p ./tsconfig.json",
-    "test:windows": "cross-env NODE_ENV=test  && jest --detectOpenHandles --coverage --forceExit -u"
+    "test": "cross-env NODE_ENV=test  && jest --detectOpenHandles --coverage --forceExit -u",
+    "coverage:check": "cross-env NODE_ENV=test  && jest --detectOpenHandles --coverage --coverageThreshold '{\"global\": {\"branches\": 80, \"functions\": 80, \"lines\": 80, \"statements\": 80}}' --forceExit -u"
   },
   "author": "Camila Couto e Melina Carniel",
   "license": "ISC",
