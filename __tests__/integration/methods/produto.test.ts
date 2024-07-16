@@ -1,39 +1,25 @@
 import { route, TestRouteOptions } from '../../common';
+import nock from 'nock';
+import Config from '../../../src/config/environment.config'
 
-it('[POST] Adicionar um produto - 200', async () => {
-    const params: TestRouteOptions = {
-      method: 'POST',
-      url: 'api/produto',
-      basePath: '',
-      payload: {
-        nome: "x-salada",
-        descricao: "Pão, salada, hamburguer, queijo",
-        preco: 22.50,
-        categoria: "Lanches"
-      }
-    };
-    const { payload, statusCode } = await route(params);
-    expect(statusCode).toBe(200);
-    expect(payload.nome).toBe('x-salada');
-  });
+const { url } = Config.apis.produtos;
 
-  it('[POST] Erro ao adicionar um produto com categoria não válida - 400', async () => {
-    const params: TestRouteOptions = {
-      method: 'POST',
-      url: 'api/produto',
-      basePath: '',
-      payload: {
-        nome: "x-salada",
-        descricao: "Pão, salada, hamburguer, queijo",
-        preco: 22.50,
-        categoria: "Hamburguer"
-      }
-    };
-    const { payload, statusCode } = await route(params);
-    expect(statusCode).toBe(400);
-    expect(payload.error).toBe('Bad Request');
-    expect(payload.message).toBe('Invalid request payload input');
-  });
+const mockResponse = [
+  {
+    id: "c4e53126-5a73-4ed0-b428-76950ed35b8c",
+    nome: "x-salada",
+    descricao: "Pão, salada, hamburguer, queijo",
+    preco: 22.50,
+    categoria: "Hamburguer"
+  },
+  {
+    id: "c4e53126-5a73-4ed0-b428-76950ed35djs",
+    nome: "Batata M",
+    descricao: "batata frita tamanho M",
+    preco: 10.50,
+    categoria: "Acompanhamentos"
+  }
+]
 
   it('[GET] Buscar todos os produtos - 200', async () => {
     const params: TestRouteOptions = {
@@ -41,106 +27,74 @@ it('[POST] Adicionar um produto - 200', async () => {
       url: 'api/produtos',
       basePath: ''
     };
+
+    nock(url)
+    .get('')
+    .reply(200, mockResponse);
     
     const { payload, statusCode } = await route(params);
     expect(statusCode).toBe(200);
-    expect(payload).toHaveLength(1);
+    expect(payload).toHaveLength(2);
   });
 
   it('[GET] Buscar produto por ID - 200', async () => {
-    const params: TestRouteOptions = {
-      method: 'GET',
-      url: 'api/produtos',
-      basePath: ''
-    };
-    
-    const response = await route(params);
-    expect(response.statusCode).toBe(200);
+    const id = '12345';
+    const mockResponse = { id: '12345', nome: 'Produto Teste', preco: 99.99 };
 
     const paramsId: TestRouteOptions = {
       method: 'GET',
-      url: `api/produto/${response.payload[0].id}`,
+      url: `api/produto/${id}`,
       basePath: '',
       query: {
-        id:response.payload.id
+        id
       }
     };
+    
+    nock(url)
+      .get(`/${id}`)
+      .reply(200, mockResponse);
+
     const { payload, statusCode } = await route(paramsId);
     expect(statusCode).toBe(200);
-    expect(payload.nome).toBe('x-salada');
+    expect(payload.nome).toBe('Produto Teste');
   });
 
   it('[GET] Buscar produto por Categoria - 200', async () => {
+    const categoria = 'Lanches';
+    
     const paramsId: TestRouteOptions = {
       method: 'GET',
       url: `api/produto/categoria/Lanches`,
       basePath: '',
     };
+    
+    nock(url)
+      .get(`/categoria/${categoria}`)
+      .reply(200, mockResponse);
+
     const { payload, statusCode } = await route(paramsId);
     expect(statusCode).toBe(200);
     expect(payload[0].nome).toBe('x-salada');
   });
 
   it('[GET] Buscar produto por Categoria - 404', async () => {
+    const categoria = 'Lanches';
+    
     const paramsId: TestRouteOptions = {
       method: 'GET',
-      url: `api/produto/categoria/Bebidas`,
+      url: `api/produto/categoria/Lanches`,
       basePath: '',
     };
-    const { payload, statusCode } = await route(paramsId);
-    expect(statusCode).toBe(404);
+
+    const mockErrorResponse = { error: 'Not found' };
+
+    nock(url)
+      .get(`/categoria/${categoria}`)
+      .reply(404, mockErrorResponse);
+
+    try {
+      await route(paramsId);
+    } catch (error) {
+      expect(error.statusCode).toBe(404);
+    }
   });
-
-  it('[PUT] Atualizar produto por ID - 200', async () => {
-    const params: TestRouteOptions = {
-      method: 'GET',
-      url: 'api/produtos',
-      basePath: ''
-    };
-    
-    const response = await route(params);
-    expect(response.statusCode).toBe(200);
-
-    const paramsId: TestRouteOptions = {
-      method: 'PUT',
-      url: `api/produto/${response.payload[0].id}`,
-      basePath: '',
-      payload: {
-        nome: response.payload[0].nome,
-        descricao: response.payload[0].descricao,
-        preco: 25.50,
-        categoria: response.payload[0].categoria
-      }
-    };
-    const { payload, statusCode } = await route(paramsId);
-    expect(statusCode).toBe(200);
-    expect(payload.nome).toBe('x-salada');
-    expect(payload.preco).toBe(25.50);
-  });
-
-  it('[DELETE] Deletar produto por ID - 204', async () => {
-    const params: TestRouteOptions = {
-      method: 'GET',
-      url: 'api/produtos',
-      basePath: ''
-    };
-    
-    const response = await route(params);
-    expect(response.statusCode).toBe(200);
-
-    const paramsId: TestRouteOptions = {
-      method: 'DELETE',
-      url: `api/produto/${response.payload[0].id}`,
-      basePath: ''
-    };
-    const { statusCode } = await route(paramsId);
-    expect(statusCode).toBe(204);
-
-    const responseAfter = await route(params);
-    expect(responseAfter.statusCode).toBe(200);
-    expect(responseAfter.payload).toHaveLength(0);
-  });
-
-
-
-

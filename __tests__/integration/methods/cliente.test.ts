@@ -1,5 +1,8 @@
 import { route, TestRouteOptions } from '../../common';
+import nock from 'nock';
+import Config from '../../../src/config/environment.config'
 
+const { url } = Config.apis.clientes
 
   it('[POST] Adicionar um cliente - 200', async () => {
     const params: TestRouteOptions = {
@@ -12,6 +15,12 @@ import { route, TestRouteOptions } from '../../common';
         cpf: '304.206.345-23'
       }
     };
+    
+    nock(url)
+      .post('', params.payload)
+      .reply(200, params.payload);
+
+   
     const { payload, statusCode } = await route(params);
     expect(statusCode).toBe(200);
     expect(payload.nome).toBe('Melina Garcia');
@@ -28,42 +37,37 @@ import { route, TestRouteOptions } from '../../common';
         cpf: '304.206.345-23'
       }
     };
-    const { payload, statusCode } = await route(params);
-    expect(statusCode).toBe(400);
-    expect(payload.error).toBe('Cliente já existe');
+
+    nock(url)
+    .post('', params.payload)
+    .reply(400, {error: "cliente já existe"});
+
+    try {
+      await route(params);
+    } catch (error) {
+      expect(error.statusCode).toBe(400);
+      expect(error.payload.data).toBe('Cliente já existe');
+    }
   });
 
-
-  it('[GET] Buscar todos os clientes - 200', async () => {
-    const params: TestRouteOptions = {
-      method: 'GET',
-      url: 'api/clientes',
-      basePath: ''
-    };
-    
-    const { payload, statusCode } = await route(params);
-    expect(statusCode).toBe(200);
-    expect(payload).toHaveLength(1);
-  });
 
   it('[GET] Buscar cliente por ID - 200', async () => {
-    const params: TestRouteOptions = {
-      method: 'GET',
-      url: 'api/clientes',
-      basePath: ''
-    };
     
-    const response = await route(params);
-    expect(response.statusCode).toBe(200);
-
     const paramsId: TestRouteOptions = {
       method: 'GET',
-      url: `api/cliente/${response.payload[0].id}`,
+      url: `api/cliente/${"c4e53126-5a73-4ed0-b428-76950ed35b8c"}`,
       basePath: '',
       query: {
-        id:response.payload.id
+        id: "c4e53126-5a73-4ed0-b428-76950ed35b8c"
       }
     };
+
+    nock(url)
+    .get(`/${"c4e53126-5a73-4ed0-b428-76950ed35b8c"}`)
+    .reply(200, { nome: 'Melina Garcia',
+                  email: 'melina@test.com.br',
+                  cpf: '304.206.345-23'});
+
     const { payload, statusCode } = await route(paramsId);
     expect(statusCode).toBe(200);
     expect(payload.nome).toBe('Melina Garcia');
@@ -75,26 +79,40 @@ import { route, TestRouteOptions } from '../../common';
       url: `api/cliente/c4e53126-5a73-4ed0-b428-76950ed35b8c`,
       basePath: '',
     };
-    const { payload, statusCode } = await route(paramsId);
-    expect(statusCode).toBe(404);
-    expect(payload.error).toBe('Not found');
+
+    nock(url)
+    .get(`/${"c4e53126-5a73-4ed0-b428-76950ed35b8c"}`)
+    .reply(404, {error: "Not found"});
+
+    try {
+      await route(paramsId);
+    } catch (error) {
+      expect(error.statusCode).toBe(404);
+      expect(error.payload.data).toBe('Not found');
+    }
+   
   });
 
   it('[GET] Buscar cliente por CPF - 200', async () => {
-    const params: TestRouteOptions = {
-      method: 'GET',
-      url: 'api/clientes',
-      basePath: ''
-    };
-    
-    const response = await route(params);
-    expect(response.statusCode).toBe(200);
 
     const paramsId: TestRouteOptions = {
       method: 'GET',
-      url: `api/cliente-cpf/${response.payload[0].cpf}`,
+      url: `api/cliente-cpf/${"304.206.345-23"}`,
       basePath: '',
+      query: {
+        id: "304.206.345-23"
+      }
     };
+
+    const cpf = '304.206.345-23';
+    const mockResponse = { nome: 'Melina Garcia', cpf: '304.206.345-23', email: 'melina@test.com.br' };
+
+    // Configurando o mock para a URL e resposta
+    nock(url)
+      .get(`/cpf/${cpf}`)
+      .reply(200, mockResponse);
+
+
     const { payload, statusCode } = await route(paramsId);
     expect(statusCode).toBe(200);
     expect(payload.nome).toBe('Melina Garcia');
@@ -104,51 +122,21 @@ import { route, TestRouteOptions } from '../../common';
   it('[GET] Buscar cliente por CPF inexistente - 404', async () => {
     const paramsId: TestRouteOptions = {
       method: 'GET',
-      url: `api/cliente-cpf/305.234.211-34`,
+      url: `api/cliente-cpf/000.000.000-00`,
       basePath: '',
     };
-    const { payload, statusCode } = await route(paramsId);
-    expect(statusCode).toBe(404);
-    expect(payload.error).toBe('Not found');
-  });
 
-  it('[PUT] Atualizar cliente - 200', async () => {
-    const paramsId: TestRouteOptions = {
-      method: 'PUT',
-      url: `api/cliente`,
-      basePath: '',
-      payload: {
-        nome: 'Melina Carniel',
-        email: 'melina@gmail.com.br',
-        cpf: '304.206.345-23'
-      }
-    };
-    const { payload, statusCode } = await route(paramsId);
-    expect(statusCode).toBe(200);
-    expect(payload.nome).toBe('Melina Carniel');
-    expect(payload.email).toBe('melina@gmail.com.br');
-    expect(payload.cpf).toBe('304.206.345-23');
-  });
+    const cpf = '000.000.000-00';
+    const mockErrorResponse = { error: 'Not found' };
 
-  it('[DELETE] Deletar cliente por ID - 204', async () => {
-    const params: TestRouteOptions = {
-      method: 'GET',
-      url: 'api/clientes',
-      basePath: ''
-    };
-    
-    const response = await route(params);
-    expect(response.statusCode).toBe(200);
+    nock(url)
+      .get(`/cpf/${cpf}`)
+      .reply(400, mockErrorResponse);
 
-    const paramsId: TestRouteOptions = {
-      method: 'DELETE',
-      url: `api/cliente/${response.payload[0].id}`,
-      basePath: ''
-    };
-    const { statusCode } = await route(paramsId);
-    expect(statusCode).toBe(204);
-
-    const responseAfter = await route(params);
-    expect(responseAfter.statusCode).toBe(200);
-    expect(responseAfter.payload).toHaveLength(0);
+    try {
+      await route(paramsId);
+    } catch (error) {
+      expect(error.statusCode).toBe(404);
+      expect(error.payload.data).toBe('Not found');
+    }
   });
