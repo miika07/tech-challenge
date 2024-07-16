@@ -1,19 +1,10 @@
 import * as Hapi from '@hapi/hapi';
 import Logger from '../../../plugins/logger.plugin';
-import { ok } from 'assert';
 import ProdutoManagerUseCases from '../../../core/applications/usecases/produto/produtoManagerUseCase';
-import { AppDataSourceTest } from '../../data/database/data-source-teste';
-import { AppDataSource } from '../../data/database/data-source';
-import { ProdutoEntity } from '../../../core/domain/entities/produto';
-import ProdutoRepositoryAdapter from '../../adapter/produto/produtoRepositoryAdapter';
 
 export default class ProdutoController {
 
-  private produtoRepository = process.env.NODE_ENV == 'test'
-    ? AppDataSourceTest.getRepository(ProdutoEntity)
-    : AppDataSource.getRepository(ProdutoEntity);
-  private adapter: ProdutoRepositoryAdapter = new ProdutoRepositoryAdapter(this.produtoRepository);
-  private readonly produtoManagerUseCase: ProdutoManagerUseCases = new ProdutoManagerUseCases(this.adapter);
+  private readonly produtoManagerUseCase: ProdutoManagerUseCases = new ProdutoManagerUseCases();
 
   public buscarTodosProdutos = async (
     request: Hapi.Request, h: Hapi.ResponseToolkit

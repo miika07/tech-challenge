@@ -1,41 +1,32 @@
-name: Terraform Workflow
-
+name: Build
 on:
   push:
     branches:
       - main
-
+  pull_request:
+    types: [opened, synchronize, reopened]
 jobs:
-  terraform:
+  sonarcloud:
+    name: SonarCloud
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Login Docker
-        uses: docker/login-action@v2
+      - uses: actions/checkout@v3
         with:
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+          
+      - name: Run npm install 
+        run: npm install
 
-      - name: Subindo imagem Docker
+      - name: Run tests and generate coverage
         run: |
-          docker build -t ${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_REPO }}:latest . --no-cache
-          docker push ${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_REPO }}:latest
-      
-      - name: Login AWS
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+          npm run coverage:check
 
-      - name: Adiciona contexto do cluster
-        run: aws eks --region us-east-1 update-kubeconfig --name tech-challenge-eks
-
-      - name: Cria service
-        run: kubectl apply -f infra/api-service.yaml --validate=false
-
-      - name: Cria deployment
-        run: kubectl apply -f infra/api-deployment.yaml --validate=false
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
