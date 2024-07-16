@@ -31,7 +31,9 @@ module.exports = {
     '!src/**/index.ts',
     '!src/**/*.(spec|test).ts',
     '!src/config/environment.config.ts',
-    '!src/service/*',
-    '!src/models/*'
+    '!src/core/applications/models/*',
+    '!src/core/applications/adapters/*',
+    '!src/core/domain/entities/*',
+    '!src/service/api-gateway.service.ts'
   ],
 }
