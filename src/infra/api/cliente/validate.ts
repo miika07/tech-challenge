@@ -18,6 +18,13 @@ export default {
       cpf: Joi.string().pattern(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/).required()
     })
   },
+  exclusaoCliente: {
+    payload: Joi.object({
+      nome: Joi.string().required(),
+      telefone: Joi.string().required(),
+      endereco: Joi.string().required()
+    })
+  },
   updateCliente: {
     payload: Joi.object({
       nome: Joi.string().required(),

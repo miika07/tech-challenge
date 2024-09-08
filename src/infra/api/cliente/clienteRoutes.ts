@@ -50,7 +50,20 @@ export default class ClienteRoutes implements IRoute {
               mode: "optional"
             }
             }
-        }
+        },
+        {
+          method: 'POST',
+          path: '/api/cliente-exclusao',
+          options: {
+            handler: controller.exclusaoCliente,
+            validate: validate.exclusaoCliente,
+            description: 'Excluir dados de um cliente',
+            tags: ['api', 'clientes'],
+            auth: {
+            mode: "optional"
+          }
+          }
+      }
       ])
 
       Logger.info('Clientes - Finalizando de adicionar rotas')
