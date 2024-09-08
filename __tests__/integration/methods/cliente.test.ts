@@ -140,3 +140,26 @@ const { url } = Config.apis.clientes
       expect(error.payload.data).toBe('Not found');
     }
   });
+
+  it('[POST] Exclusao de um cliente - 200', async () => {
+    const params: TestRouteOptions = {
+      method: 'POST',
+      url: 'api/cliente-exclusao',
+      basePath: '',
+      payload: {
+        nome: 'Melina Garcia',
+        telefone: '998765-0987',
+        endereco: 'Rua rui barbosa, 123'
+      }
+    };
+    
+    nock(url)
+      .post('', params.payload)
+      .reply(200, params.payload);
+
+   
+    const { payload, statusCode } = await route(params);
+    expect(statusCode).toBe(200);
+    expect(payload.message).toBe('Cliente Melina Garcia, com telefone: 998765-0987 e endereço: Rua rui barbosa, 123\n' +
+        '                seu pedido para exclusão será avaliado e processado');
+  });

@@ -53,4 +53,17 @@ export default class ClienteController {
             return h.response({ error: 'Internal Server Error' }).code(500)
         }
     }
+
+    public exclusaoCliente = async (
+        request: Hapi.Request, h: Hapi.ResponseToolkit
+    ): Promise<any> => {
+        try {
+            const body = request.payload as { nome: string, telefone: string, endereco: string };
+            return h.response({message: `Cliente ${body.nome}, com telefone: ${body.telefone} e endereço: ${body.endereco}
+                seu pedido para exclusão será avaliado e processado`}).code(200)
+        } catch (error) {
+            Logger.error(`Error in POST /clientes-exclusao: ${error.message}`);
+            return h.response({ error: 'Internal Server Error' }).code(500)
+        }
+    }
 }
