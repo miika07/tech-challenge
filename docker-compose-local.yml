@@ -11,5 +11,31 @@ services:
             - "3306:3306"
         volumes:
             - db_data:/var/lib/mysql
+    rabbitmq:
+        image: rabbitmq:management
+        ports:
+            - "5672:5672"
+            - "15672:15672"
+        volumes:
+            - rabbitmq_data:/var/lib/rabbitmq:rw
+            - ./rabbitmq_definitions.json:/etc/rabbitmq/definitions.json:ro
+            - ./rabbitmq.config:/etc/rabbitmq/rabbitmq.config:ro
+    # node-app:
+    #     container_name: fiap-backend
+    #     build:
+    #         context: .
+    #         dockerfile: Dockerfile
+    #     command: sh -c "npm run build:run"
+    #     ports:
+    #         - "3000:3000"
+    #     networks:
+    #         - tech-challenge-rede
+    #     volumes:
+    #         - /usr/src/app
+    #     depends_on:
+    #         mysql:
+    #             condition: service_healthy
+    #     restart: on-failure
 volumes:
     db_data:
+    rabbitmq_data:

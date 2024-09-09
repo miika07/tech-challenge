@@ -1,0 +1,49 @@
+{
+    "rabbit_version": "3.8.0",
+    "users": [
+        {
+            "name": "fiap",
+            "password_hash": "96eo1rBNIgrjuufoQpLHJkUnn1d+cy2/V3VYPuHIlUjZpIWa",
+            "hashing_algorithm": "rabbit_password_hashing_sha256",
+            "tags": "administrator"
+        }
+    ],
+    "permissions": [
+        {
+            "user": "fiap",
+            "vhost": "/",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        }
+    ],
+    "vhosts": [
+        {
+            "name": "/"
+        }
+    ],
+    "queues": [
+        {
+            "name": "pagamentos_confirmados",
+            "vhost": "/",
+            "durable": true
+        }
+    ],
+    "exchanges": [
+        {
+            "name": "exchange",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true
+        }
+    ],
+    "bindings": [
+        {
+            "source": "exchange",
+            "vhost": "/",
+            "destination": "pagamentos_confirmados",
+            "destination_type": "queue",
+            "routing_key": "pagamento_sucesso"
+        }
+    ]
+}
