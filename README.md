@@ -1,8 +1,8 @@
 
 # Tech Challenge - FIAP - Turma 5SOAT
 
-Quarta entrega da Pós de Arquitetura de Software da FIAP.
-## Autores
+Quinta entrega da Pós de Arquitetura de Software da FIAP.
+## Autoras
 
 - [Camila Couto](https://github.com/miika07)
 - [Melina Carniel](https://github.com/melcarniel)
@@ -45,6 +45,8 @@ https://github.com/miika07/api-pedidos
 - Decidimos usar o padrão de **orquestração** para esta solução, uma vez que já temos um dos microserviços atuando como o ponto centralizador das nossas operações: o projeto [**tech-challenge**](https://github.com/miika07/tech-challenge/tree/quinta-entrega). 
 - Esse microserviço é responsável por controlar as chamadas das APIs de pedidos, clientes e produtos, além de gerenciar o fluxo de pagamentos e encaminhar os pedidos para a cozinha. A orquestração nos permite coordenar de forma eficaz as ações entre esses serviços, garantindo consistência nas transações e maior controle sobre as etapas de cada processo.
 
+![Microserviços ](src/assets/arquitetura/flowdatabases.png)
+
 #### OWASP ZAP
 
 lorem ipsum
@@ -65,8 +67,6 @@ Os projetos que criamos para nos apoiar foram APIs de Clientes, Produtos e Pedid
 ### Desenhos de Arquitetura
 
 Nessa entrega foi adicionado o serviço de mensageria que auxilia o nosso orquestrador a avisar quando um pedido foi pago e quando ele deverá ir ou não para a cozinha para ser prepardo.
-
-![Microserviços ](src/assets/arquitetura/flowdatabases.png)
 
 ![Diagrama ](src/assets/arquitetura/flow.png)
 
