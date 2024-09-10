@@ -66,11 +66,11 @@ Os projetos que criamos para nos apoiar foram APIs de Clientes, Produtos e Pedid
 
 ### Desenhos de Arquitetura
 
-Nessa entrega foi adicionado o serviço de mensageria que auxilia o nosso orquestrador a avisar quando um pedido foi pago e quando ele deverá ir ou não para a cozinha para ser prepardo.
-
 ![Diagrama ](src/assets/arquitetura/flow.png)
 
+![Cloud](src/assets/arquitetura/arquitetura-cloud.png)
 
+![C4](src/assets/arquitetura/c4-projeto-tech-challenge.png)
 
 
 ## Stack utilizada
