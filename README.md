@@ -49,10 +49,11 @@ https://github.com/miika07/api-pedidos
 
 #### OWASP ZAP
 
-lorem ipsum
+- https://drive.google.com/drive/folders/118Vs9rk3ggsKM6Yth9LY7lGW4Mkmda8u?usp=drive_link
 
 #### LGPD
-lorem ipsum
+ Relatório:
+ - https://docs.google.com/document/d/1ifXaDMtC0svJGZrWHvWbziL6A87z1gdxwoIQBVkivZE/edit
 
 
 ### Sonar Cloud e testes
