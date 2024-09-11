@@ -51,9 +51,8 @@ https://github.com/miika07/api-pedidos
 
 ---
 
-![Orquestrador](src/assets/arquitetura/diagrama orquestrador.png)
+![Orquestrador](src/assets/arquitetura/diagrama-orquestrador.png)
 
----
 
 #### OWASP ZAP
 
