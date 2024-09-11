@@ -1,7 +1,6 @@
-import { PagamentoRepositoryAdapter } from "../../../../infra/adapter/pagamento/pagamentoRepositoryAdapter";
-import { PedidoRepositoryAdapter } from "../../../../infra/adapter/pedido/pedidoRepositoryAdapter";
+import amqp from 'amqplib';
 
-export default class WebhookManagerUseCase {
+export default class SistemaFakeDePagamento {
 
     private adapter: PagamentoRepositoryAdapter;
     private adapterPedido: PedidoRepositoryAdapter;

@@ -24,7 +24,7 @@
     ],
     "queues": [
         {
-            "name": "pagamentos_confirmados",
+            "name": "processar_pagamentos",
             "vhost": "/",
             "durable": true
         }
@@ -41,7 +41,7 @@
         {
             "source": "exchange",
             "vhost": "/",
-            "destination": "pagamentos_confirmados",
+            "destination": "processar_pagamentos",
             "destination_type": "queue",
             "routing_key": "pagamento_sucesso"
         }

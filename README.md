@@ -45,7 +45,15 @@ https://github.com/miika07/api-pedidos
 - Decidimos usar o padrão de **orquestração** para esta solução, uma vez que já temos um dos microserviços atuando como o ponto centralizador das nossas operações: o projeto [**tech-challenge**](https://github.com/miika07/tech-challenge/tree/quinta-entrega). 
 - Esse microserviço é responsável por controlar as chamadas das APIs de pedidos, clientes e produtos, além de gerenciar o fluxo de pagamentos e encaminhar os pedidos para a cozinha. A orquestração nos permite coordenar de forma eficaz as ações entre esses serviços, garantindo consistência nas transações e maior controle sobre as etapas de cada processo.
 
-![Microserviços ](src/assets/arquitetura/flowdatabases.png)
+--- 
+
+![Microserviços](src/assets/arquitetura/flowdatabases.png)
+
+---
+
+![Orquestrador](src/assets/arquitetura/diagrama orquestrador.png)
+
+---
 
 #### OWASP ZAP
 

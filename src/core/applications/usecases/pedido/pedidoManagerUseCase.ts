@@ -1,10 +1,12 @@
 import { ItemPedido } from "../../models/itensPedido";
 import { CheckoutPedidoResponse, Pedido, Status } from "../../models/pedido";
 import PedidosService from "../../../../service/pedidos.service";
+import { RabbitMQClient } from "../../../../infra/rabbitmq/rabbitmqClient";
 
 export default class PedidoManagerUseCase {
 
     private servicePedidos: PedidosService = new PedidosService();
+    constructor(private rabbitMQClient: RabbitMQClient) { }
 
     async buscarTodosPedidos(): Promise<Pedido[]> {
         const response = await this.servicePedidos.buscarTodosPedidos();
@@ -32,9 +34,30 @@ export default class PedidoManagerUseCase {
         return response.data;
     }
 
-    async checkoutPedido(idCliente: string, status: string, itensPedido: ItemPedido[], statusPagamento: string): Promise<CheckoutPedidoResponse> {
-        const pedido = { cliente: idCliente, status, itensPedido, statusPagamento};
-        const response = await this.servicePedidos.criarPedido(pedido);
-        return response.data;
+    async analisandoPagamento(pedido: any, idPedido: string, idCliente: string, status: string, itensPedido: ItemPedido[]) {
+        let pedido = { cliente: idCliente, status, itensPedido, statusPagamento };
+
+        if (pedido && pedido.status == "APROVADO") {
+            const response = await this.atualizarStatusPedido(idPedido, "APROVADO");
+
+            //Enviar para a cozinha
+            //Adicionar evento
+
+            return response.data;
+        } else {
+            throw new Error("Pagamento não aprovado");
+        }
+    }
+
+    async checkoutPedido(idCliente: string, status: string, itensPedido: ItemPedido[]): Promise<CheckoutPedidoResponse> {
+        const statusPagamento = "PENDENTE_PAGAMENTO";
+        let pedido = { cliente: idCliente, status, itensPedido, statusPagamento };
+        const responsePedido = await this.servicePedidos.criarPedido(pedido);
+        const pedidoCriado = responsePedido.data;
+        
+        //Envia para serviço externo de pagamentos
+        await this.rabbitMQClient.publicarEventos('pedidos', { retornoCriacao: responsePedido.data, pedido });
+
+        return pedidoCriado;
     }
 }

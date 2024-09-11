@@ -19,4 +19,5 @@ export class Pedido {
 export class CheckoutPedidoResponse {
     idPedido?: string;
     numeroPedido?: number;
+    mensagem?:string;
 }
