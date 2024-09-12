@@ -1,27 +1,43 @@
 import amqp from 'amqplib';
 
-export default class SistemaFakeDePagamento {
+export async function iniciarSistemaFakePagamento() {
 
-    private adapter: PagamentoRepositoryAdapter;
-    private adapterPedido: PedidoRepositoryAdapter;
+    try {
+        const con = await amqp.connect('amqp://fiap:password@localhost');
+        const channel = await con.createChannel();
+        const queue = 'processar_pagamentos';
+        const exchange = 'exchange';
+        const routingKey = 'processarPagamento';
 
-    constructor(adapter: PagamentoRepositoryAdapter, adapterPedido: PedidoRepositoryAdapter){
-        this.adapter = adapter;
-        this.adapterPedido = adapterPedido
-    }
+        await channel.assertExchange(exchange, 'direct', { durable: true });
+        await channel.assertQueue(queue, { durable: true });
+        await channel.bindQueue(queue, exchange, routingKey);
 
-    async atualizarStatusPedido(idPedido: string, statusPagamento: string): Promise<Boolean> {
-        const pagamento = await this.adapter.buscarPagamentoPorIdPedido(idPedido);
-        if (pagamento) {
-            pagamento.status = statusPagamento
-            await this.adapter.atualizarPagamentoStatus(pagamento);
-            const pedido = await this.adapterPedido.buscarPedidoPorId(idPedido);
-            if(pedido && statusPagamento === 'APROVADO'){
-                pedido.status = 'RECEBIDO';
-                await this.adapterPedido.atualizarPedido(pedido);
+        console.log(`Sistema Pagamentos: ${queue} pronta para receber mensagems.`);
+        
+        channel.consume(queue, async (msg) => {
+            if (msg !== null) {
+                const messageContent = JSON.parse(msg.content.toString());
+                console.log(messageContent);
+                if(messageContent.type == "processarPagamento"){
+                    await publicarPagamentoProcessado(channel,{statusPagamento:"APROVADO", "type": "pagamentoProcessado"});
+                }
+                channel.ack(msg);
             }
-            return true;
-        }
-        return false;
+        });
+    } catch (error) {
+        console.error('Erro ao consumir mensagens:', error);
     }
+}
+
+async function publicarPagamentoProcessado(channel: amqp.Channel, pagamentoProcessado: any) {
+    const exchange = 'exchange';
+    const routingKey = 'pagamentoProcessado';
+
+    await channel.assertExchange(exchange, 'direct', { durable: true, autoDelete: false});
+
+    console.log("Evento 2 - ProcessarPagamento");
+    channel.publish(exchange, routingKey, Buffer.from(JSON.stringify(pagamentoProcessado)));
+
+    console.log('Sistema Pagamentos: evento "pagamentoProcessado" publicado. ', pagamentoProcessado);
 }

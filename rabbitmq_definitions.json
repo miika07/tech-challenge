@@ -34,7 +34,8 @@
             "name": "exchange",
             "vhost": "/",
             "type": "direct",
-            "durable": true
+            "durable": true,
+            "auto_delete": false
         }
     ],
     "bindings": [
@@ -43,7 +44,28 @@
             "vhost": "/",
             "destination": "processar_pagamentos",
             "destination_type": "queue",
-            "routing_key": "pagamento_sucesso"
+            "routing_key": "processarPagamento"
+        },
+        {
+            "source": "exchange",
+            "vhost": "/",
+            "destination": "processar_pagamentos",
+            "destination_type": "queue",
+            "routing_key": "pagamentoProcessado"
+        },
+        {
+            "source": "exchange",
+            "vhost": "/",
+            "destination": "processar_pagamentos",
+            "destination_type": "queue",
+            "routing_key": "enviarPedidoCozinha"
+        },
+        {
+            "source": "exchange",
+            "vhost": "/",
+            "destination": "processar_pagamentos",
+            "destination_type": "queue",
+            "routing_key": "notificaPedidoCliente"
         }
     ]
 }

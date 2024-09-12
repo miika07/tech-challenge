@@ -2,9 +2,9 @@ import { RabbitMQClient } from "./rabbitmqClient";
 
 
 export class Consumer {
-  constructor(private rabbitMQClient: RabbitMQClient) {}
+  constructor(private rabbitMQClient: RabbitMQClient) { }
 
-  async consomePedidos(callback: (msg: any) => void) {
-    await this.rabbitMQClient.consumidorDeEventos('pedidos', callback);
+  async consomePagamento(callback: (msg: any) => void) {
+    await this.rabbitMQClient.consumidorDeEventosRoutingKey('exchange', 'pagamentoProcessado', 'processar_pagamentos', callback);
   }
 }

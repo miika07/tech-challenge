@@ -6,7 +6,6 @@ import { RabbitMQClient } from "../../../../infra/rabbitmq/rabbitmqClient";
 export default class PedidoManagerUseCase {
 
     private servicePedidos: PedidosService = new PedidosService();
-    constructor(private rabbitMQClient: RabbitMQClient) { }
 
     async buscarTodosPedidos(): Promise<Pedido[]> {
         const response = await this.servicePedidos.buscarTodosPedidos();
@@ -34,29 +33,35 @@ export default class PedidoManagerUseCase {
         return response.data;
     }
 
-    async analisandoPagamento(pedido: any, idPedido: string, idCliente: string, status: string, itensPedido: ItemPedido[]) {
-        let pedido = { cliente: idCliente, status, itensPedido, statusPagamento };
-
-        if (pedido && pedido.status == "APROVADO") {
-            const response = await this.atualizarStatusPedido(idPedido, "APROVADO");
-
-            //Enviar para a cozinha
-            //Adicionar evento
-
-            return response.data;
+    async analisandoPagamento(pedidoEvento: any) {
+        const rabbitMQClient = new RabbitMQClient();
+        await rabbitMQClient.criarConexaoRabbitMq();
+        console.log(pedidoEvento);
+        if (pedidoEvento && pedidoEvento.statusPagamento == "APROVADO") {
+            // const response = await this.atualizarStatusPedido(pedidoEvento.retornoCriacao.idPedido, "APROVADO");
+            const response = "teste";
+            console.log("Evento 3 - EnviarPedidoCozinha");
+            await rabbitMQClient.publicarEventosRoutingKey('exchange','enviarPedidoCozinha', { "type": "enviarPedidoCozinha", pedidoEvento, response });
+            return response;
         } else {
             throw new Error("Pagamento não aprovado");
         }
     }
 
-    async checkoutPedido(idCliente: string, status: string, itensPedido: ItemPedido[]): Promise<CheckoutPedidoResponse> {
-        const statusPagamento = "PENDENTE_PAGAMENTO";
+    async checkoutPedido(idCliente: string, status: string, itensPedido: ItemPedido[], statusPagamentoPg): Promise<CheckoutPedidoResponse> {
+        const rabbitMQClient = new RabbitMQClient();
+        await rabbitMQClient.criarConexaoRabbitMq();
+
+        let statusPagamento = "PENDENTE_PAGAMENTO";
         let pedido = { cliente: idCliente, status, itensPedido, statusPagamento };
-        const responsePedido = await this.servicePedidos.criarPedido(pedido);
-        const pedidoCriado = responsePedido.data;
-        
+        // const returnData = await this.servicePedidos.criarPedido(pedido);
+        // let responsePedido = returnData.data;
+        let responsePedido = {idPedido: "1", numeroPedido: 1};
+        const pedidoCriado = { idPedido: responsePedido.idPedido, numeroPedido: responsePedido.numeroPedido, mensagem: "Pendente pagamento." }
+
         //Envia para serviço externo de pagamentos
-        await this.rabbitMQClient.publicarEventos('pedidos', { retornoCriacao: responsePedido.data, pedido });
+        console.log("Evento 1 - ProcessarPagamento");
+        await rabbitMQClient.publicarEventosRoutingKey('exchange','processarPagamento', { statusPagamento, "type": "processarPagamento" });
 
         return pedidoCriado;
     }

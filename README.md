@@ -76,11 +76,6 @@ Os projetos que criamos para nos apoiar foram APIs de Clientes, Produtos e Pedid
 
 ![Diagrama ](src/assets/arquitetura/flow.png)
 
-![Cloud](src/assets/arquitetura/arquitetura-cloud.png)
-
-![C4](src/assets/arquitetura/c4-projeto-tech-challenge.png)
-
-
 ## Stack utilizada
 
 **Back-end:** Node, Hapi.

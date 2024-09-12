@@ -6,9 +6,12 @@ import Router from './router'
 import * as JWT from 'hapi-auth-jwt2'
 import { plugin } from 'hapi-alive';
 import { CognitoJwtVerifier } from "aws-jwt-verify";
-import { sistemaFakeDeCozinha } from '../../servicos-externo-fake/sistemaFakeDeCozinha'
+import { iniciarSistemaFakeCozinha } from '../../servicos-externo-fake/sistemaFakeDeCozinha'
 import { RabbitMQClient } from '../rabbitmq/rabbitmqClient'
 import { Consumer } from '../rabbitmq/rabbitmqConsumer'
+import { iniciarSistemaFakePagamento } from '../../servicos-externo-fake/sistemaFakeDePagamento'
+import PedidoManagerUseCase from '../../core/applications/usecases/pedido/pedidoManagerUseCase'
+import { iniciarSistemaConsumer } from '../../servicos-externo-fake/sistemaConsumer'
 
 async function verifyToken(decoded, request) {
   const verifier = CognitoJwtVerifier.create({
@@ -71,22 +74,30 @@ const server = new Hapi.Server({
       `Server - Visit http://${Config.host}:${Config.port}/documentation for Swagger docs`
     )
 
-    //Consumidor de Eventos
+    //Sistema Externo Fake de Pagamento
+    iniciarSistemaFakePagamento();
+
+    //Sistema Externo Fake de Cozinha
+    iniciarSistemaFakeCozinha();
+
+    //Sistema Consumer
+    // iniciarSistemaConsumer();
+
+    //Consumidor de Eventos - orquestrador
     const rabbitMQClient = new RabbitMQClient();
     await rabbitMQClient.criarConexaoRabbitMq();
-
     const consumer = new Consumer(rabbitMQClient);
-    // const processOrder = new ProcessOrder();
-
-    consumer.consomePedidos((message) => {
-      const pedido = JSON.parse(message);
-      // processOrder.execute(pedido);
-      console.log(`Pedido processado: ${pedido.id}`);
-    });
-
     
-    //Sistema Externo Fake de Cozinha
-    // sistemaFakeDeCozinha();
+    const pedidoManager = new PedidoManagerUseCase();
+
+    //Consome pagamento efetuado e enviar pedido para cozinha
+    consumer.consomePagamento(async (message) =>  {
+          const pedido = JSON.parse(message);
+          await pedidoManager.analisandoPagamento(pedido); 
+          console.log(`Processar pagamento: ${message}`);
+      }
+    );
+
 
     return server;
 
